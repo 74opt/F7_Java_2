@@ -8,17 +8,12 @@ import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 
 /*
-TODO: bc this hoe cant make up their mind as to what to do for work
-you must:
-- work on weapon loot //* methinks im done with this    
-- shield looting //* methinks im done with this
-- consumables //* methinks im done with this
-- json //* WOOOOOOOOOOOOOOOOOOOOO
-and if possible do that stuff in dumb notes.txt starting with maneuvers //? do i wanna do maneuvers tho
+TODO: Todos part 2 
+you must
+- fix shit code
+ - Use smth like rarityArrayList.get(random.nextInt(0, rarityArrayList.size()));
+- replace json because jackson
 */
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//TODO: FIX THE DAMN JSON
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 public class CombatMenu {
     private static Enemy enemy;

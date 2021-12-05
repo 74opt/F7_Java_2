@@ -14,7 +14,7 @@ public class Rarities { // rarities must equal 100 when summed
 
     public static Rarity godly = new Rarity("Godly", 208, 1);
 
-    public static ArrayList<Rarity> rarities = new ArrayList<Rarity>();
+    public static ArrayList<Rarity> rarityArrayList = new ArrayList<Rarity>();
 
     public static void setRaritiesArrayList() throws Exception {
         if (common.CHANCE() + uncommon.CHANCE() + rare.CHANCE() + exceptional.CHANCE() + godly.CHANCE() != 100) {
@@ -22,23 +22,23 @@ public class Rarities { // rarities must equal 100 when summed
         }
 
         for (int i = 0; i < common.CHANCE(); i++) {
-            rarities.add(common);
+            rarityArrayList.add(common);
         }
 
         for (int i = 0; i < uncommon.CHANCE(); i++) {
-            rarities.add(uncommon);
+            rarityArrayList.add(uncommon);
         }
 
         for (int i = 0; i < rare.CHANCE(); i++) {
-            rarities.add(rare);
+            rarityArrayList.add(rare);
         }
 
         for (int i = 0; i < exceptional.CHANCE(); i++) {
-            rarities.add(exceptional);
+            rarityArrayList.add(exceptional);
         }
 
         for (int i = 0; i < godly.CHANCE(); i++) {
-            rarities.add(godly);
+            rarityArrayList.add(godly);
         }
     }
 }

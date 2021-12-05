@@ -36,3 +36,6 @@ Convert to lanterna
 move everything to F7_Extended to fix
 
 individual weapon upgrading.
+
+Should i remove the gitignore just so that when i move shit to another computer i have like everything
+Also should i make repo private
