@@ -1,10 +1,12 @@
 package F7.ui;
 
+import java.io.*;
 import F7.Utils;
 import F7.entities.classes.*;
 import F7.entities.construction.*;
 import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MainMenu {
     private static final String LOGO = Ansi.colorize(
@@ -89,7 +91,9 @@ public class MainMenu {
     }
 
     private static void load() throws Exception  {
-        //Players.player = Player.loadJson();
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        Players.player = objectMapper.readValue(new File(Utils.SAVE_PATH), Player.class);
 
         MapMenu.getCurrentMap().spawnPlayer(Players.player.getX(), Players.player.getY());
 

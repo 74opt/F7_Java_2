@@ -13,7 +13,7 @@ public class Utils {
     public static final int SCROLL = 45; // .045 seconds
 
     // Save file path
-    public static final String SAVE_PATH = "src\\F7\\save.json";
+    public static final String SAVE_PATH = "src\\main\\java\\F7\\save.json";
 
     // Decimal format
     public static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");

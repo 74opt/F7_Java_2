@@ -16,10 +16,10 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
                     "Illegal. Software may be pirated or tampered with.", Attribute.TEXT_COLOR(1)) +
             Ansi.colorize("\n\nSpecified ID: ", Attribute.TEXT_COLOR(231)) + Players.player.getName() +
             Ansi.colorize("\nLevel: ", Attribute.TEXT_COLOR(231)) + Players.player.getLevel() +
-            Utils.outOf("\nExperience Points:", Players.player.getExpRequired(), Players.player.getExp(), 46) +
+            Utils.outOf("\nExperience Points:", Players.player.expRequired(), Players.player.getExp(), 46) +
             Utils.outOf("\nHealth:", Players.player.getHealth(), Players.player.getTempHealth(), 9) +
             String.format("\n\n%s %s", Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)),
-                    Players.player.getWeaponEquipped().toString(true)) +
+                    Players.player.weaponEquipped().toString(true)) +
             Ansi.colorize("\nWeapons:", Attribute.TEXT_COLOR(231))
         );
 

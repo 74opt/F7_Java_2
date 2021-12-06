@@ -1,7 +1,7 @@
 package F7.entities.classes;
 
-// org.json.simple.JSONObject;
 import com.diogonunes.jcolor.*;
+import com.fasterxml.jackson.annotation.*;
 
 public class Shield {
     private final String NAME;
@@ -20,7 +20,7 @@ public class Shield {
     public Rarity getRARITY() {return RARITY;}
 
     // Constructor
-    public Shield(String NAME, int DAMAGE_REDUCTION, int TURNS, int COOLDOWN, Rarity RARITY) {
+    public Shield(@JsonProperty("name") String NAME, @JsonProperty("damage_REDUCTION") int DAMAGE_REDUCTION, @JsonProperty("turns") int TURNS, @JsonProperty("cooldown") int COOLDOWN, @JsonProperty("rarity") Rarity RARITY) {
         this.NAME = NAME;
         this.DAMAGE_REDUCTION = DAMAGE_REDUCTION;
         this.TURNS = TURNS;
@@ -53,8 +53,4 @@ public class Shield {
             );
         }
     }
-
-//    public static Shield loadJson(JSONObject jsonObject) {
-//        return new Shield((String) jsonObject.get("NAME"), Math.toIntExact((Long) jsonObject.get("DAMAGE_REDUCTION")), Math.toIntExact((Long) jsonObject.get("TURNS")), Math.toIntExact((Long) jsonObject.get("COOLDOWN")), Rarity.loadJson((JSONObject) jsonObject.get("RARITY")));
-//    }
 }

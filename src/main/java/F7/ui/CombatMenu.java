@@ -10,9 +10,9 @@ import com.diogonunes.jcolor.Attribute;
 /*
 TODO: Todos part 2 
 you must
-- fix shit code
+- fix shit code (found in looting mainly)
  - Use smth like rarityArrayList.get(random.nextInt(0, rarityArrayList.size()));
-- replace json because jackson
+- replace json code because jackson
 */
 
 public class CombatMenu {
@@ -127,7 +127,7 @@ public class CombatMenu {
                 Ansi.colorize("Model-F v5.032 Targeting Chip", Attribute.TEXT_COLOR(10)),
                 Players.player.getName(),
                 Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), 9),
-                Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)), Players.player.getWeaponEquipped().toString(true),
+                Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)), Players.player.weaponEquipped().toString(true),
                 Ansi.colorize("Shield:", Attribute.TEXT_COLOR(231)), Players.player.getShield().toString(true), shieldStatus, 
                 Ansi.colorize("Consumables:", Attribute.TEXT_COLOR(231)), Players.player.displayConsumables(), displayStatuses(), enemy.toString(false)
         );
@@ -207,7 +207,7 @@ public class CombatMenu {
                 4) Equip New Weapon
                 5) Run Away
                 """, 
-                Ansi.colorize(Players.player.getWeaponEquipped().getNAME(), Attribute.TEXT_COLOR(231))
+                Ansi.colorize(Players.player.weaponEquipped().getNAME(), Attribute.TEXT_COLOR(231))
             );
 
             String choice = Utils.input(false);
@@ -250,12 +250,12 @@ public class CombatMenu {
     private static void attack() throws Exception {
         int damage = 0; // Player damage fluctuates between 93% and 107%
 
-        for (int i = 0; i < Players.player.getWeaponEquipped().getRof(); i++) {
-            if (targetActive || Utils.chance(Players.player.getWeaponEquipped().getAccuracy())) {
+        for (int i = 0; i < Players.player.weaponEquipped().getRof(); i++) {
+            if (targetActive || Utils.chance(Players.player.weaponEquipped().getAccuracy())) {
                 if (amplifierActive) {
-                    damage += (int) (Players.player.getWeaponEquipped().getDamage() * (Utils.randomRange(109, 135) / 100.0));
+                    damage += (int) (Players.player.weaponEquipped().getDamage() * (Utils.randomRange(109, 135) / 100.0));
                 } else {
-                    damage += (int) (Players.player.getWeaponEquipped().getDamage() * (Utils.randomRange(93, 108) / 100.0));
+                    damage += (int) (Players.player.weaponEquipped().getDamage() * (Utils.randomRange(93, 108) / 100.0));
                 } 
             }
         }
@@ -267,7 +267,7 @@ public class CombatMenu {
             Thread.sleep(Utils.QUICK_STANDARD);
         }
 
-        System.out.printf("%s dealt %s damage to %s!", Players.player.getWeaponEquipped().getNAME(), damage, enemy.getNAME());
+        System.out.printf("%s dealt %s damage to %s!", Players.player.weaponEquipped().getNAME(), damage, enemy.getNAME());
         Thread.sleep(Utils.QUICK_STANDARD);
 
         if (corrosiveActive) {
@@ -601,6 +601,8 @@ public class CombatMenu {
         }
     }
 
+    //! warning: shit code
+    // FIXME: this is shit code
     private static void enemyDead() throws Exception {
         HashMap<Rarity, Double> rarityMultipliers = new HashMap<Rarity, Double>();
         rarityMultipliers.put(Rarities.common, 1.0);
@@ -631,7 +633,8 @@ public class CombatMenu {
             } else if (weaponRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE() + Rarities.exceptional.CHANCE() + Rarities.godly.CHANCE()) {
                 weapon = Weapons.weaponHashMap.get(Rarities.godly)[random.nextInt(Weapons.weaponHashMap.get(Rarities.godly).length)];
             } else { // if goes above 100 you get a shield! yay!!!!
-                weapon = null;
+                weapon = null; //! bad idea, should do like 33%-50% (must decide on value) chance to loot, then create different probabilities as to what you could be looting
+                               // although i would like 100% of getting currency if i ever implement that
 
                 int shieldRarity = random.nextInt(101);
                 Shield shield;

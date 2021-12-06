@@ -4,6 +4,8 @@ import F7.entities.classes.*;
 import F7.Utils;
 import F7.entities.construction.*;
 import com.diogonunes.jcolor.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.util.Arrays;
 
@@ -105,139 +107,12 @@ public class MapMenu {
         PlayerMenu.menu();
     }
 
+    // TODO: move to jackson
     private static void save() throws Exception {
         File save = new File(Utils.SAVE_PATH);
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        FileWriter writer = new FileWriter(save);
-
-        String consumableString = "[\n";
-
-        for (Consumable consumable : Players.player.getConsumables()) {
-            consumableString += String.format(
-            """
-                {
-                    \"NAME\": \"%s\", 
-                    \"TURNS\": %s, 
-                    \"RARITY\": 
-                    {
-                        \"NAME\": \"%s\",
-                        \"COLOR\": %s, 
-                        \"CHANCE\": %s
-                    }
-                },
-            """,
-            consumable.NAME(),
-            consumable.TURNS(),
-            consumable.RARITY().NAME(),
-            consumable.RARITY().COLOR(),
-            consumable.RARITY().CHANCE()
-            );
-        }
-
-        consumableString = consumableString.substring(0, consumableString.length() - 2) + "]";
-
-        String weaponString = "[\n";
-
-        for (Weapon weapon : Players.player.getWeapons()) {
-            if (weapon != null) {
-                weaponString += String.format(
-                """
-                    {
-                        \"NAME\": \"%s\", 
-                        \"damage\": %s, 
-                        \"accuracy\": %s,
-                        \"level\": %s,
-                        \"rof\": %s,
-                        \"RARITY\": 
-                        {
-                            \"NAME\": \"%s\",
-                            \"COLOR\": %s, 
-                            \"CHANCE\": %s
-                        }
-                    },
-                """,
-                weapon.getNAME(),
-                weapon.getDamage(),
-                weapon.getAccuracy(),
-                weapon.getLevel(),
-                weapon.getRof(),
-                weapon.getRARITY().NAME(),
-                weapon.getRARITY().COLOR(),
-                weapon.getRARITY().CHANCE()
-                );
-            } else {
-                weaponString += "\nnull,\n";
-            }
-        }
-
-        weaponString = weaponString.substring(0, weaponString.length() - 2) + "]";
-
-        String json = String.format(
-        """
-        {
-        \"name\": \"%s\",
-        \"health\": %s,
-        \"tempHealth\": %s,
-        \"exp\": %s,
-        \"level\": %s,
-        \"x\": %s,
-        \"y\": %s,
-        \"equippedIndex\": %s,
-        \"shield\": %s,
-        \"consumables\": %s,
-        \"healthLevel\": %s,
-        \"damageLevel\": %s,
-        \"evasionLevel\": %s,
-        \"accuracyLevel\": %s,
-        \"luckLevel\": %s,
-        \"weapons\": %s
-        }
-        """,
-        Players.player.getName(),
-        Players.player.getHealth(),
-        Players.player.getTempHealth(),
-        Players.player.getExp(),
-        Players.player.getLevel(),
-        Players.player.getX(),
-        Players.player.getY(),
-        Players.player.getEquippedIndex(),
-        Players.player.getShield() != null ?
-        String.format(
-        """
-        {
-            \"NAME\": \"%s\",
-            \"DAMAGE_REDUCTION\": %s,
-            \"TURNS\": %s,
-            \"COOLDOWN\": %s,
-            \"RARITY\": 
-            {
-                \"NAME\": \"%s\",
-                \"COLOR\": %s, 
-                \"CHANCE\": %s
-            }
-        }""",
-        Players.player.getShield().getNAME(),
-        Players.player.getShield().getDAMAGE_REDUCTION(),
-        Players.player.getShield().getTURNS(),
-        Players.player.getShield().getCOOLDOWN(),
-        Players.player.getShield().getRARITY().NAME(),
-        Players.player.getShield().getRARITY().COLOR(),
-        Players.player.getShield().getRARITY().CHANCE()
-        ) 
-        :
-        "null",
-        consumableString,
-        Players.player.getHealthLevel(),
-        Players.player.getDamageLevel(),
-        Players.player.getEvasionLevel(),
-        Players.player.getAccuracyLevel(),
-        Players.player.getLuckLevel(),
-        weaponString
-        );
-
-        writer.write(json);
-        writer.flush();
-        writer.close();
+        objectMapper.writeValue(save, Players.player);
 
         System.out.println("Saved.");
         Thread.sleep(Utils.QUICK_STANDARD);

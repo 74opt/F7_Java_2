@@ -1,7 +1,8 @@
 package F7.entities.classes;
 
 import com.diogonunes.jcolor.*;
-//import org.json.simple.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Weapon {
     private final String NAME;
@@ -26,7 +27,8 @@ public class Weapon {
     public Rarity getRARITY() {return RARITY;}
 
     // Constructor
-    public Weapon(String NAME, int damage, int accuracy, int level, int rof, Rarity RARITY) {
+    @JsonCreator
+    public Weapon(@JsonProperty("name") String NAME, @JsonProperty("damage") int damage, @JsonProperty("accuracy") int accuracy, @JsonProperty("level") int level, @JsonProperty("rof") int rof, @JsonProperty("rarity") Rarity RARITY) {
         this.NAME = NAME;
         this.damage = damage;
         this.accuracy = accuracy;
@@ -44,6 +46,10 @@ public class Weapon {
         this.RARITY = weapon.getRARITY();
     }
 
+    // public Weapon() {
+    //     super();
+    // }
+
     // Methods 
     public String toString(boolean simple) {
         if (simple) {
@@ -57,8 +63,4 @@ public class Weapon {
             );
         }
     }
-
-//    public static Weapon loadJson(JSONObject jsonObject) {
-//        return new Weapon((String) jsonObject.get("NAME"), Math.toIntExact((Long) jsonObject.get("damage")), Math.toIntExact((Long) jsonObject.get("accuracy")), Math.toIntExact((Long) jsonObject.get("level")), Math.toIntExact((Long) jsonObject.get("rof")), Rarity.loadJson((JSONObject) jsonObject.get("RARITY")));
-//    }
 }

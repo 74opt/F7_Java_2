@@ -2,21 +2,13 @@ Bring minigames from F7 as combat maneuvers
 
 Introduce random crits
 
-Bring back consumables (DONE!)
-
-Call toolboxes medkits (DONE!)
-
 Try implementing different zones
-
-Get rid of sprites, replace with descriptions (DONE!)
 
 Try implementing crafting
 
 If crafting, enemies will drop parts
 
 Try adding skill tree and skill points (time to do next)
-
-Must implement rarities but maybe make rarity a record class (DONE!)
 
 Damage types + weaknesses/strength
 (Inspired by warframe/pokémon)
@@ -25,17 +17,12 @@ Make arraylist for each crafting material as storage
 
 find way to make shields utilize levels
 
-Make each enemy inherit from the Enemy class (so they can do fun special thingamajigs)
+Make each enemy inherit from the Enemy class (so they can do fun special thingamajigs) (Using extends keyword just so you know)
     should i do same with weapons? because yknow fun stuff!
-    and consumables too!
-
-Swap simple.json with Jackson
+    and consumables too! (might not actually hm)
 
 Convert to lanterna
 
-move everything to F7_Extended to fix
+individual weapon upgrading (like attachments).
 
-individual weapon upgrading.
-
-Should i remove the gitignore just so that when i move shit to another computer i have like everything
-Also should i make repo private
+in VSCode you can F1 and use "Format Document With" so that you get nice pretty formatting instead of dumb ugly formatting

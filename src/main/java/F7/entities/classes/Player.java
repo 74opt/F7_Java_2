@@ -4,8 +4,6 @@ import F7.Utils;
 import F7.entities.construction.*;
 import java.io.*;
 import java.util.*;
-//import org.json.simple.*;
-//import org.json.simple.parser.JSONParser;
 
 public class Player {
     private String name;
@@ -37,8 +35,8 @@ public class Player {
 
     public int getExp() {return exp;}
     public void setExp(int exp) { // when modifying exp values, program should check if exp reaches requirement, and if so, level up.
-        while (exp >= getExpRequired()) {
-            exp -= getExpRequired();
+        while (exp >= expRequired()) {
+            exp -= expRequired();
             level++;
             health += (int) ((health * .95) * Math.pow(level, 0.0001));
             tempHealth = health;
@@ -58,11 +56,6 @@ public class Player {
 
     public Weapon[] getWeapons() {return weapons;}
     public void setWeapon(Weapon weapon, int index) {weapons[index] = weapon;}
-
-    // @Deprecated
-    // public Weapon getWeaponEquipped() {return weaponEquipped;}
-    // @Deprecated
-    // public void setWeaponEquipped(Weapon weapon) {this.weaponEquipped = weapon;}
     
     public int getEquippedIndex() {return equippedIndex;} // do i need?
     public void setEquippedIndex(int equippedIndex) {this.equippedIndex = equippedIndex;} 
@@ -131,12 +124,15 @@ public class Player {
         this.luckLevel = luckLevel;
     }
 
+    // Default Constructor
+    public Player() {}
+
     // Methods
-    public int getExpRequired() {
+    public int expRequired() {
         return (int) (Math.pow(level, 1.75) * 300) + 200;
     }
 
-    public Weapon getWeaponEquipped() {
+    public Weapon weaponEquipped() {
         return weapons[equippedIndex] != null ? weapons[equippedIndex] : Weapons.fists;
     }
 
@@ -189,52 +185,4 @@ public class Player {
         Consumables.flashbang.toString(), flashbangs
         );
     }
-
-    //save.json is centered around player info, meaning all other loadJson() methods will only be used here
-//    public static Player loadJson() {
-//        JSONParser jsonParser = new JSONParser();
-//
-//        // program should have save.json already in files, will throw FileNotFoundException if not and if so thats a you problem
-//        try {
-//            JSONObject data = (JSONObject) jsonParser.parse(new FileReader(Utils.SAVE_PATH));
-//
-//            String name = (String) data.get("name");
-//            double health = (double) data.get("health");
-//            double tempHealth = (double) data.get("tempHealth");
-//            int level = Math.toIntExact((Long) data.get("level"));
-//            int exp = Math.toIntExact((Long) data.get("exp"));
-//            int x = Math.toIntExact((Long) data.get("x"));
-//            int y = Math.toIntExact((Long) data.get("y"));
-//            int equippedIndex = Math.toIntExact((Long) data.get("equippedIndex"));
-//            Shield shield = Shield.loadJson((JSONObject) data.get("shield"));
-//            JSONArray JSONweapons = (JSONArray) data.get("weapons");
-//
-//            ArrayList<Consumable> consumables = new ArrayList<>();
-//
-//            for (Object consumable : (JSONArray) data.get("consumables")) {
-//                consumables.add(Consumable.loadJson((JSONObject) consumable));
-//            }
-//
-//            Weapon[] weapons = new Weapon[4];
-//
-//            for (int i = 0; i < 4; i++) {
-//                if (JSONweapons.get(i) != null) {
-//                    weapons[i] = Weapon.loadJson((JSONObject) JSONweapons.get(i));
-//                } else {
-//                    weapons[i] = null;
-//                }
-//            }
-//
-//            int healthLevel = Math.toIntExact((Long) data.get("healthLevel"));
-//            int damageLevel = Math.toIntExact((Long) data.get("damageLevel"));
-//            int evasionLevel = Math.toIntExact((Long) data.get("evasionLevel"));
-//            int accuracyLevel = Math.toIntExact((Long) data.get("accuracyLevel"));
-//            int luckLevel = Math.toIntExact((Long) data.get("luckLevel"));
-//
-//            return new Player(name, health, tempHealth, level, exp, weapons, equippedIndex, shield, x, y, consumables, healthLevel, damageLevel, evasionLevel, accuracyLevel, luckLevel);
-//        } catch (Exception exception) {
-//            exception.printStackTrace();
-//            return null;
-//        }
-//    }
 }
