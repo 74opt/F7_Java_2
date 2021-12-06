@@ -1,4 +1,5 @@
-Bring minigames from F7 as combat maneuvers
+Bring minigames from F7 as combat maneuvers (increasing dodge, crit (or damage if no crit), and health regen)
+    Make medkits give health over time rather than all at once
 
 Introduce random crits
 
@@ -11,7 +12,9 @@ If crafting, enemies will drop parts
 Try adding skill tree and skill points (time to do next)
 
 Damage types + weaknesses/strength
-(Inspired by warframe/pokémon)
+(Inspired by warframe/pokemon)
+    Do like warframe and have different health types and damage types
+    Or like pokemon and have different types (easier and probably much better)
 
 Make arraylist for each crafting material as storage
 
@@ -21,7 +24,7 @@ Make each enemy inherit from the Enemy class (so they can do fun special thingam
     should i do same with weapons? because yknow fun stuff!
     and consumables too! (might not actually hm)
 
-Convert to lanterna
+Convert to lanterna (DO NOW)
 
 individual weapon upgrading (like attachments).
 
