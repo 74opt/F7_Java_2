@@ -5,6 +5,8 @@ import F7.entities.construction.*;
 import F7.ui.*;
 
 // Test Imports
+import com.diogonunes.jcolor.Ansi;
+import com.diogonunes.jcolor.Attribute;
 import com.googlecode.lanterna.terminal.*;
 import com.googlecode.lanterna.terminal.virtual.*;
 import com.googlecode.lanterna.graphics.TextGraphics;
@@ -26,7 +28,7 @@ public class Main {
 
         screen.startScreen();
 
-        textGraphics.putString(1, 1, "Hello World!");
+        textGraphics.putString(0, 0, "Hello World!\nThis is a test\n\nBecause :)");
 
         screen.refresh();
     }
