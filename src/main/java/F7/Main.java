@@ -26,7 +26,7 @@ public class Main {
 
         screen.startScreen();
 
-        textGraphics.putString(10, 10, "Hello World!");
+        textGraphics.putString(1, 1, "Hello World!");
 
         screen.refresh();
     }

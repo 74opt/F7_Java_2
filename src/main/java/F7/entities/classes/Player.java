@@ -9,7 +9,6 @@ public class Player {
     private String name;
     private double health, tempHealth;
     private int exp, level, x, y;
-    //private Weapon weaponEquipped; //! will be replaced with equippedIndex
     private int equippedIndex;
     private Weapon[] weapons = new Weapon[4];
     private Shield shield;
