@@ -4,9 +4,10 @@ import com.diogonunes.jcolor.*;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+// TODO: Crits
 public class Weapon {
     private final String NAME;
-    private int damage, accuracy, level, rof;
+    private int damage, accuracy, level, rof, critChance, critMultiplier;
     private final Rarity RARITY;
 
     // Setters and Getters
@@ -23,6 +24,12 @@ public class Weapon {
 
     public int getRof() {return rof;}
     public void setRof(int rof) {this.rof = rof;}
+
+    public int getCritChance() {return critChance;}
+    public void setCritChance(int critChance) {this.critChance = critChance;}
+
+    public int getCritMultiplier() {return critMultiplier;}
+    public void setCritMultiplier(int critMultiplier) {this.critMultiplier = critMultiplier;}
 
     public Rarity getRARITY() {return RARITY;}
 
@@ -62,5 +69,11 @@ public class Weapon {
                 Ansi.colorize("Rate of Fire", Attribute.TEXT_COLOR(231)), rof
             );
         }
+    }
+
+    //? should be void?
+    // to be overrided
+    public void special() {
+        System.out.println();
     }
 }
