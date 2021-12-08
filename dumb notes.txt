@@ -29,3 +29,5 @@ Convert to lanterna (DO NOW)
 individual weapon upgrading (like attachments).
 
 in VSCode you can F1 and use "Format Document With" so that you get nice pretty formatting instead of dumb ugly formatting
+
+CONSOLE COMMANDS
