@@ -33,30 +33,7 @@ public class Main {
         Rarities.setRaritiesArrayList();
 
         //MainMenu.menu();
-        Terminal terminal = new DefaultTerminalFactory()
-                .setInitialTerminalSize(new TerminalSize(100, 100))
-                .setTerminalEmulatorColorConfiguration(TerminalEmulatorColorConfiguration.newInstance(new TerminalEmulatorPalette(
-                        Color.BLACK,
-                        Color.BLACK,
-                        Color.WHITE,
-                        Color.BLACK,
-                        Color.BLACK,
-                        new Color(133, 66, 45),
-                        new Color(229, 69, 46),
-                        new Color(25, 112, 25),
-                        new Color(27, 199, 27),
-                        Color.YELLOW,
-                        Color.YELLOW,
-                        Color.BLUE,
-                        Color.BLUE,
-                        Color.MAGENTA,
-                        Color.MAGENTA,
-                        Color.CYAN,
-                        Color.CYAN,
-                        Color.WHITE,
-                        Color.WHITE
-                )))
-                .createTerminal();
+        Terminal terminal = new DefaultTerminalFactory().createTerminal();
         Screen screen = new TerminalScreen(terminal);
 
         TextGraphics textGraphics = screen.newTextGraphics();
@@ -75,19 +52,19 @@ public class Main {
 //                AWTTerminalFontConfiguration.BoldMode.NOTHING,
 //                new Font("test", Font.PLAIN, 16));
 
-        int row = 0;
-        int column = 0;
-
-        for (int i = 0; i < testArray.length; i++) {
-            for (int j = 0; j < testArray.length; j++) {
-                textGraphics.putString(column, row, testArray[i][j]);
-                column++;
-            }
-            row++;
-            column = 0;
-        }
-
-        screen.refresh();
+//        int row = 0;
+//        int column = 0;
+//
+//        for (int i = 0; i < testArray.length; i++) {
+//            for (int j = 0; j < testArray.length; j++) {
+//                textGraphics.putString(column, row, testArray[i][j]);
+//                column++;
+//            }
+//            row++;
+//            column = 0;
+//        }
+//
+//        screen.refresh();
 
         //screen.stopScreen();
 
@@ -95,30 +72,35 @@ public class Main {
 
         //textGraphics.putString(0, 1, "Hello World!\nThis is a test\n\nBecause :)");
         //textGraphics.drawRectangle(new TerminalPosition(5, 5), new TerminalSize(10, 10), '#');
-//        String test = "";
-//
-//        boolean running = true;
-//        int row = 10;
-//        while (running) {
-//            KeyStroke keyPressed = terminal.pollInput();
-//
-//            if (keyPressed != null) {
-//                test += keyPressed.getCharacter();
-//                textGraphics.putString(10, row, test);
-//                screen.refresh();
-//
-//                switch (keyPressed.getKeyType()) {
-//                    case Escape -> screen.clear();
-//                    case Enter -> {
-//                        row++;
-//                        test = "";
-//                    }
-//                    case Backspace, Delete -> test = test.substring(0, test.length() - 2);
-//
-//                    //System.out.println(keyPressed);
-//                }
-//            }
-//        }
+        String test = "";
+
+        boolean running = true;
+        int row = 10;
+        while (running) {
+            KeyStroke keyPressed = terminal.pollInput();
+
+            if (keyPressed != null) {
+                test += keyPressed.getCharacter();
+                textGraphics.putString(10, row, test);
+                screen.refresh();
+
+                switch (keyPressed.getKeyType()) {
+                    case Escape -> {
+                        screen.clear();
+                        screen.refresh();
+                        test = "";
+                        row = 10;
+                    }
+                    case Enter -> {
+                        row++;
+                        test = "";
+                    }
+                    case Backspace, Delete -> test = test.substring(0, test.length() - 2);
+
+                    //System.out.println(keyPressed);
+                }
+            }
+        }
 
 //        screen.refresh();
 //

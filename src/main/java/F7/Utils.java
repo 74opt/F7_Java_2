@@ -123,7 +123,14 @@ public class Utils {
         return random.nextInt(max - min) + min;
     }
 
+    //TODO: fix so that in can round up
+    /**
+     * Rounds a double to a specified decimal place.
+     * @param doub the double to be rounded
+     * @param places the amount of decimal
+     * @return
+     */
     public static double round(double doub, int places) {
-        return ((double) ((int) doub * Math.pow(10, places))) / Math.pow(10, places);
+        return  ((int) doub * Math.pow(10, places)) / Math.pow(10, places);
     }
 }
