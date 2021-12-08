@@ -13,7 +13,7 @@
 ## Unit 5: Writing Classes
 
 - [x] Uses only public classes.
-- [ ] Uses only private attributes to encapsulate data. (ASK HOLMER ABOUT RECORDS (MAYBE JUST TURN INTO CLASSES IF NOT))
+- [ ] Uses only private attributes to encapsulate data. (ASK HOLMER ABOUT RECORDS (MAYBE JUST TURN INTO CLASSES IF NOT)) (ALSO UTILS CLASS USES PUBLIC ATTRIBUTES)
 - [x] Uses only public constructors.
 - [x] Uses at least one public and at least one private method.
 - [x] Includes all necessary accessor and mutator methods. (GET RID OF UNNECESSARY)
