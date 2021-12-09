@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class Utils {
     // Time values in milliseconds
-    // TODO: make vars below private (mr holmer please)
+    // TODO: make vars below private (mr holmer please why)
 
     /** .042 seconds, used for the screen's refresh rate */
     public static final int TWENTY_FOUR_FRAMES = 42;
@@ -132,20 +132,16 @@ public class Utils {
     /**
      * Generates a random integer from 0 to 100 and returns true or false depending 
      * on the percent chance of success.
-     * @param percent
+     * @param percent the chance of success out of 100
      * @return true if the percentage is greater than or equal to the random integer
      *         generated.
      */
     public static boolean chance(int percent) {
-        if (random.nextInt(101) <= percent) {
-            return true;
-        } else {
-            return false;
-        }
+        return random.nextInt(101) <= percent;
     }
 
     /**
-     * Returns a random integer between a given minumum (inclusive) and maximum (exclusive)
+     * Returns a random integer between a given minimum (inclusive) and maximum (exclusive)
      * @param min minimum possible integer to generate
      * @param max maximum possible integer to generate minus one
      * @return random integer between min and max
