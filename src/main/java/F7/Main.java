@@ -47,31 +47,6 @@ public class Main {
                         {"g", "h", "i"},
                 };
 
-        // how to use send help
-//        SwingTerminalFontConfiguration stfc = new SwingTerminalFontConfiguration(true,
-//                AWTTerminalFontConfiguration.BoldMode.NOTHING,
-//                new Font("test", Font.PLAIN, 16));
-
-//        int row = 0;
-//        int column = 0;
-//
-//        for (int i = 0; i < testArray.length; i++) {
-//            for (int j = 0; j < testArray.length; j++) {
-//                textGraphics.putString(column, row, testArray[i][j]);
-//                column++;
-//            }
-//            row++;
-//            column = 0;
-//        }
-//
-//        screen.refresh();
-
-        //screen.stopScreen();
-
-        //textGraphics.putString(10, 15, Maps.plains.toString());
-
-        //textGraphics.putString(0, 1, "Hello World!\nThis is a test\n\nBecause :)");
-        //textGraphics.drawRectangle(new TerminalPosition(5, 5), new TerminalSize(10, 10), '#');
         String test = "";
 
         boolean running = true;
@@ -95,16 +70,19 @@ public class Main {
                         row++;
                         test = "";
                     }
-                    case Backspace, Delete -> test = test.substring(0, test.length() - 2);
+                    case Backspace, Delete -> {
+                        running = false;
+
+                        //test = test.substring(0, test.length() - 2);
+                    }
 
                     //System.out.println(keyPressed);
                 }
             }
         }
 
-//        screen.refresh();
-//
-//        screen.readInput();
+        screen.refresh();
 
+        screen.readInput();
     }
 }
