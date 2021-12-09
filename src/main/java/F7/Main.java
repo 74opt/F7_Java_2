@@ -4,26 +4,6 @@ import F7.entities.classes.*;
 import F7.entities.construction.*;
 import F7.ui.*;
 
-// Test Imports
-import com.diogonunes.jcolor.Ansi;
-import com.diogonunes.jcolor.Attribute;
-import com.googlecode.lanterna.TerminalPosition;
-import com.googlecode.lanterna.TerminalSize;
-import com.googlecode.lanterna.TextCharacter;
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.terminal.*;
-import com.googlecode.lanterna.terminal.swing.AWTTerminalFontConfiguration;
-import com.googlecode.lanterna.terminal.swing.SwingTerminalFontConfiguration;
-import com.googlecode.lanterna.terminal.swing.TerminalEmulatorColorConfiguration;
-import com.googlecode.lanterna.terminal.swing.TerminalEmulatorPalette;
-import com.googlecode.lanterna.terminal.virtual.*;
-import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.screen.*;
-
-import java.awt.*;
-import java.util.Random;
-
 public class Main {
     public static void main(String[] args) throws Exception {
         MapMenu.setCurrentMap(new Map(Maps.plains)); // TODO: Move to MainMenu once i get more maps and ways to move from one to another
@@ -33,27 +13,11 @@ public class Main {
         Rarities.setRaritiesArrayList();
 
         //MainMenu.menu();
-        Terminal terminal = new DefaultTerminalFactory().createTerminal();
-        Screen screen = new TerminalScreen(terminal);
+        Lanterna.startScreen();
 
-        TextGraphics textGraphics = screen.newTextGraphics();
+        Lanterna.print(1, 1, "Hello World!\nlets goooo");
 
-        screen.startScreen();
-
-        String test = "dkfj\ndfjk\ndf";
-
-        int row = 1;
-        int column = 0;
-
-        for (char character : test.toCharArray()) {
-            if (character == '\n') {
-                row++;
-                column = 0;
-            } else {
-                textGraphics.putString(column, row, character + "");
-                column++;
-            }
-        }
+        System.out.println(Maps.plains.toString());
 
 //        boolean running = true;
 //        int row = 10;
@@ -61,7 +25,7 @@ public class Main {
 //            KeyStroke keyPressed = terminal.pollInput();
 //
 //            if (keyPressed != null) {
-//                test += keyPressed.getCharacter();
+//                test += keyPressed.getKeyType();
 //                textGraphics.putString(10, row, test);
 //                screen.refresh();
 //
@@ -86,9 +50,5 @@ public class Main {
 //                }
 //            }
 //        }
-
-        screen.refresh();
-
-        screen.readInput();
     }
 }
