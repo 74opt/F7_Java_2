@@ -40,46 +40,52 @@ public class Main {
 
         screen.startScreen();
 
-        String[][] testArray = new String[][]
-                {
-                        {"a", "b", "c"},
-                        {"d", "e", "f"},
-                        {"g", "h", "i"},
-                };
+        String test = "dkfj\ndfjk\ndf";
 
-        String test = "";
+        int row = 1;
+        int column = 0;
 
-        boolean running = true;
-        int row = 10;
-        while (running) {
-            KeyStroke keyPressed = terminal.pollInput();
-
-            if (keyPressed != null) {
-                test += keyPressed.getCharacter();
-                textGraphics.putString(10, row, test);
-                screen.refresh();
-
-                switch (keyPressed.getKeyType()) {
-                    case Escape -> {
-                        screen.clear();
-                        screen.refresh();
-                        test = "";
-                        row = 10;
-                    }
-                    case Enter -> {
-                        row++;
-                        test = "";
-                    }
-                    case Backspace, Delete -> {
-                        running = false;
-
-                        //test = test.substring(0, test.length() - 2);
-                    }
-
-                    //System.out.println(keyPressed);
-                }
+        for (char character : test.toCharArray()) {
+            if (character == '\n') {
+                row++;
+                column = 0;
+            } else {
+                textGraphics.putString(column, row, character + "");
+                column++;
             }
         }
+
+//        boolean running = true;
+//        int row = 10;
+//        while (running) {
+//            KeyStroke keyPressed = terminal.pollInput();
+//
+//            if (keyPressed != null) {
+//                test += keyPressed.getCharacter();
+//                textGraphics.putString(10, row, test);
+//                screen.refresh();
+//
+//                switch (keyPressed.getKeyType()) {
+//                    case Escape -> {
+//                        screen.clear();
+//                        screen.refresh();
+//                        test = "";
+//                        row = 10;
+//                    }
+//                    case Enter -> {
+//                        row++;
+//                        test = "";
+//                    }
+//                    case Backspace, Delete -> {
+//                        running = false;
+//
+//                        //test = test.substring(0, test.length() - 2);
+//                    }
+//
+//                    //System.out.println(keyPressed);
+//                }
+//            }
+//        }
 
         screen.refresh();
 
