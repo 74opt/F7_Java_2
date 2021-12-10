@@ -17,18 +17,10 @@ public class Main {
         //MainMenu.menu();
         Lanterna.startScreen();
 
-        Lanterna.print(6, 4, "Hello World!\nlets goooo");
-        Lanterna.print(10, 5, "This is a color test", 10);
-        Lanterna.print(10, 10, "and this is your mom");
+        MainMenu.menu();
 
-        Lanterna.println("Testing globals");
-        Lanterna.print("If this works\nI will pee");
-        Lanterna.println(" lets hope");
+        //TODO: jsoncreator annotations for the new final classes
 
-        //Lanterna.clear();
-        Lanterna.print("things are work!");
-
-        //Lanterna.print(1, 1, Ansi.colorize("Color test", Attribute.TEXT_COLOR(10)));
 
 //        boolean running = true;
 //        int row = 10;

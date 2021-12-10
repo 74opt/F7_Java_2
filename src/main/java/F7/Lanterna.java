@@ -1,5 +1,6 @@
 package F7;
 
+import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
@@ -7,6 +8,7 @@ import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
+import java.util.Locale;
 
 public class Lanterna {
     private static Terminal terminal;
@@ -18,7 +20,7 @@ public class Lanterna {
     private static final int SCROLL = 45; //taken from Utils.SCROLL
 
     public static void startScreen() throws IOException {
-        terminal = new DefaultTerminalFactory().createTerminal();
+        terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(480, 50)).createTerminal();
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         textGraphics = screen.newTextGraphics();
@@ -36,6 +38,8 @@ public class Lanterna {
         screen.refresh();
     }
 
+    // Printing to terminal
+    // TODO: implement Gordon's ^ thing for coloring
     public static void print(int column, int row, String text) throws IOException {
         final int finalColumn = Lanterna.column;
         final int finalRow = Lanterna.row;
@@ -55,11 +59,27 @@ public class Lanterna {
     public static void print(String text) throws IOException {
         final int finalColumn = column;
 
-        for (char character : text.toCharArray()) {
+        char[] charArray = text.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            char character = charArray[i];
             switch (character) { // will add more cases with more special chars
                 case '\n' -> {
                     row++;
                     column = finalColumn;
+                }
+                case '^' -> {
+                    int color;
+
+                    switch (text.toCharArray()[i + 1]) {
+                        case 'W' -> color = 231;
+                        case 'R' -> color = 1;
+                        case 'C' -> color = 50;
+                        case 'G' -> color = 251;
+                        default -> color = 0;
+                    }
+                    textGraphics.setForegroundColor(new TextColor.Indexed(color));
+
+                    i++;
                 }
                 default -> {
                     textGraphics.putString(column, row, character + "");
@@ -78,6 +98,7 @@ public class Lanterna {
     }
 
     // supports color text
+    //TODO: make version that uses global column and row
     public static void print(int column, int row, String text, int color) throws IOException {
         textGraphics.setForegroundColor(new TextColor.Indexed(color));
         print(column, row, text);

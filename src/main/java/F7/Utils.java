@@ -76,7 +76,7 @@ public class Utils {
 
     /**
      * Clears the terminal.
-     * @deprecated
+     * @deprecated Unusable with lanterna
      */
     @Deprecated
     public static void clear() {
@@ -91,7 +91,7 @@ public class Utils {
      * @throws InterruptedException Thrown when a thread is waiting, sleeping,
      *                              or otherwise occupied, and the thread is
      *                              interrupted, either before or during the activity.
-     * @deprecated
+     * @deprecated Unusable with lanterna
      */
     @Deprecated
     public static void scrollText(String text, long time) throws InterruptedException {

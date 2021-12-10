@@ -1,6 +1,8 @@
 package F7.ui;
 
 import java.io.*;
+
+import F7.Lanterna;
 import F7.Utils;
 import F7.entities.classes.*;
 import F7.entities.construction.*;
@@ -9,9 +11,9 @@ import com.diogonunes.jcolor.Attribute;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class MainMenu {
-    private static final String LOGO = Ansi.colorize(
+    private static final String LOGO =
             """
-            oo++++++++++++++++++++++++++++++++sy`.s+++++++++++++++++++++++++++++o:
+            ^Coo++++++++++++++++++++++++++++++++sy`.s+++++++++++++++++++++++++++++o:
             h.                              -s+.oo`                              /s:
             h.                            -s/.oo`                                  :s:
             h.                          -s/.o+`                                      :s:
@@ -43,16 +45,15 @@ public class MainMenu {
                /s- y-                                    o+          /s
                  /sd-                                   /s          -y
                    :`                                  .m+++++++++++h`
-            """,
-    Attribute.TEXT_COLOR(50));
+            """;
 
     public static void menu() throws Exception {
-        Utils.clear();
+        Lanterna.clear();
 
-        System.out.println(
+        Lanterna.println(
                 LOGO + "\n" +
                 """
-                1) New Game
+                ^G1) New Game
                 2) Continue
                 3) Credits
                 4) Quit"""
