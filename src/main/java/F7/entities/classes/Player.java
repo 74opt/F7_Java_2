@@ -1,8 +1,7 @@
 package F7.entities.classes;
 
-import F7.Utils;
 import F7.entities.construction.*;
-import java.io.*;
+
 import java.util.*;
 
 public class Player {
@@ -144,7 +143,7 @@ public class Player {
         int flashbangs = 0;
 
         for (Consumable consumable : consumables) {
-            switch (consumable.NAME()) {
+            switch (consumable.getNAME()) {
                 case "Medkit":
                     medkits++;
                     break;

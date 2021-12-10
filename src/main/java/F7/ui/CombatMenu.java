@@ -63,13 +63,13 @@ public class CombatMenu {
 
         int enemyRarity = random.nextInt(101);
 
-        if (enemyRarity <= Rarities.common.CHANCE()) {
+        if (enemyRarity <= Rarities.common.getCHANCE()) {
             enemy = Enemies.enemyHashMap.get(Rarities.common)[random.nextInt(Enemies.enemyHashMap.get(Rarities.common).length)];
-        } else if (enemyRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE()) {
+        } else if (enemyRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE()) {
             enemy = Enemies.enemyHashMap.get(Rarities.uncommon)[random.nextInt(Enemies.enemyHashMap.get(Rarities.uncommon).length)];
-        } else if (enemyRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE()) {
+        } else if (enemyRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE()) {
             enemy = Enemies.enemyHashMap.get(Rarities.rare)[random.nextInt(Enemies.enemyHashMap.get(Rarities.rare).length)];
-        } else if (enemyRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE() + Rarities.exceptional.CHANCE()) {
+        } else if (enemyRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE() + Rarities.exceptional.getCHANCE()) {
             enemy = Enemies.enemyHashMap.get(Rarities.exceptional)[random.nextInt(Enemies.enemyHashMap.get(Rarities.exceptional).length)];
         } else {
             enemy = Enemies.enemyHashMap.get(Rarities.godly)[random.nextInt(Enemies.enemyHashMap.get(Rarities.godly).length)];
@@ -156,7 +156,7 @@ public class CombatMenu {
             if (smokeActive) {
                 smokeTurns++;
 
-                if (smokeTurns > Consumables.smoke.TURNS()) {
+                if (smokeTurns > Consumables.smoke.getTURNS()) {
                     smokeActive = false;
                     smokeTurns = 0;
                 }
@@ -165,7 +165,7 @@ public class CombatMenu {
             if (corrosiveActive) {
                 corrosiveTurns++;
 
-                if (corrosiveTurns > Consumables.corrosive.TURNS()) {
+                if (corrosiveTurns > Consumables.corrosive.getTURNS()) {
                     corrosiveActive = false;
                     corrosiveTurns = 0;
                 }
@@ -174,7 +174,7 @@ public class CombatMenu {
             if (targetActive) {
                 targetTurns++;
 
-                if (targetTurns > Consumables.target.TURNS()) {
+                if (targetTurns > Consumables.target.getTURNS()) {
                     targetActive = false;
                     targetTurns = 0;
                 }
@@ -183,7 +183,7 @@ public class CombatMenu {
             if (amplifierActive) {
                 amplifierTurns++;
 
-                if (amplifierTurns > Consumables.amplifier.TURNS()) {
+                if (amplifierTurns > Consumables.amplifier.getTURNS()) {
                     amplifierActive = false;
                     amplifierTurns = 0;
                 }
@@ -192,7 +192,7 @@ public class CombatMenu {
             if (flashbangActive) {
                 flashbangTurns++;
 
-                if (flashbangTurns > Consumables.flashbang.TURNS()) {
+                if (flashbangTurns > Consumables.flashbang.getTURNS()) {
                     flashbangActive = false;
                     flashbangTurns = 0;
                 }
@@ -297,7 +297,7 @@ public class CombatMenu {
         int flashbangs = 0;
 
         for (Consumable consumable : Players.player.getConsumables()) { // yes this code is taken from Player
-            switch (consumable.NAME()) {
+            switch (consumable.getNAME()) {
                 case "Medkit":
                     medkits++;
                     break;
@@ -620,17 +620,17 @@ public class CombatMenu {
         //TODO: implement shield loot as the rarest thing possible ok thanks 
         if (Utils.chance(34)) { //* weapon looting and shield looting
             Weapon weapon;
-            int weaponRarity = Utils.randomRange(0, enemy.getRARITY().CHANCE() + 5);
+            int weaponRarity = Utils.randomRange(0, enemy.getRARITY().getCHANCE() + 5);
 
-            if (weaponRarity <= Rarities.common.CHANCE()) {
+            if (weaponRarity <= Rarities.common.getCHANCE()) {
                 weapon = Weapons.weaponHashMap.get(Rarities.common)[random.nextInt(Weapons.weaponHashMap.get(Rarities.common).length)];
-            } else if (weaponRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE()) {
+            } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE()) {
                 weapon = Weapons.weaponHashMap.get(Rarities.uncommon)[random.nextInt(Weapons.weaponHashMap.get(Rarities.uncommon).length)];
-            } else if (weaponRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE()) {
+            } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE()) {
                 weapon = Weapons.weaponHashMap.get(Rarities.rare)[random.nextInt(Weapons.weaponHashMap.get(Rarities.rare).length)];
-            } else if (weaponRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE() + Rarities.exceptional.CHANCE()) {
+            } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE() + Rarities.exceptional.getCHANCE()) {
                 weapon = Weapons.weaponHashMap.get(Rarities.exceptional)[random.nextInt(Weapons.weaponHashMap.get(Rarities.exceptional).length)];
-            } else if (weaponRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE() + Rarities.exceptional.CHANCE() + Rarities.godly.CHANCE()) {
+            } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE() + Rarities.exceptional.getCHANCE() + Rarities.godly.getCHANCE()) {
                 weapon = Weapons.weaponHashMap.get(Rarities.godly)[random.nextInt(Weapons.weaponHashMap.get(Rarities.godly).length)];
             } else { // if goes above 100 you get a shield! yay!!!!
                 weapon = null; //! bad idea, should do like 33%-50% (must decide on value) chance to loot, then create different probabilities as to what you could be looting
@@ -639,13 +639,13 @@ public class CombatMenu {
                 int shieldRarity = random.nextInt(101);
                 Shield shield;
                 
-                if (shieldRarity <= Rarities.common.CHANCE()) {
+                if (shieldRarity <= Rarities.common.getCHANCE()) {
                     shield = Shields.shieldHashMap.get(Rarities.common)[random.nextInt(Shields.shieldHashMap.get(Rarities.common).length)];
-                } else if (shieldRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE()) {
+                } else if (shieldRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE()) {
                     shield = Shields.shieldHashMap.get(Rarities.uncommon)[random.nextInt(Shields.shieldHashMap.get(Rarities.uncommon).length)];
-                } else if (shieldRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE()) {
+                } else if (shieldRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE()) {
                     shield = Shields.shieldHashMap.get(Rarities.rare)[random.nextInt(Shields.shieldHashMap.get(Rarities.rare).length)];
-                } else if (shieldRarity <= Rarities.common.CHANCE() + Rarities.uncommon.CHANCE() + Rarities.rare.CHANCE() + Rarities.exceptional.CHANCE()) {
+                } else if (shieldRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE() + Rarities.exceptional.getCHANCE()) {
                     shield = Shields.shieldHashMap.get(Rarities.exceptional)[random.nextInt(Shields.shieldHashMap.get(Rarities.exceptional).length)];
                 } else {
                     shield = Shields.shieldHashMap.get(Rarities.godly)[random.nextInt(Shields.shieldHashMap.get(Rarities.godly).length)];
@@ -789,11 +789,11 @@ public class CombatMenu {
     private static String displayStatuses() {
         String status = "";
 
-        status += addStatus(smokeActive, Consumables.smoke.toString(), Consumables.smoke.TURNS(), smokeTurns);
-        status += addStatus(corrosiveActive, Consumables.corrosive.toString(), Consumables.corrosive.TURNS(), corrosiveTurns);
-        status += addStatus(targetActive, Consumables.target.toString(), Consumables.target.TURNS(), targetTurns);
-        status += addStatus(amplifierActive, Consumables.amplifier.toString(), Consumables.amplifier.TURNS(), amplifierTurns);
-        status += addStatus(flashbangActive, Consumables.flashbang.toString(), Consumables.flashbang.TURNS(), flashbangTurns);
+        status += addStatus(smokeActive, Consumables.smoke.toString(), Consumables.smoke.getTURNS(), smokeTurns);
+        status += addStatus(corrosiveActive, Consumables.corrosive.toString(), Consumables.corrosive.getTURNS(), corrosiveTurns);
+        status += addStatus(targetActive, Consumables.target.toString(), Consumables.target.getTURNS(), targetTurns);
+        status += addStatus(amplifierActive, Consumables.amplifier.toString(), Consumables.amplifier.getTURNS(), amplifierTurns);
+        status += addStatus(flashbangActive, Consumables.flashbang.toString(), Consumables.flashbang.getTURNS(), flashbangTurns);
         
         return status;
     }

@@ -76,7 +76,9 @@ public class Utils {
 
     /**
      * Clears the terminal.
+     * @deprecated
      */
+    @Deprecated
     public static void clear() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -86,8 +88,12 @@ public class Utils {
      * Creates scrolling text where each character appears one at a time.
      * @param text text to print out
      * @param time time between each character in milliseconds
-     * @throws InterruptedException
+     * @throws InterruptedException Thrown when a thread is waiting, sleeping,
+     *                              or otherwise occupied, and the thread is
+     *                              interrupted, either before or during the activity.
+     * @deprecated
      */
+    @Deprecated
     public static void scrollText(String text, long time) throws InterruptedException {
         for (char character : text.toCharArray()) {
             System.out.print(character);

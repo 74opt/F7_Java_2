@@ -1,6 +1,6 @@
 package F7.entities.classes;
 
-public class Tile {
+public final class Tile {
     private final String TILE;
     private final boolean COLLISION_ENABLED;
 

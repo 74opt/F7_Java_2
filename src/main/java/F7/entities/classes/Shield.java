@@ -50,7 +50,7 @@ public class Shield {
             Ansi.colorize("Damage Reduction:", Attribute.TEXT_COLOR(231)), DAMAGE_REDUCTION,
             Ansi.colorize("Active Time:", Attribute.TEXT_COLOR(231)), TURNS,
             Ansi.colorize("Cooldown Time:", Attribute.TEXT_COLOR(231)), COOLDOWN
-            );
+            ); 
         }
     }
 }

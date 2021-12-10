@@ -3,6 +3,8 @@ package F7;
 import F7.entities.classes.*;
 import F7.entities.construction.*;
 import F7.ui.*;
+import com.diogonunes.jcolor.Ansi;
+import com.diogonunes.jcolor.Attribute;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -15,9 +17,18 @@ public class Main {
         //MainMenu.menu();
         Lanterna.startScreen();
 
-        Lanterna.print(1, 1, "Hello World!\nlets goooo");
+        Lanterna.print(6, 4, "Hello World!\nlets goooo");
+        Lanterna.print(10, 5, "This is a color test", 10);
+        Lanterna.print(10, 10, "and this is your mom");
 
-        System.out.println(Maps.plains.toString());
+        Lanterna.println("Testing globals");
+        Lanterna.print("If this works\nI will pee");
+        Lanterna.println(" lets hope");
+
+        //Lanterna.clear();
+        Lanterna.print("things are work!");
+
+        //Lanterna.print(1, 1, Ansi.colorize("Color test", Attribute.TEXT_COLOR(10)));
 
 //        boolean running = true;
 //        int row = 10;
@@ -30,7 +41,7 @@ public class Main {
 //                screen.refresh();
 //
 //                switch (keyPressed.getKeyType()) {
-//                    case Escape -> {
+//                    case Escape -> { 
 //                        screen.clear();
 //                        screen.refresh();
 //                        test = "";
