@@ -7,6 +7,7 @@ import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
+import com.googlecode.lanterna.input.KeyStroke;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -19,6 +20,21 @@ public class Lanterna {
     // TODO: MAKE SCROLLING TEXT METHOD
     private static final int SCROLL = 45; //taken from Utils.SCROLL
 
+    public static Thread keyboardListen = new Thread(() -> {
+        while (true) {
+            try {
+                KeyStroke keyPressed = terminal.pollInput();
+
+                if (keyPressed != null) {
+                    System.out.print(keyPressed.getCharacter());
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+
     public static void startScreen() throws IOException {
         terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(480, 50)).createTerminal();
         screen = new TerminalScreen(terminal);
@@ -28,6 +44,7 @@ public class Lanterna {
         row = 0;
 
         screen.startScreen();
+        keyboardListen.start();
     }
 
     public static void clear() throws IOException {
@@ -37,6 +54,8 @@ public class Lanterna {
         screen.clear();
         screen.refresh();
     }
+
+
 
     // Printing to terminal
     // TODO: implement Gordon's ^ thing for coloring
@@ -75,6 +94,7 @@ public class Lanterna {
                         case 'R' -> color = 1;
                         case 'C' -> color = 50;
                         case 'G' -> color = 251;
+                        case 'g' -> color = 46;
                         default -> color = 0;
                     }
                     textGraphics.setForegroundColor(new TextColor.Indexed(color));

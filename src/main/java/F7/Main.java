@@ -20,6 +20,7 @@ public class Main {
         MainMenu.menu();
 
         //TODO: jsoncreator annotations for the new final classes
+        //TODO: make consumable, rarity, and tile enums?
 
 
 //        boolean running = true;
