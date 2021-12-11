@@ -89,12 +89,23 @@ public class Lanterna {
                 case '^' -> {
                     int color;
 
-                    switch (text.toCharArray()[i + 1]) {
+                    switch (text.toCharArray()[i + 1]) { // TODO: more colors
                         case 'W' -> color = 231;
-                        case 'R' -> color = 1;
+                        case 'R' -> color = 196; // To replace 1
                         case 'C' -> color = 50;
                         case 'G' -> color = 251;
-                        case 'g' -> color = 46;
+                        case 'g' -> color = 40; // To replace 46
+
+                        // The following are codes for specifically for tiles
+                        case '1' -> color = 82;
+                        case '2' -> color = 28;
+                        case '3' -> color = 238;
+                        case '4' -> color = 245;
+                        case '5' -> color = 94;
+                        case '6' -> color = 95;
+                        case '7' -> color = 33;
+                        case '8' -> color = 27;
+
                         default -> color = 0;
                     }
                     textGraphics.setForegroundColor(new TextColor.Indexed(color));
