@@ -9,6 +9,8 @@ import F7.entities.construction.*;
 import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 
 public class MainMenu {
     private static final String LOGO =
@@ -47,8 +49,42 @@ public class MainMenu {
                    :`                                  .m+++++++++++h`
             """;
 
+    private static Thread keyboardListen = new Thread(() -> {
+        boolean running = true;
+
+        while (running) {
+            try {
+                KeyStroke keyPressed = Lanterna.getTerminal().pollInput();
+
+                if (keyPressed != null) {
+                    if (keyPressed.getKeyType().equals(KeyType.F7)) {
+                        System.exit(0);
+                    }
+
+                    try {
+                        switch (keyPressed.getCharacter()) {
+                            case '1' -> {
+                                start();
+                                running = false;
+                            }
+                            case '2' -> {
+                                load();
+                                running = false;
+                            }
+                            case '3' -> credits();
+                            case '4' -> System.exit(0);
+                        }
+                    } catch (Exception ignored) {}
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+
     public static void menu() throws Exception {
         Lanterna.clear();
+        //keyboardListen.start();
 
         Lanterna.println(
                 LOGO + "\n" +

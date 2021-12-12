@@ -3,13 +3,13 @@ package F7;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 import com.googlecode.lanterna.input.KeyStroke;
 import java.io.IOException;
-import java.util.Locale;
 
 public class Lanterna {
     private static Terminal terminal;
@@ -20,20 +20,26 @@ public class Lanterna {
     // TODO: MAKE SCROLLING TEXT METHOD
     private static final int SCROLL = 45; //taken from Utils.SCROLL
 
-    public static Thread keyboardListen = new Thread(() -> {
+    // Test
+    private static Thread keyboardListen = new Thread(() -> {
         while (true) {
             try {
                 KeyStroke keyPressed = terminal.pollInput();
 
                 if (keyPressed != null) {
+                    if (keyPressed.getKeyType().equals(KeyType.F7)) {
+                        System.exit(0);
+                    }
+
                     System.out.print(keyPressed.getCharacter());
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     });
+
+    public static Terminal getTerminal() {return terminal;}
 
     public static void startScreen() throws IOException {
         terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(480, 50)).createTerminal();
@@ -44,7 +50,7 @@ public class Lanterna {
         row = 0;
 
         screen.startScreen();
-        keyboardListen.start();
+        //keyboardListen.start();
     }
 
     public static void clear() throws IOException {
@@ -59,7 +65,7 @@ public class Lanterna {
 
     // Printing to terminal
     // TODO: implement Gordon's ^ thing for coloring
-    public static void print(int column, int row, String text) throws IOException {
+    public static void print(int column, int row, String text) throws Exception {
         final int finalColumn = Lanterna.column;
         final int finalRow = Lanterna.row;
 
@@ -75,7 +81,7 @@ public class Lanterna {
     }
 
     // uses global rows and columns
-    public static void print(String text) throws IOException {
+    public static void print(String text) throws Exception {
         final int finalColumn = column;
 
         char[] charArray = text.toCharArray();
@@ -89,24 +95,30 @@ public class Lanterna {
                 case '^' -> {
                     int color;
 
-                    switch (text.toCharArray()[i + 1]) { // TODO: more colors
-                        case 'W' -> color = 231;
-                        case 'R' -> color = 196; // To replace 1
-                        case 'C' -> color = 50;
-                        case 'G' -> color = 251;
-                        case 'g' -> color = 40; // To replace 46
+                    switch (text.toCharArray()[i + 1]) {
+                        case 'W' -> color = 231; // White
+                        case 'w' -> color = 249; // Darker white
+                        case 'R' -> color = 196; // Red; To replace 1
+                        case 'C' -> color = 50; // Cyan; To replace 14, 6
+                        case 'G' -> color = 251; // Grey; Main grey to use
+                        case 'g' -> color = 40; // Green; To replace 46, 10
+                        case 'O' -> color = 208; // Orange; To replace 9
+                        case 'B' -> color = 27; // Blue; To replace 20
+                        case 'P' -> color = 13; // Pink
+                        case 'p' -> color = 99; // Purple
 
                         // The following are codes for specifically for tiles
-                        case '1' -> color = 82;
-                        case '2' -> color = 28;
-                        case '3' -> color = 238;
-                        case '4' -> color = 245;
-                        case '5' -> color = 94;
-                        case '6' -> color = 95;
-                        case '7' -> color = 33;
-                        case '8' -> color = 27;
+                        case '1' -> color = 82; // Green
+                        case '2' -> color = 28; // Green
+                        case '3' -> color = 238; // Grey
+                        case '4' -> color = 245; // Grey
+                        case '5' -> color = 94; // Brown
+                        case '6' -> color = 95; // Brown
+                        case '7' -> color = 33; // Blue
 
-                        default -> color = 0;
+                        default -> {
+                            throw new Exception("^ not followed by character");
+                        }
                     }
                     textGraphics.setForegroundColor(new TextColor.Indexed(color));
 
@@ -122,17 +134,9 @@ public class Lanterna {
         screen.refresh();
     }
 
-    public static void println(String text) throws IOException {
+    public static void println(String text) throws Exception {
         print(text);
         row++;
         column = 0;
-    }
-
-    // supports color text
-    //TODO: make version that uses global column and row
-    public static void print(int column, int row, String text, int color) throws IOException {
-        textGraphics.setForegroundColor(new TextColor.Indexed(color));
-        print(column, row, text);
-        textGraphics.setForegroundColor(TextColor.ANSI.DEFAULT);
     }
 }
