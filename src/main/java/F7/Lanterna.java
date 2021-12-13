@@ -39,7 +39,14 @@ public class Lanterna {
         }
     });
 
+    @Deprecated
     public static Terminal getTerminal() {return terminal;}
+
+    public static Screen getScreen() {return screen;}
+
+    public static int getGlobalColumn() {return column;}
+
+    public static int getGlobalRow() {return row;}
 
     public static void startScreen() throws IOException {
         terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(480, 50)).createTerminal();

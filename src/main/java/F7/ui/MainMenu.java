@@ -54,7 +54,7 @@ public class MainMenu {
 
         while (running) {
             try {
-                KeyStroke keyPressed = Lanterna.getTerminal().pollInput();
+                KeyStroke keyPressed = Lanterna.getScreen().pollInput();
 
                 if (keyPressed != null) {
                     if (keyPressed.getKeyType().equals(KeyType.F7)) {
@@ -82,9 +82,11 @@ public class MainMenu {
         }
     });
 
+    // Threading should only be used when multiple things have to happen per frame
+    // Examples: animation, combat
     public static void menu() throws Exception {
         Lanterna.clear();
-        //keyboardListen.start();
+        keyboardListen.start();
 
         Lanterna.println(
                 LOGO + "\n" +
@@ -94,35 +96,51 @@ public class MainMenu {
                 3) Credits
                 4) Quit"""
         );
-
-        String choice = Utils.input(false);
-
-        switch (choice) {
-            case "1":
-                start();
-                break;
-            case "2":
-                load();
-                break;
-            case "3":
-                credits();
-                break;
-            case "4":
-                quit();
-                break;
-            default:
-                Utils.invalidOption();
-                menu();
-                break;
-        }
     }
 
     private static void start() throws Exception {
-        String name = Utils.input("What is your name?", true);
+        Lanterna.println("\n^WWhat is your name?^G");
+        String name = "";
+        boolean running = true;
+
+        while (running) {
+            try {
+                KeyStroke keyPressed = Lanterna.getScreen().readInput();
+
+                if (keyPressed != null) {
+                    if (keyPressed.getKeyType().equals(KeyType.F7)) {
+                        System.exit(0);
+                    }
+
+                    try {
+                        switch (keyPressed.getKeyType()) {
+                            case Backspace, Delete -> {
+                                name = name.substring(0, name.length() - 1);
+
+                                // This is a really shoddy way to delete things but my god do i not care
+                                Lanterna.print(name.length(), Lanterna.getGlobalRow(), " ");
+                                Lanterna.print(0, Lanterna.getGlobalRow(), name);
+                            }
+                            case Enter -> {
+                                running = false;
+                            }
+                            default -> {
+                                try {
+                                    name += keyPressed.getCharacter();
+
+                                    Lanterna.print(0, Lanterna.getGlobalRow(), name);
+                                } catch (Exception ignored) {}
+                            }
+                        }
+                    } catch (Exception ignored) {}
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         Players.player = new Player(name);
         MapMenu.getCurrentMap().spawnPlayer(19, 8);
-        Players.player = Players.presentation; //! IS FOR TESTING
 
         MapMenu.menu();
     }
