@@ -10,7 +10,9 @@ import java.util.*;
  */
 public class Utils {
     // Time values in milliseconds
-    // TODO: make vars below private (mr holmer please why)
+    /* TODO: make vars below private
+       Yeah just write getters for it
+     */
 
     /** .042 seconds, used for the screen's refresh rate */
     public static final int TWENTY_FOUR_FRAMES = 42;
@@ -32,10 +34,13 @@ public class Utils {
 
     /**
      * Takes in an input from the user with text to prompt was the user should input.
+     * Precondtion: output is not an empty string
      * @param output text prompted to the user
      * @param caseSensitive if the text inputted should keep its case
      * @return string that was inputted by the user, put into lowercase if case sensitivity is false
+     * @deprecated Unusable with Lanterna
      */
+    @Deprecated
     public static String input(String output, boolean caseSensitive) {
         Scanner scanner = new Scanner(System.in);
 
@@ -53,7 +58,9 @@ public class Utils {
      * Takes in an input from the user.
      * @param caseSensitive if the text inputted should keep its case
      * @return string that was inputted by the user, put into lowercase if case sensitivity is false
+     * @deprecated Unusable with Lanterna
      */
+    @Deprecated
     public static String input(boolean caseSensitive) {
         Scanner scanner = new Scanner(System.in);
 
@@ -68,7 +75,9 @@ public class Utils {
 
     /**
      * Tells the user if their input wasn't allowed.
+     * @deprecated Unusable with Lanterna
      */
+    @Deprecated
     public static void invalidOption() throws InterruptedException {
         System.out.println("Invalid Option.");
         Thread.sleep(QUICK_STANDARD);
@@ -76,7 +85,7 @@ public class Utils {
 
     /**
      * Clears the terminal.
-     * @deprecated Unusable with lanterna
+     * @deprecated Unusable with Lanterna
      */
     @Deprecated
     public static void clear() {
@@ -86,12 +95,13 @@ public class Utils {
 
     /**
      * Creates scrolling text where each character appears one at a time.
+     * Precondition: Text is not an empty string.
      * @param text text to print out
      * @param time time between each character in milliseconds
      * @throws InterruptedException Thrown when a thread is waiting, sleeping,
      *                              or otherwise occupied, and the thread is
      *                              interrupted, either before or during the activity.
-     * @deprecated Unusable with lanterna
+     * @deprecated Unusable with Lanterna
      */
     @Deprecated
     public static void scrollText(String text, long time) throws InterruptedException {
@@ -111,6 +121,7 @@ public class Utils {
      * @return string that displays the item, the current amount out of the total
      *         possible amount, and the percentage.
      */
+    // TODO: Update to fit lanterna
     public static String outOf(String value, int total, int current, int color) {
         return String.format("%s %s out of %s (%s%%)", Ansi.colorize(value, Attribute.TEXT_COLOR(231)),
                 Ansi.colorize(String.valueOf(current), Attribute.TEXT_COLOR(color)),
@@ -128,6 +139,7 @@ public class Utils {
      * @return string that displays the item, the current amount out of the total
      *         possible amount, and the percentage.
      */
+    // TODO: Update to fit lanterna
     public static String outOf(String value, double total, double current, int color) {
         return String.format("%s %s out of %s (%s%%)", Ansi.colorize(value, Attribute.TEXT_COLOR(231)),
                 Ansi.colorize(String.valueOf(current), Attribute.TEXT_COLOR(color)),
@@ -148,12 +160,17 @@ public class Utils {
 
     /**
      * Returns a random integer between a given minimum (inclusive) and maximum (exclusive)
+     * Precondition: Max is greater than min
      * @param min minimum possible integer to generate
      * @param max maximum possible integer to generate minus one
      * @return random integer between min and max
      */
     public static int randomRange(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
+        if (max < min) {
+            return (int) ((Math.random() * (max - min)) + min);
+        } else {
+            return -1;
+        }
     }
 
     /**
