@@ -47,22 +47,22 @@ public class Lanterna {
     public static int getGlobalColumn() {return column;}
 
     public static int getGlobalRow() {return row;}
-
+    
     public static void startScreen() throws IOException {
         terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(480, 50)).createTerminal();
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         textGraphics = screen.newTextGraphics();
-        column = 0;
-        row = 0;
+        column = 1;
+        row = 1;
 
         screen.startScreen();
         //keyboardListen.start();
     }
 
     public static void clear() throws IOException {
-        column = 0;
-        row = 0;
+        column = 1;
+        row = 1;
 
         screen.clear();
         screen.refresh();
@@ -108,9 +108,9 @@ public class Lanterna {
                         case 'R' -> color = 196; // Red; To replace 1
                         case 'C' -> color = 50; // Cyan; To replace 14, 6
                         case 'G' -> color = 251; // Grey; Main grey to use
-                        case 'g' -> color = 40; // Green; To replace 46, 10
+                        case 'g' -> color = 40; // Green; Main green to use; To replace 46, 10
                         case 'O' -> color = 208; // Orange; To replace 9
-                        case 'B' -> color = 27; // Blue; To replace 20
+                        case 'B' -> color = 27; // Blue; Main blue to use; To replace 20
                         case 'P' -> color = 13; // Pink
                         case 'p' -> color = 99; // Purple
 
@@ -123,9 +123,7 @@ public class Lanterna {
                         case '6' -> color = 95; // Brown
                         case '7' -> color = 33; // Blue
 
-                        default -> {
-                            throw new Exception("^ not followed by character");
-                        }
+                        default -> throw new Exception("^ not followed by character");
                     }
                     textGraphics.setForegroundColor(new TextColor.Indexed(color));
 
@@ -144,6 +142,6 @@ public class Lanterna {
     public static void println(String text) throws Exception {
         print(text);
         row++;
-        column = 0;
+        column = 1;
     }
 }

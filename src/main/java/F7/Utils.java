@@ -12,6 +12,7 @@ public class Utils {
     // Time values in milliseconds
     /* TODO: make vars below private
        Yeah just write getters for it
+       TODO: ask mr holmer if @return can basically be the post condition
      */
 
     /** .042 seconds, used for the screen's refresh rate */
@@ -114,6 +115,7 @@ public class Utils {
     /**
      * Returns a string that contains a percentage of how much of an item left out 
      * of the total possible amount of items, comparing integers.
+     * Precondition: total is not negative, current is not negative, color is between 0 and 255
      * @param value the item that is being compared
      * @param total the total amount of the item
      * @param current the current amount of the item
@@ -132,6 +134,7 @@ public class Utils {
     /**
      * Returns a string that contains a percentage of how much of an item left out 
      * of the total possible amount of items, comparing doubles.
+     * Precondition: total is not negative, current is not negative, color is between 0 and 255
      * @param value the item that is being compared
      * @param total the total amount of the item
      * @param current the current amount of the item

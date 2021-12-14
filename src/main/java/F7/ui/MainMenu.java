@@ -71,8 +71,7 @@ public class MainMenu {
                                 load();
                                 running = false;
                             }
-                            case '3' -> credits();
-                            case '4' -> System.exit(0);
+                            case '3' -> System.exit(0);
                         }
                     } catch (Exception ignored) {}
                 }
@@ -93,13 +92,12 @@ public class MainMenu {
                 """
                 ^G1) New Game
                 2) Continue
-                3) Credits
-                4) Quit"""
+                3) Quit"""
         );
     }
 
     private static void start() throws Exception {
-        Lanterna.println("\n^WWhat is your name?^G");
+        Lanterna.print("\n^WWhat is your name?\n^g> ^G");
         String name = "";
         boolean running = true;
 
@@ -117,9 +115,8 @@ public class MainMenu {
                             case Backspace, Delete -> {
                                 name = name.substring(0, name.length() - 1);
 
-                                // This is a really shoddy way to delete things but my god do i not care
-                                Lanterna.print(name.length(), Lanterna.getGlobalRow(), " ");
-                                Lanterna.print(0, Lanterna.getGlobalRow(), name);
+                                Lanterna.print(name.length() + 3, Lanterna.getGlobalRow(), " ");
+                                Lanterna.print(3, Lanterna.getGlobalRow(), name);
                             }
                             case Enter -> {
                                 running = false;
@@ -128,7 +125,7 @@ public class MainMenu {
                                 try {
                                     name += keyPressed.getCharacter();
 
-                                    Lanterna.print(0, Lanterna.getGlobalRow(), name);
+                                    Lanterna.print(3, Lanterna.getGlobalRow(), name);
                                 } catch (Exception ignored) {}
                             }
                         }
@@ -153,15 +150,5 @@ public class MainMenu {
         MapMenu.getCurrentMap().spawnPlayer(Players.player.getX(), Players.player.getY());
 
         MapMenu.menu();
-    }
-
-    private static void credits() throws Exception {
-        System.out.println("Matt.\n\nEmotional Support Animals:\nJordan Dewey\nGirl with the hard to spell name\n\nInput anything to exit.");
-        Utils.input(false);
-        MainMenu.menu();
-    }
-
-    private static void quit() {
-        System.exit(0);
     }
 }
