@@ -9,12 +9,13 @@ import java.util.*;
  * Utils contains static variables and methods to aid in several features in the rest of F7
  */
 public class Utils {
-    // Time values in milliseconds
-    /* TODO: make vars below private
-       Yeah just write getters for it
-       TODO: ask mr holmer if @return can basically be the post condition
+    /* Time values in milliseconds,
+       used as a standard instead of
+       having to remember every
+       number to use in certain cases
      */
 
+    // TODO: use the getters please
     /** .042 seconds, used for the screen's refresh rate */
     public static final int TWENTY_FOUR_FRAMES = 42;
     /** 2 seconds, used as a standard waiting time for Thread.sleep() */
@@ -28,15 +29,44 @@ public class Utils {
     public static final String SAVE_PATH = "src\\main\\java\\F7\\save.json";
 
     /** Standard decimal format used in the game */
-    public static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");
+    private static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");
 
     // Random
     private static Random random = new Random();
 
     /**
+     * @return Time for 24 frame refresh rate
+     */
+    public static int getTWENTY_FOUR() {return TWENTY_FOUR_FRAMES;}
+
+    /**
+     * @return Time for standard wait time
+     */
+    public static int getSTANDARD() {return STANDARD;}
+
+    /**
+     * @return Time for quicker standard wait time
+     */
+    public static int getQUICK_STANDARD() {return QUICK_STANDARD;}
+
+    /**
+     * @return Time for best scrolling text time
+     */
+    public static int getSCROLL() {return SCROLL;}
+
+    /**
+     * @return File path for where F7 saves the game
+     */
+    public static String getSAVE_PATH() {return SAVE_PATH;}
+
+    /**
+     * @return Standard DecimalFormat for presenting doubles with 2 decimal places
+     */
+    public static DecimalFormat getDOUBLE_DECIMAL() {return DOUBLE_DECIMAL;}
+
+    /**
      * Takes in an input from the user with text to prompt was the user should input.
-     * Precondtion: output is not an empty string
-     * @param output text prompted to the user
+     * @param output text prompted to the user, best if argument isn't empty
      * @param caseSensitive if the text inputted should keep its case
      * @return string that was inputted by the user, put into lowercase if case sensitivity is false
      * @deprecated Unusable with Lanterna
@@ -96,8 +126,7 @@ public class Utils {
 
     /**
      * Creates scrolling text where each character appears one at a time.
-     * Precondition: Text is not an empty string.
-     * @param text text to print out
+     * @param text text to print out, given that text is not an empty string
      * @param time time between each character in milliseconds
      * @throws InterruptedException Thrown when a thread is waiting, sleeping,
      *                              or otherwise occupied, and the thread is
@@ -115,11 +144,10 @@ public class Utils {
     /**
      * Returns a string that contains a percentage of how much of an item left out 
      * of the total possible amount of items, comparing integers.
-     * Precondition: total is not negative, current is not negative, color is between 0 and 255
      * @param value the item that is being compared
-     * @param total the total amount of the item
+     * @param total the total amount of the item, being 0 or above
      * @param current the current amount of the item
-     * @param color color to display the item and values
+     * @param color color to display the item and values between 0 and 255
      * @return string that displays the item, the current amount out of the total
      *         possible amount, and the percentage.
      */
@@ -136,9 +164,9 @@ public class Utils {
      * of the total possible amount of items, comparing doubles.
      * Precondition: total is not negative, current is not negative, color is between 0 and 255
      * @param value the item that is being compared
-     * @param total the total amount of the item
+     * @param total the total amount of the item, being 0 or above
      * @param current the current amount of the item
-     * @param color color to display the item and values
+     * @param color color to display the item and values between 0 and 255
      * @return string that displays the item, the current amount out of the total
      *         possible amount, and the percentage.
      */
@@ -163,9 +191,8 @@ public class Utils {
 
     /**
      * Returns a random integer between a given minimum (inclusive) and maximum (exclusive)
-     * Precondition: Max is greater than min
      * @param min minimum possible integer to generate
-     * @param max maximum possible integer to generate minus one
+     * @param max maximum possible integer to generate minus one, must be greater than min
      * @return random integer between min and max
      */
     public static int randomRange(int min, int max) {

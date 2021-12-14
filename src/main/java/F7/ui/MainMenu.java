@@ -1,13 +1,10 @@
 package F7.ui;
 
 import java.io.*;
-
 import F7.Lanterna;
 import F7.Utils;
 import F7.entities.classes.*;
 import F7.entities.construction.*;
-import com.diogonunes.jcolor.Ansi;
-import com.diogonunes.jcolor.Attribute;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -118,9 +115,7 @@ public class MainMenu {
                                 Lanterna.print(name.length() + 3, Lanterna.getGlobalRow(), " ");
                                 Lanterna.print(3, Lanterna.getGlobalRow(), name);
                             }
-                            case Enter -> {
-                                running = false;
-                            }
+                            case Enter -> running = false;
                             default -> {
                                 try {
                                     name += keyPressed.getCharacter();
