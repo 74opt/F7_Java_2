@@ -16,10 +16,13 @@ public class Main {
 
         Lanterna.startScreen();
 
-        MainMenu.menu();
+        //MainMenu.menu();
+        Lanterna.print("é");
+        System.out.println(Maps.plains.toString());
+        //Lanterna.print(Maps.plains.toString());
 
         //TODO: jsoncreator annotations for the new final classes
-        //TODO: make consumable, rarity, and tile enums?
+        //TODO: make consumable, rarity, and tile enums? probably not
 //        boolean running = true;
 //        int row = 10;
 //        while (running) {

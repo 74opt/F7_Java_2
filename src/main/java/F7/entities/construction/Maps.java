@@ -9,33 +9,33 @@ public class Maps {
     private static Tile k = new Tile(" ", true);
 
     // Grass
-    private static Tile g = new Tile(Ansi.colorize("░", Attribute.TEXT_COLOR(82)), false);
-    private static Tile v = new Tile(Ansi.colorize("░", Attribute.TEXT_COLOR(28)), false);
-    private static Tile b = new Tile(Ansi.colorize("░", Attribute.TEXT_COLOR(40)), false);
+    private static Tile g = new Tile("^1░", false);
+    private static Tile v = new Tile("^2░", false);
+    private static Tile b = new Tile("^g░", false);
 
     // Stone
-    private static Tile s = new Tile(Ansi.colorize("▓", Attribute.TEXT_COLOR(238)), false);
-    private static Tile z = new Tile(Ansi.colorize("▓", Attribute.TEXT_COLOR(251)), false);
-    private static Tile x = new Tile(Ansi.colorize("▓", Attribute.TEXT_COLOR(245)), false);
+    private static Tile s = new Tile("^3▓", false);
+    private static Tile z = new Tile("^G▓", false);
+    private static Tile x = new Tile("^4▓", false);
 
     // Dirt
-    private static Tile d = new Tile(Ansi.colorize("░", Attribute.TEXT_COLOR(95)), false);
-    private static Tile n = new Tile(Ansi.colorize("▓", Attribute.TEXT_COLOR(94)), false);
+    private static Tile d = new Tile("^6░", false);
+    private static Tile n = new Tile("^5▓", false);
 
     // Water
-    private static Tile a = new Tile(Ansi.colorize("▒", Attribute.TEXT_COLOR(33)), true);
-    private static Tile u = new Tile(Ansi.colorize("▒", Attribute.TEXT_COLOR(27)), true);
+    private static Tile a = new Tile("^7▒", true);
+    private static Tile u = new Tile("^B▒", true);
 
     // Wall
-    private static Tile w = new Tile(Ansi.colorize("█", Attribute.TEXT_COLOR(241)), true);
+    private static Tile w = new Tile("^8█", true);
 
     // Foliage
-    private static Tile r = new Tile(Ansi.colorize("#", Attribute.TEXT_COLOR(65)), true);
-    private static Tile h = new Tile(Ansi.colorize("#", Attribute.TEXT_COLOR(70)), true);
-    private static Tile y = new Tile(Ansi.colorize("#", Attribute.TEXT_COLOR(28)), true);
+    private static Tile r = new Tile("^0#", true);
+    private static Tile h = new Tile("^9#", true);
+    private static Tile y = new Tile("^2#", true);
 
     // Player
-    private static Tile f = new Tile(Ansi.colorize("7", Attribute.TEXT_COLOR(196)), false);
+    private static Tile f = new Tile(Ansi.colorize("^R7", Attribute.TEXT_COLOR(196)), false);
     public static Tile getPlayer() {return f;}
 
     public static Map plains = new Map("Kwéleches Plains", new Tile[][]

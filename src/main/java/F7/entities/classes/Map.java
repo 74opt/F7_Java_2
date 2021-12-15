@@ -71,7 +71,7 @@ public class Map {
 
     @Override
     public String toString() {
-        String string = "Location: " + Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)) + "\n";
+        String string = "Location: ^W" + NAME + "\n";
 
         for (int i = 0; i < MAP.length; i++) {
             for (int j = 0; j < MAP[0].length; j++) {
