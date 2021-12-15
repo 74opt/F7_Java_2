@@ -14,15 +14,12 @@ public class Main {
         Shields.setShieldHashMap();
         Rarities.setRaritiesArrayList();
 
-        //MainMenu.menu();
         Lanterna.startScreen();
 
         MainMenu.menu();
 
         //TODO: jsoncreator annotations for the new final classes
         //TODO: make consumable, rarity, and tile enums?
-
-
 //        boolean running = true;
 //        int row = 10;
 //        while (running) {
