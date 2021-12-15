@@ -12,7 +12,7 @@ TODO: Todos part 2
 you must
 - fix shit code (found in looting mainly)
  - Use smth like rarityArrayList.get(random.nextInt(0, rarityArrayList.size()));
-- replace json code because jackson
+- lanterna
 */
 
 public class CombatMenu {
