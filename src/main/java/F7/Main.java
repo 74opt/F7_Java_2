@@ -16,9 +16,8 @@ public class Main {
 
         Lanterna.startScreen();
 
-        //MainMenu.menu();
-        Lanterna.print("é");
-        System.out.println(Maps.plains.toString());
+        MainMenu.menu();
+        //System.out.println(Maps.plains.toString());
         //Lanterna.print(Maps.plains.toString());
 
         //TODO: jsoncreator annotations for the new final classes

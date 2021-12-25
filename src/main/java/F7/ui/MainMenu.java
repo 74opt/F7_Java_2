@@ -54,10 +54,6 @@ public class MainMenu {
                 KeyStroke keyPressed = Lanterna.getScreen().pollInput();
 
                 if (keyPressed != null) {
-                    if (keyPressed.getKeyType().equals(KeyType.F7)) {
-                        System.exit(0);
-                    }
-
                     try {
                         switch (keyPressed.getCharacter()) {
                             case '1' -> {

@@ -39,9 +39,6 @@ public class Lanterna {
         }
     });
 
-    @Deprecated
-    public static Terminal getTerminal() {return terminal;}
-
     public static Screen getScreen() {return screen;}
 
     public static int getGlobalColumn() {return column;}
@@ -49,7 +46,7 @@ public class Lanterna {
     public static int getGlobalRow() {return row;}
     
     public static void startScreen() throws IOException {
-        terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(480, 50)).createTerminal();
+        terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(150, 50)).createTerminal();
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         textGraphics = screen.newTextGraphics();
@@ -68,10 +65,7 @@ public class Lanterna {
         screen.refresh();
     }
 
-
-
     // Printing to terminal
-    // TODO: implement Gordon's ^ thing for coloring
     public static void print(int column, int row, String text) throws Exception {
         final int finalColumn = Lanterna.column;
         final int finalRow = Lanterna.row;

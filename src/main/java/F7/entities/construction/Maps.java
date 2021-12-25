@@ -35,7 +35,7 @@ public class Maps {
     private static Tile y = new Tile("^2#", true);
 
     // Player
-    private static Tile f = new Tile(Ansi.colorize("^R7", Attribute.TEXT_COLOR(196)), false);
+    private static Tile f = new Tile("^R7", false);
     public static Tile getPlayer() {return f;}
 
     public static Map plains = new Map("Kwéleches Plains", new Tile[][]
