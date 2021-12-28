@@ -3,13 +3,10 @@ package F7.ui;
 import F7.entities.classes.*;
 import F7.Utils;
 import F7.entities.construction.*;
-import com.diogonunes.jcolor.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import F7.Lanterna;
 import com.googlecode.lanterna.input.KeyStroke;
-
 import java.io.*;
-import java.util.Arrays;
 
 public class MapMenu {
     private static Map currentMap;
@@ -37,7 +34,6 @@ public class MapMenu {
                             }
                             case '3' -> {
                                 save();
-                                // don't think i need running = false here
                             }
                             case '4' -> {
                                 exit();
@@ -45,16 +41,23 @@ public class MapMenu {
                             }
                             case 'w' -> {
                                 currentMap.movePlayer("up", 1);
+                                Lanterna.print(1, 3, currentMap.toString());
                                 Lanterna.getScreen().refresh();
                             }
-                            case 'a' -> {}
-                            case 's' -> {}
+                            case 'a' -> {
+                                currentMap.movePlayer("left", 1);
+                                Lanterna.print(1, 3, currentMap.toString());
+                                Lanterna.getScreen().refresh();
+                            }
+                            case 's' -> {
+                                currentMap.movePlayer("down", 1);
+                                Lanterna.print(1, 3, currentMap.toString());
+                                Lanterna.getScreen().refresh();
+                            }
                             case 'd' -> {
                                 currentMap.movePlayer("right", 1);
+                                Lanterna.print(1, 3, currentMap.toString());
                                 Lanterna.getScreen().refresh();
-                                running = false;
-                                System.out.println("test");
-                                menu();
                             }
                         }
                     } catch (Exception ignored) {}
@@ -67,7 +70,7 @@ public class MapMenu {
 
     public static void menu() throws Exception {
         Lanterna.clear();
-        keyboardListen.start(); // doesnt start the second time
+        keyboardListen.start();
 
         Lanterna.println(
             "^CGMapping v75.221^G\nCoordinates: ^R#%&V;}!%@( ERROR ;}=@&!&(/?{\n" + currentMap.toString() +
@@ -80,50 +83,6 @@ public class MapMenu {
         );
     }
 
-    private static void movement() throws Exception {
-        System.out.println(
-            Ansi.colorize("GMapping v75.221", Attribute.TEXT_COLOR(14)) + "\nCoordinates: " +
-            Ansi.colorize("#%&V;}!%@( ERROR ;}=@&!(/?{", Attribute.TEXT_COLOR(1)) + "\n" + currentMap.toString()
-        );
-
-        String direction = Utils.input("Input up, down, left, or right. Input \"exit\" to exit.", false);
-
-        if (Arrays.asList(new String[] {"up", "down", "left", "right"}).contains(direction)) {
-            try {
-                int tiles = Integer.parseInt(Utils.input("How many tiles do you want to move?", false));
-
-                for (int i = 0; i < tiles; i++) {
-                    Thread.sleep(Utils.TWENTY_FOUR_FRAMES);
-                    if (!currentMap.movePlayer(direction, 1)) {
-                        break;
-                    }
-
-                    Utils.clear();
-
-                    System.out.println(
-                        Ansi.colorize("GMapping v75.221", Attribute.TEXT_COLOR(14)) + "\nCoordinates: " +
-                        Ansi.colorize("#%&V;}!%@( ERROR ;}=@&!(/?{", Attribute.TEXT_COLOR(1)) + "\n" +
-                        currentMap.toString()
-                    );
-
-                }
-
-                System.out.println("Finished moving.");
-                Thread.sleep(Utils.STANDARD);
-                movement();
-            } catch (NumberFormatException exception) {
-                Utils.invalidOption();
-                movement();
-            }
-
-        } else if (direction.equals("exit")) {
-            menu();
-        } else {
-            Utils.invalidOption();
-            movement();
-        }
-    }
-
     private static void fight() throws Exception {
         CombatMenu.start();
     }
@@ -132,7 +91,7 @@ public class MapMenu {
         PlayerMenu.menu();
     }
 
-    // TODO: move to jackson
+    // TODO: Modify for Lanterna
     private static void save() throws Exception {
         File save = new File(Utils.SAVE_PATH);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -144,6 +103,7 @@ public class MapMenu {
         menu();
     }
 
+    // TODO: Modify for Lanterna
     private static void exit() throws Exception {
         System.out.println("Are you sure you want to exit? Make sure you save your game! (Y/N)");
 
