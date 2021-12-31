@@ -15,7 +15,7 @@ public class Utils {
        number to use in certain cases
      */
 
-    // TODO: use the getters please
+    // TODO: use the getters please and make private
     /** .042 seconds, used for the screen's refresh rate */
     public static final int TWENTY_FOUR_FRAMES = 42;
     /** 2 seconds, used as a standard waiting time for Thread.sleep() */
@@ -151,11 +151,11 @@ public class Utils {
      * @return string that displays the item, the current amount out of the total
      *         possible amount, and the percentage.
      */
-    // TODO: Update to fit lanterna
-    public static String outOf(String value, int total, int current, int color) {
-        return String.format("%s %s out of %s (%s%%)", Ansi.colorize(value, Attribute.TEXT_COLOR(231)),
-                Ansi.colorize(String.valueOf(current), Attribute.TEXT_COLOR(color)),
-                Ansi.colorize(String.valueOf(total), Attribute.TEXT_COLOR(color)),
+    public static String outOf(String value, int total, int current, String color) {
+        return String.format("%s %s ^Gout of %s ^G(%s%%)",
+                "^W" + value,
+                color + current,
+                color + total,
                 DOUBLE_DECIMAL.format((((double) current) / total) * 100));
     }
 
@@ -170,12 +170,12 @@ public class Utils {
      * @return string that displays the item, the current amount out of the total
      *         possible amount, and the percentage.
      */
-    // TODO: Update to fit lanterna
-    public static String outOf(String value, double total, double current, int color) {
-        return String.format("%s %s out of %s (%s%%)", Ansi.colorize(value, Attribute.TEXT_COLOR(231)),
-                Ansi.colorize(String.valueOf(current), Attribute.TEXT_COLOR(color)),
-                Ansi.colorize(String.valueOf(total), Attribute.TEXT_COLOR(color)),
-                DOUBLE_DECIMAL.format((current / total) * 100));
+    public static String outOf(String value, double total, double current, String color) {
+        return String.format("%s %s ^Gout of %s ^G(%s%%)",
+                "^W" + value,
+                color + current,
+                color + total,
+                DOUBLE_DECIMAL.format(((current) / total) * 100));
     }
 
     /**

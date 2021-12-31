@@ -66,7 +66,7 @@ public class Enemy {
                 %s
                 %s""", 
                 RARITY.toString(), level, Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)), 
-                Utils.outOf("Health:", health, tempHealth, 9),
+                Utils.outOf("Health:", health, tempHealth, "^R"),
                 DESCRIPTION
             );
         }

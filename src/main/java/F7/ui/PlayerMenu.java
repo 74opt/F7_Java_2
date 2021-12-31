@@ -1,73 +1,138 @@
 package F7.ui;
+import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
 import com.diogonunes.jcolor.*; //https://github.com/dialex/JColor
+import com.googlecode.lanterna.input.KeyStroke;
+
+import java.io.IOException;
 import java.util.Arrays;
 
 public class PlayerMenu { //TODO: make menu code look nicer with """""" and String.format if have time
+    private static Thread keyboardListen = new Thread(() -> {
+        boolean running = true;
+
+        while (running) {
+            try {
+                KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                if (keyPressed != null) {
+                    try {
+                        switch (keyPressed.getCharacter()) {
+                            // TODO: running = false should be at the front if necessary
+                            case '1' -> {
+                                heal();
+                                // Do i need running = false?
+                                running = false;
+                            }
+                            case '2' -> {
+                                equip();
+                                running = false;
+                            }
+                            case '3' -> {
+                                discard();
+                                running = false;
+                            }
+                            case '4' -> {
+                                running = false;
+                                MapMenu.menu();
+                            }
+
+                            // go from 0-3
+                            case 'w' -> { // --
+                                if (Players.player.getEquippedIndex() == 0) {
+                                    Players.player.setEquippedIndex(3);
+                                } else {
+                                    Players.player.setEquippedIndex(Players.player.getEquippedIndex() - 1);
+                                }
+
+                                // Starts at 10
+                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true)  + "                                                                       ");
+
+                                for (int i = 0; i < 4; i++) {
+                                    if (i == Players.player.getEquippedIndex()) {
+                                        Lanterna.print(1, 11 + i, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                    } else {
+                                        Lanterna.print(1, 11 + i, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                    }
+                                }
+                            }
+                            case 's' -> { // ++
+                                if (Players.player.getEquippedIndex() == 3) {
+                                    Players.player.setEquippedIndex(0);
+                                } else {
+                                    Players.player.setEquippedIndex(Players.player.getEquippedIndex() + 1);
+                                }
+
+                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true) + "                                                                       ");
+
+                                for (int i = 0; i < 4; i++) {
+                                    if (i == Players.player.getEquippedIndex()) {
+                                        Lanterna.print(1, 11 + i, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                    } else {
+                                        Lanterna.print(1, 11 + i, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                    }
+                                }
+                            }
+
+                            // To delete weapon
+                            // TODO: woah can i get rid of the numbers entirely on this one
+                            case 'd' -> {
+
+                            }
+                        }
+                    } catch (Exception ignored) {}
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+
     public static void menu() throws Exception {
-        Utils.clear();
+        Lanterna.clear();
+        keyboardListen.start();
 
         // Stats View
-        System.out.println(
-            Ansi.colorize("F7 Chassis - Model 891Z", Attribute.TEXT_COLOR(50)) +
-            Ansi.colorize("\nCreated by RRS Industries", Attribute.TEXT_COLOR(50)) +
-            Ansi.colorize("\nVersion: ", Attribute.TEXT_COLOR(231)) + Ansi.colorize(
-                    "Illegal. Software may be pirated or tampered with.", Attribute.TEXT_COLOR(1)) +
-            Ansi.colorize("\n\nSpecified ID: ", Attribute.TEXT_COLOR(231)) + Players.player.getName() +
-            Ansi.colorize("\nLevel: ", Attribute.TEXT_COLOR(231)) + Players.player.getLevel() +
-            Utils.outOf("\nExperience Points:", Players.player.expRequired(), Players.player.getExp(), 46) +
-            Utils.outOf("\nHealth:", Players.player.getHealth(), Players.player.getTempHealth(), 9) +
-            String.format("\n\n%s %s", Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)),
-                    Players.player.weaponEquipped().toString(true)) +
-            Ansi.colorize("\nWeapons:", Attribute.TEXT_COLOR(231))
+        Lanterna.println(
+            String.format("""
+            ^CF7 Chassis - Model 891Z
+            Created by RRS Industries
+            ^WVersion: ^RIllegal. Software may be pirated or tampered with.
+            
+            ^WSpecified ID: ^G%s
+            ^WLevel: ^G%s
+            %s
+            %s
+            
+            ^WWeapon Equipped: %s""",
+            Players.player.getName(),
+            Players.player.getLevel(),
+            Utils.outOf("^WExperience Points:", Players.player.expRequired(), Players.player.getExp(), "^g"),
+            Utils.outOf("^WHealth:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
+            Players.player.weaponEquipped().toString(true))
         );
 
         for (int i = 0; i < 4; i++) {
-            if (Players.player.getWeapons()[i] == null) {
-                System.out.println("No Weapon");
+            if (i == Players.player.getEquippedIndex()) {
+                Lanterna.println("^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
             } else {
-                System.out.println(Players.player.getWeapons()[i].toString(true));
+                Lanterna.println((Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
             }
         }
 
-        System.out.println("\nShield:\n" + Players.player.getShield().toString(false)); 
-        System.out.println("\nConsumables:\n" + Players.player.displayConsumables());
+        Lanterna.println("\n^WShield:\n" + Players.player.getShield().toString(false));
+        Lanterna.println("\n^WConsumables:\n" + Players.player.displayConsumables());
 
         // Commands
-        System.out.println(
+        Lanterna.println(
             """
             
-            1) Heal
+            ^G1) Heal
             2) Equip New Weapon
             3) Discard Weapon
             4) Exit"""
         );
-
-        String choice = Utils.input(false);
-
-        switch (choice) {
-            case "1":
-                heal();
-                break;
-            case "2":
-                equip();
-                break;
-            case "3":
-                discard();
-                break;
-            case "4":
-                exit();
-                break;
-            default:
-                Utils.invalidOption();
-                menu();
-                break;
-        }
-    }
-
-    private static void exit() throws Exception {
-        MapMenu.menu();
     }
 
     private static void heal() throws Exception {
@@ -88,13 +153,11 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
             }
 
             System.out.printf("\n%s health restored.", Ansi.colorize("" + Utils.round(restoration, 2), Attribute.TEXT_COLOR(9)));
-            Thread.sleep(Utils.QUICK_STANDARD);
-            menu();
         } else {
             System.out.printf("\nYou don't have %s available.", Consumables.medkit.toString());
-            Thread.sleep(Utils.QUICK_STANDARD);
-            menu();
         }
+        Thread.sleep(Utils.QUICK_STANDARD);
+        menu();
     }
 
     private static void equip() throws Exception {

@@ -39,6 +39,19 @@ public class Lanterna {
         }
     });
 
+    // Probably not going to use
+    // Refreshes the screen 24 frames per second
+    private static Thread refresh = new Thread(() -> {
+        while (true) {
+            try {
+                screen.refresh();
+                Thread.sleep(16);
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+
     public static Screen getScreen() {return screen;}
 
     public static int getGlobalColumn() {return column;}
@@ -54,6 +67,7 @@ public class Lanterna {
         row = 1;
 
         screen.startScreen();
+        refresh.start();
         //keyboardListen.start();
     }
 

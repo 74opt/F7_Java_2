@@ -94,7 +94,7 @@ public class Player {
         this.shield = Shields.scrap;
         this.x = 19;
         this.y = 8;
-        this.consumables = new ArrayList<Consumable>(Arrays.asList(Consumables.medkit, Consumables.medkit, Consumables.medkit, Consumables.target));
+        this.consumables = new ArrayList<>(Arrays.asList(Consumables.medkit, Consumables.medkit, Consumables.medkit, Consumables.target));
         this.healthLevel = 0;
         this.damageLevel = 0;
         this.evasionLevel = 0;
@@ -169,12 +169,12 @@ public class Player {
 
         return String.format(
         """
-        %s: %s
-        %s: %s
-        %s: %s
-        %s: %s
-        %s: %s
-        %s: %s""", 
+        %s^W: ^G%s
+        %s^W: ^G%s
+        %s^W: ^G%s
+        %s^W: ^G%s
+        %s^W: ^G%s
+        %s^W: ^G%s""",
         Consumables.medkit.toString(), medkits,
         Consumables.smoke.toString(), smokes,
         Consumables.corrosive.toString(), corrosives,

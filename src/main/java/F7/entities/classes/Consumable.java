@@ -21,6 +21,6 @@ public final class Consumable {
 
     @Override
     public String toString() {
-        return Ansi.colorize(NAME, Attribute.TEXT_COLOR(RARITY.getCOLOR()));
+        return RARITY.getCOLOR() + NAME;
     }
 }

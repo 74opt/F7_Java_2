@@ -7,17 +7,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class Rarity {
     private final String NAME;
-    private final int COLOR;
+    private final String COLOR;
     private final int CHANCE;
 
     public String getNAME() {return NAME;}
 
-    public int getCOLOR() {return COLOR;}
+    public String getCOLOR() {return COLOR;}
 
     public int getCHANCE() {return CHANCE;}
 
     @JsonCreator
-    public Rarity(String NAME, int COLOR, int CHANCE) {
+    public Rarity(String NAME, String COLOR, int CHANCE) {
         this.NAME = NAME;
         this.COLOR = COLOR;
         this.CHANCE = CHANCE;
@@ -25,6 +25,6 @@ public final class Rarity {
 
     @Override
     public String toString() {
-        return Ansi.colorize(NAME, Attribute.TEXT_COLOR(COLOR));
+        return COLOR + NAME;
     }
 }

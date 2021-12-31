@@ -42,14 +42,14 @@ public class Shield {
             return String.format("%s %s", RARITY.toString(), NAME);
         } else {
             return String.format("""
-            %s %s
-            %s %s%%
-            %s %s turns
-            %s %s turns""",
+            %s ^G%s
+            ^W%s ^G%s%%
+            ^W%s ^G%s turns
+            ^W%s ^G%s turns""",
             RARITY.toString(), NAME,
-            Ansi.colorize("Damage Reduction:", Attribute.TEXT_COLOR(231)), DAMAGE_REDUCTION,
-            Ansi.colorize("Active Time:", Attribute.TEXT_COLOR(231)), TURNS,
-            Ansi.colorize("Cooldown Time:", Attribute.TEXT_COLOR(231)), COOLDOWN
+            "Damage Reduction:", DAMAGE_REDUCTION,
+            "Active Time:", TURNS,
+            "Cooldown Time:", COOLDOWN
             ); 
         }
     }

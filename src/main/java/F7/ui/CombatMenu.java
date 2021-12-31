@@ -108,29 +108,29 @@ public class CombatMenu {
         }
 
         // TODO: change a buncha things to printf
-        System.out.printf(
-                """
-                %s
-                Assigned and Calibrated for: %s
-
-                %s
-                %s %s
-                %s %s (%s)
-
-                %s
-                %s
-
-                Active Statuses:
-                %s
-                %s
-                """,
-                Ansi.colorize("Model-F v5.032 Targeting Chip", Attribute.TEXT_COLOR(10)),
-                Players.player.getName(),
-                Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), 9),
-                Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)), Players.player.weaponEquipped().toString(true),
-                Ansi.colorize("Shield:", Attribute.TEXT_COLOR(231)), Players.player.getShield().toString(true), shieldStatus, 
-                Ansi.colorize("Consumables:", Attribute.TEXT_COLOR(231)), Players.player.displayConsumables(), displayStatuses(), enemy.toString(false)
-        );
+//        System.out.printf(
+//                """
+//                %s
+//                Assigned and Calibrated for: %s
+//
+//                %s
+//                %s %s
+//                %s %s (%s)
+//
+//                %s
+//                %s
+//
+//                Active Statuses:
+//                %s
+//                %s
+//                """,
+//                Ansi.colorize("Model-F v5.032 Targeting Chip", Attribute.TEXT_COLOR(10)),
+//                Players.player.getName(),
+//                Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), 9),
+//                Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)), Players.player.weaponEquipped().toString(true),
+//                Ansi.colorize("Shield:", Attribute.TEXT_COLOR(231)), Players.player.getShield().toString(true), shieldStatus,
+//                Ansi.colorize("Consumables:", Attribute.TEXT_COLOR(231)), Players.player.displayConsumables(), displayStatuses(), enemy.toString(false)
+//        );
 
         // can you find a way to turn these into methods
         if (isPlayerTurn) {

@@ -53,21 +53,33 @@ public class Weapon {
         this.RARITY = weapon.getRARITY();
     }
 
-    // public Weapon() {
-    //     super();
-    // }
-
     // Methods 
     public String toString(boolean simple) {
         if (simple) {
-            return String.format("%s Level %s %s", RARITY.toString(),level, Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)));
+            return String.format("%s ^GLevel %s ^W%s", RARITY.toString(), level, NAME);
         } else {
             return String.format(
-                "%s Level %s %s\n%s: %s\n%s: %s\n%s: %s", RARITY.toString(), level, Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)),
-                Ansi.colorize("Damage", Attribute.TEXT_COLOR(231)), damage,
-                Ansi.colorize("Accuracy", Attribute.TEXT_COLOR(231)), accuracy,
-                Ansi.colorize("Rate of Fire", Attribute.TEXT_COLOR(231)), rof
+                    """
+                    ^G%s Level %s ^W%s
+                    ^WDamage: ^G%s
+                    ^WAccuracy: ^G%s
+                    ^WRate of Fire: ^G%s
+                    ^WCritical Chance: ^G%s%%
+                    ^WCritical Multiplier: ^Gx%s""",
+                    RARITY.toString(), level, NAME,
+                    damage,
+                    accuracy,
+                    rof,
+                    critChance,
+                    critMultiplier
             );
+
+//            return String.format(
+//                "%s Level %s %s\n%s: %s\n%s: %s\n%s: %s", RARITY.toString(), level, Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)),
+//                Ansi.colorize("Damage", Attribute.TEXT_COLOR(231)), damage,
+//                Ansi.colorize("Accuracy", Attribute.TEXT_COLOR(231)), accuracy,
+//                Ansi.colorize("Rate of Fire", Attribute.TEXT_COLOR(231)), rof
+//            );
         }
     }
 

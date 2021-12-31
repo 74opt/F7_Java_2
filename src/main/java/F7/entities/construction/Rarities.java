@@ -4,17 +4,17 @@ import F7.entities.classes.Rarity;
 import java.util.*;
 
 public class Rarities { // rarities must equal 100 when summed
-    public static Rarity common = new Rarity("Common", 249, 60);
+    public static Rarity common = new Rarity("Common", "^w", 60);
 
-    public static Rarity uncommon = new Rarity("Uncommon", 46, 20);
+    public static Rarity uncommon = new Rarity("Uncommon", "^g", 20);
 
-    public static Rarity rare = new Rarity("Rare", 33, 13);
+    public static Rarity rare = new Rarity("Rare", "^7", 13);
 
-    public static Rarity exceptional = new Rarity("Exceptional", 99, 6);
+    public static Rarity exceptional = new Rarity("Exceptional", "^p", 6);
 
-    public static Rarity godly = new Rarity("Godly", 208, 1);
+    public static Rarity godly = new Rarity("Godly", "^O", 1);
 
-    public static ArrayList<Rarity> rarityArrayList = new ArrayList<Rarity>();
+    public static ArrayList<Rarity> rarityArrayList = new ArrayList<>();
 
     public static void setRaritiesArrayList() throws Exception {
         if (common.getCHANCE() + uncommon.getCHANCE() + rare.getCHANCE() + exceptional.getCHANCE() + godly.getCHANCE() != 100) {
