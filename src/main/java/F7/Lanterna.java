@@ -17,6 +17,8 @@ public class Lanterna {
     private static TextGraphics textGraphics;
     private static int column;
     private static int row;
+    private static int initColumn;
+    private static int initRow; // Don't know if ill need this
     // TODO: MAKE SCROLLING TEXT METHOD
     private static final int SCROLL = 45; //taken from Utils.SCROLL
 
@@ -39,7 +41,7 @@ public class Lanterna {
         }
     });
 
-    // Probably not going to use
+    // Probably not going to use since it relies on an infinite loop
     // Refreshes the screen 24 frames per second
     private static Thread refresh = new Thread(() -> {
         while (true) {
@@ -58,16 +60,19 @@ public class Lanterna {
 
     public static int getGlobalRow() {return row;}
     
-    public static void startScreen() throws IOException {
-        terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(150, 50)).createTerminal();
+    public static void startScreen(int paramInitColumn, int paramInitRow) throws IOException {
+        initColumn = paramInitColumn;
+        initRow = paramInitRow;
+        terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(paramInitColumn, paramInitRow)).createTerminal();
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         textGraphics = screen.newTextGraphics();
         column = 1;
         row = 1;
 
+
         screen.startScreen();
-        refresh.start();
+        // refresh.start();
         //keyboardListen.start();
     }
 
@@ -155,5 +160,15 @@ public class Lanterna {
         print(text);
         row++;
         column = 1;
+    }
+
+    public static void clearln(int row) throws Exception {
+        String spaces = "";
+
+        for (int i = 0; i < initColumn; i++) {
+            spaces += " ";
+        }
+
+        print(0, row, spaces);
     }
 }

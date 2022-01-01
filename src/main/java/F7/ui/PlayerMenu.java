@@ -52,7 +52,8 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
                                 }
 
                                 // Starts at 10
-                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true)  + Utils.getSpaces());
+                                Lanterna.clearln(10);
+                                Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(true));
 
                                 for (int i = 0; i < 4; i++) {
                                     if (i == Players.player.getEquippedIndex()) {
@@ -69,7 +70,8 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
                                     Players.player.setEquippedIndex(Players.player.getEquippedIndex() + 1);
                                 }
 
-                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true) + Utils.getSpaces());
+                                Lanterna.clearln(10);
+                                Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(true));
 
                                 for (int i = 0; i < 4; i++) {
                                     if (i == Players.player.getEquippedIndex()) {
@@ -94,11 +96,14 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
 
                                         if (choice.getCharacter() == 'q') {
                                             Players.player.setWeapon(null, Players.player.getEquippedIndex());
-                                            Lanterna.print(1, row, "^g> " + "^GNo Weapon" + Utils.getSpaces());
-                                            Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true) + Utils.getSpaces());
+                                            Lanterna.clearln(row);
+                                            Lanterna.clearln(10);
+                                            Lanterna.print(1, row, "^g> " + "^GNo Weapon");
+                                            Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(true));
                                             break;
                                         } else if (choice.getCharacter() == 'e') {
-                                            Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true) + Utils.getSpaces());
+                                            Lanterna.clearln(row);
+                                            Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true));
                                             break;
                                         }
                                     }
@@ -270,9 +275,4 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
         Thread.sleep(Utils.QUICK_STANDARD);
         menu();
     }
-
-    // inaccessable by player, used to equip, inspect, and discard
-    // private static String displayWeapons() {
-        
-    // }
 }

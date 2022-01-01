@@ -34,9 +34,6 @@ public class Utils {
     // Random
     private static Random random = new Random();
 
-    // Dumb lanterna thing to clear a line until i find a better way to do this
-    private static String spaces = "                                                                                                                                                            ";
-
     /**
      * @return Time for 24 frame refresh rate
      */
@@ -66,11 +63,6 @@ public class Utils {
      * @return Standard DecimalFormat for presenting doubles with 2 decimal places
      */
     public static DecimalFormat getDOUBLE_DECIMAL() {return DOUBLE_DECIMAL;}
-
-    /**
-     * @return A lot of spaces to clear a line in Lanterna
-     */
-    public static String getSpaces() {return spaces;}
 
     /**
      * Takes in an input from the user with text to prompt was the user should input.

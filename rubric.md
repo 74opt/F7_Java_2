@@ -19,8 +19,8 @@
 - [x] Includes all necessary accessor and mutator methods. (GET RID OF UNNECESSARY)
 - [x] Includes a constructor with an object as one of its parameters.
 - [ ] Includes a class with instance variables but no constructor.
-- [ ] Includes Javadoc comments (i.e. /** */).
-- [ ] Includes at least one precondition and one postcondition.
+- [x] Includes Javadoc comments (i.e. /** */).
+- [x] Includes at least one precondition and one postcondition.
 - [x] Includes non-void methods.
 - [x] Includes at least one method that returns an object other than a String.
 - [x] Includes a toString method and prints an object.

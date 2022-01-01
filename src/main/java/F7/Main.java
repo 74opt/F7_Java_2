@@ -14,7 +14,7 @@ public class Main {
         Shields.setShieldHashMap();
         Rarities.setRaritiesArrayList();
 
-        Lanterna.startScreen();
+        Lanterna.startScreen(150, 50);
 
         MainMenu.menu();
         //System.out.println(Maps.plains.toString());
