@@ -6,6 +6,7 @@ import com.diogonunes.jcolor.*; //https://github.com/dialex/JColor
 import com.googlecode.lanterna.input.KeyStroke;
 
 import java.io.IOException;
+import java.security.Key;
 import java.util.Arrays;
 
 public class PlayerMenu { //TODO: make menu code look nicer with """""" and String.format if have time
@@ -25,10 +26,14 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
                                 // Do i need running = false?
                                 running = false;
                             }
+
+                            // Get rid of this
                             case '2' -> {
                                 equip();
                                 running = false;
                             }
+
+                            // This too
                             case '3' -> {
                                 discard();
                                 running = false;
@@ -47,7 +52,7 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
                                 }
 
                                 // Starts at 10
-                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true)  + "                                                                       ");
+                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true)  + Utils.getSpaces());
 
                                 for (int i = 0; i < 4; i++) {
                                     if (i == Players.player.getEquippedIndex()) {
@@ -64,7 +69,7 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
                                     Players.player.setEquippedIndex(Players.player.getEquippedIndex() + 1);
                                 }
 
-                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true) + "                                                                       ");
+                                Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true) + Utils.getSpaces());
 
                                 for (int i = 0; i < 4; i++) {
                                     if (i == Players.player.getEquippedIndex()) {
@@ -78,7 +83,26 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
                             // To delete weapon
                             // TODO: woah can i get rid of the numbers entirely on this one
                             case 'd' -> {
+                                if (!Players.player.weaponEquipped().equals(Weapons.fists)) {
+                                    int row = 11 + Players.player.getEquippedIndex();
 
+                                    Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true) + " ^GAre you sure you want to delete this weapon? You can't get it back! (^gQ^G to confirm, ^RE^G to cancel)");
+
+                                    // This is blocking, no other action can be done until Q or E is pressed
+                                    while (true) {
+                                        KeyStroke choice = Lanterna.getScreen().readInput();
+
+                                        if (choice.getCharacter() == 'q') {
+                                            Players.player.setWeapon(null, Players.player.getEquippedIndex());
+                                            Lanterna.print(1, row, "^g> " + "^GNo Weapon" + Utils.getSpaces());
+                                            Lanterna.print(18, 10, Players.player.weaponEquipped().toString(true) + Utils.getSpaces());
+                                            break;
+                                        } else if (choice.getCharacter() == 'e') {
+                                            Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true) + Utils.getSpaces());
+                                            break;
+                                        }
+                                    }
+                                }
                             }
                         }
                     } catch (Exception ignored) {}
@@ -115,6 +139,7 @@ public class PlayerMenu { //TODO: make menu code look nicer with """""" and Stri
 
         for (int i = 0; i < 4; i++) {
             if (i == Players.player.getEquippedIndex()) {
+                // TODO: DISPLAY EQUIPPED WEAPON USING simple = false
                 Lanterna.println("^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
             } else {
                 Lanterna.println((Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");

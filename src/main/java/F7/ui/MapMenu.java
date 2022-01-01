@@ -25,19 +25,19 @@ public class MapMenu {
                     try {
                         switch (keyPressed.getCharacter()) {
                             case '1' -> {
-                                fight();
                                 running = false;
+                                fight();
                             }
                             case '2' -> {
-                                inventory();
                                 running = false;
+                                inventory();
                             }
                             case '3' -> {
                                 save();
                             }
                             case '4' -> {
-                                exit();
                                 running = false;
+                                exit();
                             }
                             case 'w' -> {
                                 currentMap.movePlayer("up", 1);
