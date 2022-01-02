@@ -22,25 +22,6 @@ public class Lanterna {
     // TODO: MAKE SCROLLING TEXT METHOD
     private static final int SCROLL = 45; //taken from Utils.SCROLL
 
-    // Test
-    private static Thread keyboardListen = new Thread(() -> {
-        while (true) {
-            try {
-                KeyStroke keyPressed = terminal.pollInput();
-
-                if (keyPressed != null) {
-                    if (keyPressed.getKeyType().equals(KeyType.F7)) {
-                        System.exit(0);
-                    }
-
-                    System.out.print(keyPressed.getCharacter());
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    });
-
     // Probably not going to use since it relies on an infinite loop
     // Refreshes the screen 24 frames per second
     private static Thread refresh = new Thread(() -> {
@@ -69,7 +50,6 @@ public class Lanterna {
         textGraphics = screen.newTextGraphics();
         column = 1;
         row = 1;
-
 
         screen.startScreen();
         // refresh.start();

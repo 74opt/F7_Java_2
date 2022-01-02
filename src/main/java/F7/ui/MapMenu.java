@@ -14,63 +14,8 @@ public class MapMenu {
     public static Map getCurrentMap() {return currentMap;}
     public static void setCurrentMap(Map currentMap) {MapMenu.currentMap = currentMap;}
 
-    private static Thread keyboardListen = new Thread(() -> {
-        boolean running = true;
-
-        while (running) {
-            try {
-                KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-
-                if (keyPressed != null) {
-                    try {
-                        switch (keyPressed.getCharacter()) {
-                            case '1' -> {
-                                running = false;
-                                fight();
-                            }
-                            case '2' -> {
-                                running = false;
-                                inventory();
-                            }
-                            case '3' -> {
-                                save();
-                            }
-                            case '4' -> {
-                                running = false;
-                                exit();
-                            }
-                            case 'w' -> {
-                                currentMap.movePlayer("up", 1);
-                                Lanterna.print(1, 3, currentMap.toString());
-                                Lanterna.getScreen().refresh();
-                            }
-                            case 'a' -> {
-                                currentMap.movePlayer("left", 1);
-                                Lanterna.print(1, 3, currentMap.toString());
-                                Lanterna.getScreen().refresh();
-                            }
-                            case 's' -> {
-                                currentMap.movePlayer("down", 1);
-                                Lanterna.print(1, 3, currentMap.toString());
-                                Lanterna.getScreen().refresh();
-                            }
-                            case 'd' -> {
-                                currentMap.movePlayer("right", 1);
-                                Lanterna.print(1, 3, currentMap.toString());
-                                Lanterna.getScreen().refresh();
-                            }
-                        }
-                    } catch (Exception ignored) {}
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    });
-
     public static void menu() throws Exception {
         Lanterna.clear();
-        keyboardListen.start();
 
         Lanterna.println(
             "^CGMapping v75.221^G\nCoordinates: ^R#%&V;}!%@( ERROR ;}=@&!&(/?{\n" + currentMap.toString() +
@@ -81,6 +26,60 @@ public class MapMenu {
             4) Exit Game
             """
         );
+
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case '1' -> {
+                                    running = false;
+                                    fight();
+                                }
+                                case '2' -> {
+                                    running = false;
+                                    inventory();
+                                }
+                                case '3' -> {
+                                    save();
+                                }
+                                case '4' -> {
+                                    running = false;
+                                    exit();
+                                }
+                                case 'w' -> {
+                                    currentMap.movePlayer("up", 1);
+                                    Lanterna.print(1, 3, currentMap.toString());
+                                    Lanterna.getScreen().refresh();
+                                }
+                                case 'a' -> {
+                                    currentMap.movePlayer("left", 1);
+                                    Lanterna.print(1, 3, currentMap.toString());
+                                    Lanterna.getScreen().refresh();
+                                }
+                                case 's' -> {
+                                    currentMap.movePlayer("down", 1);
+                                    Lanterna.print(1, 3, currentMap.toString());
+                                    Lanterna.getScreen().refresh();
+                                }
+                                case 'd' -> {
+                                    currentMap.movePlayer("right", 1);
+                                    Lanterna.print(1, 3, currentMap.toString());
+                                    Lanterna.getScreen().refresh();
+                                }
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private static void fight() throws Exception {

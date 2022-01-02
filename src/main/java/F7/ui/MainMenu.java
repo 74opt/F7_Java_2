@@ -46,39 +46,8 @@ public class MainMenu {
                    :`                                  .m+++++++++++h`
             """;
 
-    private static Thread keyboardListen = new Thread(() -> {
-        boolean running = true;
-
-        while (running) {
-            try {
-                KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-
-                if (keyPressed != null) {
-                    try {
-                        switch (keyPressed.getCharacter()) {
-                            case '1' -> {
-                                start();
-                                running = false;
-                            }
-                            case '2' -> {
-                                load();
-                                running = false;
-                            }
-                            case '3' -> System.exit(0);
-                        }
-                    } catch (Exception ignored) {}
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    });
-
-    // Threading should only be used when multiple things have to happen per frame
-    // Examples: animation, combat
     public static void menu() throws Exception {
         Lanterna.clear();
-        keyboardListen.start();
 
         Lanterna.println(
                 LOGO + "\n" +
@@ -87,6 +56,34 @@ public class MainMenu {
                 2) Continue
                 3) Quit"""
         );
+
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case '1' -> {
+                                    start();
+                                    running = false;
+                                }
+                                case '2' -> {
+                                    load();
+                                    running = false;
+                                }
+                                case '3' -> System.exit(0);
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private static void start() throws Exception {
@@ -131,6 +128,7 @@ public class MainMenu {
 
         //! IS FOR TESTING DELETE LATER
         Players.player = Players.presentation;
+
         MapMenu.getCurrentMap().spawnPlayer(19, 8);
 
         MapMenu.menu();

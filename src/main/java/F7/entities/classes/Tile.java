@@ -1,5 +1,7 @@
 package F7.entities.classes;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public final class Tile {
     private final String TILE;
     private final boolean COLLISION_ENABLED;

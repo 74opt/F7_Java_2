@@ -17,7 +17,7 @@ public final class Rarity {
     public int getCHANCE() {return CHANCE;}
 
     @JsonCreator
-    public Rarity(String NAME, String COLOR, int CHANCE) {
+    public Rarity(@JsonProperty("name") String NAME, @JsonProperty("color") String COLOR, @JsonProperty("chance") int CHANCE) {
         this.NAME = NAME;
         this.COLOR = COLOR;
         this.CHANCE = CHANCE;

@@ -1,6 +1,7 @@
 package F7.entities.classes;
 
-import com.diogonunes.jcolor.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public final class Consumable {
     private final String NAME;
@@ -13,7 +14,8 @@ public final class Consumable {
 
     public Rarity getRARITY() {return RARITY;}
 
-    public Consumable(String NAME, int TURNS, Rarity RARITY) {
+    @JsonCreator
+    public Consumable(@JsonProperty("name") String NAME, @JsonProperty("turns") int TURNS, @JsonProperty("rarity") Rarity RARITY) {
         this.NAME = NAME;
         this.TURNS = TURNS;
         this.RARITY = RARITY;

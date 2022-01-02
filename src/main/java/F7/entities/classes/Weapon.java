@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 // TODO: Crits
 public class Weapon {
     private final String NAME;
-    private int damage, accuracy, level, rof, critChance, critMultiplier;
+    private int damage, accuracy, level, rof, critChance; // critChance is out of 100
+    double critMultiplier;
     private final Rarity RARITY;
 
     // Setters and Getters
@@ -28,20 +29,29 @@ public class Weapon {
     public int getCritChance() {return critChance;}
     public void setCritChance(int critChance) {this.critChance = critChance;}
 
-    public int getCritMultiplier() {return critMultiplier;}
+    public double getCritMultiplier() {return critMultiplier;}
     public void setCritMultiplier(int critMultiplier) {this.critMultiplier = critMultiplier;}
 
     public Rarity getRARITY() {return RARITY;}
 
     // Constructor
     @JsonCreator
-    public Weapon(@JsonProperty("name") String NAME, @JsonProperty("damage") int damage, @JsonProperty("accuracy") int accuracy, @JsonProperty("level") int level, @JsonProperty("rof") int rof, @JsonProperty("rarity") Rarity RARITY) {
+    public Weapon(@JsonProperty("name") String NAME,
+                  @JsonProperty("damage") int damage,
+                  @JsonProperty("accuracy") int accuracy,
+                  @JsonProperty("level") int level,
+                  @JsonProperty("rof") int rof,
+                  @JsonProperty("rarity") Rarity RARITY,
+                  @JsonProperty("critChance") int critChance,
+                  @JsonProperty("critMultiplier") double critMultiplier) {
         this.NAME = NAME;
         this.damage = damage;
         this.accuracy = accuracy;
         this.level = level;
         this.rof = rof;
         this.RARITY = RARITY;
+        this.critChance = critChance;
+        this.critMultiplier = critMultiplier;
     }
 
     public Weapon(Weapon weapon) {
@@ -51,6 +61,8 @@ public class Weapon {
         this.level = weapon.getLevel();
         this.rof = weapon.getRof();
         this.RARITY = weapon.getRARITY();
+        this.critChance = weapon.getCritChance();
+        this.critMultiplier = weapon.getCritMultiplier();
     }
 
     // Methods 
@@ -60,7 +72,7 @@ public class Weapon {
         } else {
             return String.format(
                     """
-                    ^G%s Level %s ^W%s
+                    %s ^GLevel %s ^W%s
                     ^WDamage: ^G%s
                     ^WAccuracy: ^G%s
                     ^WRate of Fire: ^G%s
@@ -73,19 +85,12 @@ public class Weapon {
                     critChance,
                     critMultiplier
             );
-
-//            return String.format(
-//                "%s Level %s %s\n%s: %s\n%s: %s\n%s: %s", RARITY.toString(), level, Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)),
-//                Ansi.colorize("Damage", Attribute.TEXT_COLOR(231)), damage,
-//                Ansi.colorize("Accuracy", Attribute.TEXT_COLOR(231)), accuracy,
-//                Ansi.colorize("Rate of Fire", Attribute.TEXT_COLOR(231)), rof
-//            );
         }
     }
 
     //? should be void?
     // to be overrided
     public void special() {
-        System.out.println();
+        // something.
     }
 }

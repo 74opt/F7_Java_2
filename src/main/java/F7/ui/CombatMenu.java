@@ -11,7 +11,7 @@ import com.diogonunes.jcolor.Attribute;
 TODO: Todos part 2 
 you must
 - fix shit code (found in looting mainly)
- - Use smth like rarityArrayList.get(random.nextInt(0, rarityArrayList.size()));
+- Use smth like rarityArrayList.get(random.nextInt(0, rarityArrayList.size()));
 - lanterna
 */
 
