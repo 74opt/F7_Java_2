@@ -124,6 +124,7 @@ public class MainMenu {
             }
         }
 
+        MapMenu.setCurrentMap(new Map(Maps.plains));
         Players.player = new Player(name);
 
         //! IS FOR TESTING DELETE LATER
@@ -139,6 +140,8 @@ public class MainMenu {
 
         Players.player = objectMapper.readValue(new File(Utils.SAVE_PATH), Player.class);
 
+        // TODO: save Map into save.json and change this
+        MapMenu.setCurrentMap(new Map(Maps.plains));
         MapMenu.getCurrentMap().spawnPlayer(Players.player.getX(), Players.player.getY());
 
         MapMenu.menu();

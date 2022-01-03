@@ -11,6 +11,7 @@ public class Players {
     // All other instances of player are just tests and stuff
     public static Player player;// = new Player("God");
 
+    // do i even need dev my guy
     public static Player dev = new Player(
             "Dev", 9821, 8472, 90, 0, new Weapon[]{new Weapon(Weapons.tachyon),
             new Weapon(Weapons.crowbar), null, new Weapon(Weapons.gauss)},

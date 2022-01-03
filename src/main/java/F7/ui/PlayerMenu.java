@@ -128,6 +128,7 @@ public class PlayerMenu {
                                 // TODO: woah can i get rid of the numbers entirely on this one
                                 case 'd' -> {
                                     if (!Players.player.weaponEquipped().equals(Weapons.fists)) {
+
                                         int row = 18 + Players.player.getEquippedIndex();
 
                                         Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true) + " ^GAre you sure you want to delete this weapon? You can't get it back! (^gQ^G to confirm, ^RE^G to cancel)");

@@ -96,6 +96,7 @@ public class MapMenu {
         ObjectMapper objectMapper = new ObjectMapper();
 
         objectMapper.writeValue(save, Players.player);
+        // TODO: save map
 
         System.out.println("Saved.");
         Thread.sleep(Utils.QUICK_STANDARD);
