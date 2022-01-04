@@ -128,7 +128,7 @@ public class MainMenu {
         Players.player = new Player(name);
 
         //! IS FOR TESTING DELETE LATER
-        Players.player = Players.presentation;
+        //Players.player = Players.presentation;
 
         MapMenu.getCurrentMap().spawnPlayer(19, 8);
 
