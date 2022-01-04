@@ -8,7 +8,7 @@ public class DeathMenu {
     public static void menu() throws Exception {
         Utils.clear();
 
-        Thread.sleep(Utils.STANDARD);
+        Thread.sleep(Utils.getSTANDARD());
         Utils.scrollText(Ansi.colorize("RRS Prototype 67TLB Revival System", Attribute.TEXT_COLOR(50)) + " is installed in your system.\n", Utils.SCROLL);
         Thread.sleep(Utils.QUICK_STANDARD);
         Utils.scrollText("Reviving you.\n", Utils.SCROLL);

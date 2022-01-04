@@ -1,6 +1,5 @@
 package F7;
 
-import F7.entities.classes.*;
 import F7.entities.construction.*;
 import F7.ui.*;
 

@@ -90,7 +90,6 @@ public class MapMenu {
         PlayerMenu.menu();
     }
 
-    // TODO: Modify for Lanterna
     private static void save() throws Exception {
         File playerSave = new File(Utils.getPLAYER_SAVE_PATH());
         File mapSave = new File(Utils.getMAP_SAVE_PATH());
@@ -98,25 +97,41 @@ public class MapMenu {
 
         objectMapper.writeValue(playerSave, Players.player);
         objectMapper.writeValue(mapSave, currentMap);
+
+        new Thread(() -> {
+            try {
+
+                Lanterna.print(65, 1,
+                        """
+                        ^W╔═════════════╗
+                        ║ ^GSaved Game.^W ║
+                        ╚═════════════╝""");
+                Thread.sleep(Utils.getSTANDARD());
+
+                for (int i = 1; i < 4; i++) {
+                    Lanterna.print(65, i, "               ");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     // TODO: Modify for Lanterna
     private static void exit() throws Exception {
-        System.out.println("Are you sure you want to exit? Make sure you save your game! (Y/N)");
+        Lanterna.print(1, 28, "^GAre you sure you want to quit? All unsaved progress will be lost. (^gQ^G to confirm, ^RE^G to cancel)");
 
-        String choice = Utils.input(false);
+        // Blocking, will not let player do anything until Q or E is pressed, taken from PlayerMenu
+        while (true) {
+            KeyStroke choice = Lanterna.getScreen().readInput();
 
-        switch (choice) {
-            case "y":
+            if (choice.getCharacter() == 'q') {
                 MainMenu.menu();
                 break;
-            case "n":
-                menu();
+            } else if (choice.getCharacter() == 'e') {
+                Lanterna.clearln(28);
                 break;
-            default:
-                Utils.invalidOption();
-                menu();
-                break;
+            }
         }
     }
 }

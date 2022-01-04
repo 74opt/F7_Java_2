@@ -4,6 +4,8 @@ import java.util.*;
 import F7.Utils;
 import F7.entities.construction.*;
 import F7.entities.classes.*;
+
+// get rid of all uses of this
 import com.diogonunes.jcolor.Ansi;
 import com.diogonunes.jcolor.Attribute;
 
@@ -90,7 +92,7 @@ public class CombatMenu {
         enemy.setDamage(enemy.getDamage() * enemy.getLevel() + damageRandom);
         
         System.out.printf("%s has come to fight!", enemy.toString(true));
-        Thread.sleep(Utils.STANDARD);
+        Thread.sleep(Utils.getSTANDARD());
         menu();
     }
 
@@ -466,7 +468,7 @@ public class CombatMenu {
             shieldUp = true;
             shieldTurns = 0;
             System.out.printf("%s has been activated, lasting for %s turns.", Players.player.getShield().getNAME(), Players.player.getShield().getTURNS());
-            Thread.sleep(Utils.STANDARD);
+            Thread.sleep(Utils.getSTANDARD());
             setTurn();
         } else {
             if (shieldCharging) {
@@ -547,7 +549,7 @@ public class CombatMenu {
                     Players.player.setTempHealth(Players.player.getTempHealth() - damage); // TODO: make the damage relate to enemy level as well instead of just removing percentage
 
                     System.out.printf("%s was able to hit you while you were running, dealing %s damage!", enemy.getNAME(), damage);
-                    Thread.sleep(Utils.STANDARD);
+                    Thread.sleep(Utils.getSTANDARD());
                     
                     if (Players.player.getHealth() <= 0) {
                         System.out.print("You died!");
@@ -579,7 +581,7 @@ public class CombatMenu {
         };
 
         System.out.printf("\n%s is going to attack!\n", enemy.getNAME());
-        Thread.sleep(Utils.STANDARD);
+        Thread.sleep(Utils.getSTANDARD());
         if ((smokeActive ? Utils.chance(enemy.getAccuracy() - Utils.randomRange(30, 90)) : Utils.chance(enemy.getAccuracy())) && !flashbangActive) { // if hits
             double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
 
@@ -590,12 +592,12 @@ public class CombatMenu {
 
             Players.player.setTempHealth(Players.player.getTempHealth() - damage); //* Gordon: permanent damage idea might not implement
             System.out.printf("%s dealt %s damage!", enemy.getNAME(), damage); // 
-            Thread.sleep(Utils.STANDARD);
+            Thread.sleep(Utils.getSTANDARD());
             setTurn();
             menu();
         } else { 
             System.out.printf("%s %s", enemy.getNAME(), missText[random.nextInt(missText.length)]);
-            Thread.sleep(Utils.STANDARD);
+            Thread.sleep(Utils.getSTANDARD());
             setTurn();
             menu();
         }
@@ -615,7 +617,7 @@ public class CombatMenu {
         Players.player.setExp(Players.player.getExp() + exp); 
 
         System.out.printf("\nYou defeated %s! %s exp awarded.", enemy.getNAME(), exp);
-        Thread.sleep(Utils.STANDARD);
+        Thread.sleep(Utils.getSTANDARD());
 
         //TODO: implement shield loot as the rarest thing possible ok thanks 
         if (Utils.chance(34)) { //* weapon looting and shield looting
