@@ -14,5 +14,7 @@ public class Main {
         Lanterna.startScreen(150, 50);
 
         MainMenu.menu();
+
+        // TODO: the construction classes are full of public attributes, how fix.
     }
 }

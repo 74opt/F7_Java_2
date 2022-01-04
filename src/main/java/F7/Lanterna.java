@@ -52,8 +52,6 @@ public class Lanterna {
         row = 1;
 
         screen.startScreen();
-        // refresh.start();
-        //keyboardListen.start();
     }
 
     public static void clear() throws IOException {

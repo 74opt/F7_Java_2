@@ -22,9 +22,6 @@ public class Enemies {
 
     public static Enemy angel = new Enemy("Angel", "They've had enough of your hubris.", 8, 10, 1, 95, Rarities.godly);
 
-    // can remove now because no need to use MAX_VALUE
-    //public static Enemy dev = new Enemy("The Developer", ".oremoR nhoJ ,em llik tsum uoy ,emag eht niw oT", Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 101, Rarities.godly);
-
     public static HashMap<Rarity, Enemy[]> enemyHashMap = new HashMap<>();
     
     public static void setEnemyHashMap() {

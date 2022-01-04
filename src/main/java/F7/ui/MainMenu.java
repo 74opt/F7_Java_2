@@ -68,12 +68,12 @@ public class MainMenu {
                         try {
                             switch (keyPressed.getCharacter()) {
                                 case '1' -> {
-                                    start();
                                     running = false;
+                                    start();
                                 }
                                 case '2' -> {
-                                    load();
                                     running = false;
+                                    load();
                                 }
                                 case '3' -> System.exit(0);
                             }
@@ -135,13 +135,13 @@ public class MainMenu {
         MapMenu.menu();
     }
 
+    // this appears to be working and i sure hope it does buddy
     private static void load() throws Exception  {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        Players.player = objectMapper.readValue(new File(Utils.SAVE_PATH), Player.class);
+        Players.player = objectMapper.readValue(new File(Utils.getPLAYER_SAVE_PATH()), Player.class);
+        MapMenu.setCurrentMap(objectMapper.readValue(new File(Utils.getMAP_SAVE_PATH()), Map.class));
 
-        // TODO: save Map into save.json and change this
-        MapMenu.setCurrentMap(new Map(Maps.plains));
         MapMenu.getCurrentMap().spawnPlayer(Players.player.getX(), Players.player.getY());
 
         MapMenu.menu();

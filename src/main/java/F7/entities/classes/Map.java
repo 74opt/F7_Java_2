@@ -2,6 +2,8 @@ package F7.entities.classes;
 
 import F7.entities.construction.Maps;
 import F7.entities.construction.Players;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,13 +18,23 @@ public class Map {
 
     public Tile[][] getMAP() {return MAP;}
 
+    public Map getPARENT() {return PARENT;}
+
+    @JsonCreator
+    public Map(@JsonProperty("name") String NAME, @JsonProperty("map") Tile[][] MAP, @JsonProperty("parent") Map PARENT) {
+        this.NAME = NAME;
+        this.MAP = MAP;
+        this.PARENT = PARENT;
+    }
+
     public Map(String NAME, Tile[][] MAP) {
         this.NAME = NAME;
         this.MAP = MAP;
         this.PARENT = this;
     }
 
-    public Map(Map map) { // to clone a map from another
+    // to clone a map from another
+    public Map(Map map) {
         this.NAME = map.getNAME();
         this.MAP = Arrays.stream(map.getMAP()).map(Tile[]::clone).toArray(Tile[][]::new); // thank you Gayan Weerakutti from stack overflow
         this.PARENT = map;

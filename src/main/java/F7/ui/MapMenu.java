@@ -92,15 +92,12 @@ public class MapMenu {
 
     // TODO: Modify for Lanterna
     private static void save() throws Exception {
-        File save = new File(Utils.SAVE_PATH);
+        File playerSave = new File(Utils.getPLAYER_SAVE_PATH());
+        File mapSave = new File(Utils.getMAP_SAVE_PATH());
         ObjectMapper objectMapper = new ObjectMapper();
 
-        objectMapper.writeValue(save, Players.player);
-        // TODO: save map
-
-        System.out.println("Saved.");
-        Thread.sleep(Utils.QUICK_STANDARD);
-        menu();
+        objectMapper.writeValue(playerSave, Players.player);
+        objectMapper.writeValue(mapSave, currentMap);
     }
 
     // TODO: Modify for Lanterna

@@ -25,8 +25,9 @@ public class Utils {
     /** .045 seconds, used for the time between each character appearing in Utils.scrollText() */
     public static final int SCROLL = 45;
 
-    /** Path to save the game */
-    public static final String SAVE_PATH = "src\\main\\java\\F7\\save.json";
+    /** Paths to save the game */
+    private static final String PLAYER_SAVE_PATH = "src\\main\\java\\F7\\save\\player.json";
+    private static final String MAP_SAVE_PATH = "src\\main\\java\\F7\\save\\map.json";
 
     /** Standard decimal format used in the game */
     private static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");
@@ -55,9 +56,14 @@ public class Utils {
     public static int getSCROLL() {return SCROLL;}
 
     /**
-     * @return File path for where F7 saves the game
+     * @return File path for where F7 saves the player
      */
-    public static String getSAVE_PATH() {return SAVE_PATH;}
+    public static String getPLAYER_SAVE_PATH() {return PLAYER_SAVE_PATH;}
+
+    /**
+     * @return File path for where F7 saves the map
+     */
+    public static String getMAP_SAVE_PATH() {return MAP_SAVE_PATH;}
 
     /**
      * @return Standard DecimalFormat for presenting doubles with 2 decimal places
