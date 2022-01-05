@@ -14,8 +14,11 @@ TODO: Todos part 2
 you must
 - fix shit code (found in looting mainly)
 - Use smth like rarityArrayList.get(random.nextInt(0, rarityArrayList.size()));
+- Use a hashmap of String consumableEffect and int turns to determine consumable effects
 - lanterna
 */
+
+// DOTADIW
 
 public class CombatMenu {
     private static Enemy enemy;
@@ -41,6 +44,12 @@ public class CombatMenu {
     private static int targetTurns;
     private static int amplifierTurns;
     private static int flashbangTurns;
+
+    private static HashMap<Consumable, Integer> consumableEffectHashMap = new HashMap<>();
+
+    public static void setConsumableEffectHashMap() {
+
+    }
     
     public static void start() throws Exception {
         Utils.clear();
@@ -63,21 +72,9 @@ public class CombatMenu {
         amplifierTurns = 0;
         flashbangTurns = 0;
 
-        int enemyRarity = random.nextInt(101);
+        int enemyRarity = Utils.randomRange(0, 101);
 
-        if (enemyRarity <= Rarities.common.getCHANCE()) {
-            enemy = Enemies.enemyHashMap.get(Rarities.common)[random.nextInt(Enemies.enemyHashMap.get(Rarities.common).length)];
-        } else if (enemyRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE()) {
-            enemy = Enemies.enemyHashMap.get(Rarities.uncommon)[random.nextInt(Enemies.enemyHashMap.get(Rarities.uncommon).length)];
-        } else if (enemyRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE()) {
-            enemy = Enemies.enemyHashMap.get(Rarities.rare)[random.nextInt(Enemies.enemyHashMap.get(Rarities.rare).length)];
-        } else if (enemyRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE() + Rarities.exceptional.getCHANCE()) {
-            enemy = Enemies.enemyHashMap.get(Rarities.exceptional)[random.nextInt(Enemies.enemyHashMap.get(Rarities.exceptional).length)];
-        } else {
-            enemy = Enemies.enemyHashMap.get(Rarities.godly)[random.nextInt(Enemies.enemyHashMap.get(Rarities.godly).length)];
-        }
-
-        enemy = new Enemy(enemy);
+        enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
 
         enemy.setLevel(Players.player.getLevel() + Utils.randomRange(-2, 2));
         
@@ -85,11 +82,11 @@ public class CombatMenu {
             enemy.setLevel(1);
         }
 
-        int damageRandom = (int) (Utils.randomRange(-3, 5) * (((double) enemy.getLevel()) / Utils.randomRange(1, 4)));
-        int healthRandom = (int) (Utils.randomRange(-2, 3) * (((double) enemy.getLevel()) / Utils.randomRange(1, 3)) + (((double) damageRandom) / Utils.randomRange(2, 5)));
-        enemy.setHealth(enemy.getHealth() * enemy.getLevel() + healthRandom);
-        enemy.setTempHealth(enemy.getHealth());
-        enemy.setDamage(enemy.getDamage() * enemy.getLevel() + damageRandom);
+//        int damageRandom = (int) (Utils.randomRange(-3, 5) * (((double) enemy.getLevel()) / Utils.randomRange(1, 4)));
+//        int healthRandom = (int) (Utils.randomRange(-2, 3) * (((double) enemy.getLevel()) / Utils.randomRange(1, 3)) + (((double) damageRandom) / Utils.randomRange(2, 5)));
+//        enemy.setHealth(enemy.getHealth() * enemy.getLevel() + healthRandom);
+//        enemy.setTempHealth(enemy.getHealth());
+//        enemy.setDamage(enemy.getDamage() * enemy.getLevel() + damageRandom);
         
         System.out.printf("%s has come to fight!", enemy.toString(true));
         Thread.sleep(Utils.getSTANDARD());

@@ -18,6 +18,8 @@ public class Consumables {
 
     public static HashMap<Rarity, Consumable[]> consumableHashMap = new HashMap<>();
 
+    public static HashMap<Rarity, Consumable[]> getConsumableHashMap() {return consumableHashMap;}
+
     public static void setConsumableHashMap() {
         consumableHashMap.put(Rarities.common, new Consumable[] {medkit, smoke});
         consumableHashMap.put(Rarities.uncommon, new Consumable[] {corrosive, target});

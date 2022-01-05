@@ -9,6 +9,7 @@ public class Main {
         Weapons.setWeaponHashMap();
         Shields.setShieldHashMap();
         Rarities.setRaritiesArrayList();
+        Consumables.setConsumableHashMap();
 
         Lanterna.startScreen(150, 50);
 

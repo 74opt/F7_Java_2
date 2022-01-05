@@ -127,7 +127,7 @@ public class PlayerMenu {
                                 // To delete weapon
                                 // TODO: woah can i get rid of the numbers entirely on this one
                                 case 'd' -> {
-                                    if (!Players.player.weaponEquipped().equals(Weapons.fists)) {
+                                    if (!Players.player.weaponEquipped().equals(Weapons.getFists())) {
 
                                         int row = 18 + Players.player.getEquippedIndex();
 

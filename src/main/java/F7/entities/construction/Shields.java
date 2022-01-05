@@ -1,7 +1,6 @@
 package F7.entities.construction;
 
 import java.util.HashMap;
-
 import F7.entities.classes.Rarity;
 import F7.entities.classes.Shield;
 
@@ -17,6 +16,8 @@ public class Shields {
     public static Shield aegis = new Shield("Aegis-12", 95, 2, 1, Rarities.godly);
 
     public static HashMap<Rarity, Shield[]> shieldHashMap = new HashMap<>();
+
+    public static HashMap<Rarity, Shield[]> getShieldHashMap() {return shieldHashMap;}
 
     public static void setShieldHashMap() {
         shieldHashMap.put(Rarities.common, new Shield[] {scrap});

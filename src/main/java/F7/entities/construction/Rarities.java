@@ -1,7 +1,7 @@
 package F7.entities.construction;
 
 import F7.entities.classes.Rarity;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Rarities { // rarities must equal 100 when summed
     public static Rarity common = new Rarity("Common", "^w", 60);
@@ -14,7 +14,9 @@ public class Rarities { // rarities must equal 100 when summed
 
     public static Rarity godly = new Rarity("Godly", "^O", 1);
 
-    public static ArrayList<Rarity> rarityArrayList = new ArrayList<>();
+    private static ArrayList<Rarity> rarityArrayList = new ArrayList<>();
+
+    public static ArrayList<Rarity> getRarityArrayList() {return rarityArrayList;}
 
     public static void setRaritiesArrayList() throws Exception {
         if (common.getCHANCE() + uncommon.getCHANCE() + rare.getCHANCE() + exceptional.getCHANCE() + godly.getCHANCE() != 100) {

@@ -1,5 +1,6 @@
 package F7.entities.classes;
 
+import F7.Utils;
 import F7.entities.construction.*;
 
 import java.util.*;
@@ -89,7 +90,7 @@ public class Player {
         this.tempHealth = 50;
         this.level = 1;
         this.exp = 0;
-        this.weapons[0] = Weapons.crowbar;
+        this.weapons[0] = Weapons.getWeaponHashMap().get(Rarities.common)[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.common).length)];
         this.equippedIndex = 0;
         this.shield = Shields.scrap;
         this.x = 19;
@@ -131,7 +132,7 @@ public class Player {
     }
 
     public Weapon weaponEquipped() {
-        return weapons[equippedIndex] != null ? weapons[equippedIndex] : Weapons.fists;
+        return weapons[equippedIndex] != null ? weapons[equippedIndex] : Weapons.getFists();
     }
 
     public String displayConsumables() throws Exception {

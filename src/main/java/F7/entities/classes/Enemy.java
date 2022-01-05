@@ -25,7 +25,18 @@ public class Enemy {
     public void setDamage(int damage) {this.damage = damage;}
 
     public int getLevel() {return level;}
-    public void setLevel(int level) {this.level = level;}
+    public void setLevel(int level) {
+        this.level = level;
+
+        int damageRandom = (int) (Utils.randomRange(-3, 5) * (((double) this.level) / Utils.randomRange(1, 4)));
+        int healthRandom = (int) (Utils.randomRange(-2, 3) * (((double) this.level) / Utils.randomRange(1, 3)) + (((double) damageRandom) / Utils.randomRange(2, 5)));
+
+        health *= this.level;
+        health += healthRandom;
+        tempHealth = health;
+        damage *= this.level;
+        damage += damageRandom;
+    }
 
     public int getAccuracy() {return accuracy;}
     public void setAccuracy(int accuracy) {this.accuracy = accuracy;}

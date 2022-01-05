@@ -15,7 +15,7 @@ public class DeathMenu {
 
         Players.player.setTempHealth(Players.player.getHealth());
 
-        if (Utils.chance(50) && !Players.player.weaponEquipped().equals(Weapons.fists)) { //* 50% chance of destroying equipped weapon on death
+        if (Utils.chance(50) && !Players.player.weaponEquipped().equals(Weapons.getFists())) { //* 50% chance of destroying equipped weapon on death
             Utils.scrollText(String.format("%s has been destroyed in the process.\n", Players.player.weaponEquipped().toString(true)), Utils.SCROLL);
             
             Players.player.getWeapons()[Players.player.getEquippedIndex()] = null;
