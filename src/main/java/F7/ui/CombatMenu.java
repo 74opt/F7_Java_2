@@ -1,6 +1,8 @@
 package F7.ui;
 
 import java.util.*;
+
+import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
 import F7.entities.classes.*;
@@ -32,27 +34,42 @@ public class CombatMenu {
     private static int shieldChargingTurns;
 
     // Booleans for the consumables
+    @Deprecated
     private static boolean smokeActive; // affects enemy
+    @Deprecated
     private static boolean corrosiveActive; // affects player
+    @Deprecated
     private static boolean targetActive; // affects player
+    @Deprecated
     private static boolean amplifierActive; // affects player
+    @Deprecated
     private static boolean flashbangActive; // affects enemy
 
     // Timers for consumables
+    @Deprecated
     private static int smokeTurns;
+    @Deprecated
     private static int corrosiveTurns;
+    @Deprecated
     private static int targetTurns;
+    @Deprecated
     private static int amplifierTurns;
+    @Deprecated
     private static int flashbangTurns;
 
     private static HashMap<Consumable, Integer> consumableEffectHashMap = new HashMap<>();
 
     public static void setConsumableEffectHashMap() {
-
+        consumableEffectHashMap.put(Consumables.smoke, 0);
+        consumableEffectHashMap.put(Consumables.corrosive, 0);
+        consumableEffectHashMap.put(Consumables.target, 0);
+        consumableEffectHashMap.put(Consumables.amplifier, 0);
+        consumableEffectHashMap.put(Consumables.flashbang, 0);
     }
     
     public static void start() throws Exception {
         Utils.clear();
+        Lanterna.clear();
 
         isPlayerTurn = random.nextBoolean();
 
@@ -785,6 +802,7 @@ public class CombatMenu {
         isPlayerTurn = !isPlayerTurn;
     }
 
+    // TODO: replace this stuff
     private static String displayStatuses() {
         String status = "";
 
