@@ -57,14 +57,15 @@ public class CombatMenu {
     @Deprecated
     private static int flashbangTurns;
 
-    private static HashMap<Consumable, Integer> consumableEffectHashMap = new HashMap<>();
+    private static HashMap<String, Integer> statusHashMap = new HashMap<>();
 
-    public static void setConsumableEffectHashMap() {
-        consumableEffectHashMap.put(Consumables.smoke, 0);
-        consumableEffectHashMap.put(Consumables.corrosive, 0);
-        consumableEffectHashMap.put(Consumables.target, 0);
-        consumableEffectHashMap.put(Consumables.amplifier, 0);
-        consumableEffectHashMap.put(Consumables.flashbang, 0);
+    public static void setStatusHashMap() {
+        statusHashMap.put(Players.player.getShield().getNAME(), 0);
+        statusHashMap.put(Consumables.smoke.getNAME(), 0);
+        statusHashMap.put(Consumables.corrosive.getNAME(), 0);
+        statusHashMap.put(Consumables.target.getNAME(), 0);
+        statusHashMap.put(Consumables.amplifier.getNAME(), 0);
+        statusHashMap.put(Consumables.flashbang.getNAME(), 0);
     }
     
     public static void start() throws Exception {
@@ -73,21 +74,7 @@ public class CombatMenu {
 
         isPlayerTurn = random.nextBoolean();
 
-        shieldUp = false;
-        shieldCharging = false;
-        shieldTurns = 0;
-
-        smokeActive = false;
-        corrosiveActive = false;
-        targetActive = false;
-        amplifierActive = false;
-        flashbangActive = false;
-
-        smokeTurns = 0;
-        corrosiveTurns = 0;
-        targetTurns = 0;
-        amplifierTurns = 0;
-        flashbangTurns = 0;
+        setStatusHashMap();
 
         int enemyRarity = Utils.randomRange(0, 101);
 
@@ -98,12 +85,6 @@ public class CombatMenu {
         if (enemy.getLevel() <= 0) {
             enemy.setLevel(1);
         }
-
-//        int damageRandom = (int) (Utils.randomRange(-3, 5) * (((double) enemy.getLevel()) / Utils.randomRange(1, 4)));
-//        int healthRandom = (int) (Utils.randomRange(-2, 3) * (((double) enemy.getLevel()) / Utils.randomRange(1, 3)) + (((double) damageRandom) / Utils.randomRange(2, 5)));
-//        enemy.setHealth(enemy.getHealth() * enemy.getLevel() + healthRandom);
-//        enemy.setTempHealth(enemy.getHealth());
-//        enemy.setDamage(enemy.getDamage() * enemy.getLevel() + damageRandom);
         
         System.out.printf("%s has come to fight!", enemy.toString(true));
         Thread.sleep(Utils.getSTANDARD());
@@ -150,69 +131,69 @@ public class CombatMenu {
 
         // can you find a way to turn these into methods
         if (isPlayerTurn) {
-            if (shieldCharging) {
-                shieldChargingTurns++;
-    
-                if (shieldChargingTurns > Players.player.getShield().getCOOLDOWN()) {
-                    shieldCharging = false;
-                    shieldChargingTurns = 0;
-                }
-            }
-
-            if (shieldUp) {
-                shieldTurns++;
-    
-                if (shieldTurns > Players.player.getShield().getTURNS()) {
-                    shieldCharging = true;
-                    shieldChargingTurns = 0;
-                    shieldUp = false;
-                }
-            }
-
-            if (smokeActive) {
-                smokeTurns++;
-
-                if (smokeTurns > Consumables.smoke.getTURNS()) {
-                    smokeActive = false;
-                    smokeTurns = 0;
-                }
-            }
-
-            if (corrosiveActive) {
-                corrosiveTurns++;
-
-                if (corrosiveTurns > Consumables.corrosive.getTURNS()) {
-                    corrosiveActive = false;
-                    corrosiveTurns = 0;
-                }
-            }
-
-            if (targetActive) {
-                targetTurns++;
-
-                if (targetTurns > Consumables.target.getTURNS()) {
-                    targetActive = false;
-                    targetTurns = 0;
-                }
-            }
-
-            if (amplifierActive) {
-                amplifierTurns++;
-
-                if (amplifierTurns > Consumables.amplifier.getTURNS()) {
-                    amplifierActive = false;
-                    amplifierTurns = 0;
-                }
-            }
-
-            if (flashbangActive) {
-                flashbangTurns++;
-
-                if (flashbangTurns > Consumables.flashbang.getTURNS()) {
-                    flashbangActive = false;
-                    flashbangTurns = 0;
-                }
-            }
+//            if (shieldCharging) {
+//                shieldChargingTurns++;
+//
+//                if (shieldChargingTurns > Players.player.getShield().getCOOLDOWN()) {
+//                    shieldCharging = false;
+//                    shieldChargingTurns = 0;
+//                }
+//            }
+//
+//            if (shieldUp) {
+//                shieldTurns++;
+//
+//                if (shieldTurns > Players.player.getShield().getTURNS()) {
+//                    shieldCharging = true;
+//                    shieldChargingTurns = 0;
+//                    shieldUp = false;
+//                }
+//            }
+//
+//            if (smokeActive) {
+//                smokeTurns++;
+//
+//                if (smokeTurns > Consumables.smoke.getTURNS()) {
+//                    smokeActive = false;
+//                    smokeTurns = 0;
+//                }
+//            }
+//
+//            if (corrosiveActive) {
+//                corrosiveTurns++;
+//
+//                if (corrosiveTurns > Consumables.corrosive.getTURNS()) {
+//                    corrosiveActive = false;
+//                    corrosiveTurns = 0;
+//                }
+//            }
+//
+//            if (targetActive) {
+//                targetTurns++;
+//
+//                if (targetTurns > Consumables.target.getTURNS()) {
+//                    targetActive = false;
+//                    targetTurns = 0;
+//                }
+//            }
+//
+//            if (amplifierActive) {
+//                amplifierTurns++;
+//
+//                if (amplifierTurns > Consumables.amplifier.getTURNS()) {
+//                    amplifierActive = false;
+//                    amplifierTurns = 0;
+//                }
+//            }
+//
+//            if (flashbangActive) {
+//                flashbangTurns++;
+//
+//                if (flashbangTurns > Consumables.flashbang.getTURNS()) {
+//                    flashbangActive = false;
+//                    flashbangTurns = 0;
+//                }
+//            }
 
             System.out.printf(
                 """
@@ -622,7 +603,7 @@ public class CombatMenu {
     private static void enemyDead() throws Exception {
         HashMap<Rarity, Double> rarityMultipliers = new HashMap<Rarity, Double>();
         rarityMultipliers.put(Rarities.common, 1.0);
-        rarityMultipliers.put(Rarities.uncommon, 1.3); //? change to 1.5?
+        rarityMultipliers.put(Rarities.uncommon, 1.5);
         rarityMultipliers.put(Rarities.rare, 2.0);
         rarityMultipliers.put(Rarities.exceptional, 2.5);
         rarityMultipliers.put(Rarities.godly, 3.0);
