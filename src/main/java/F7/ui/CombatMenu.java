@@ -752,7 +752,7 @@ public class CombatMenu {
         }
     }
 
-    private static boolean checkStatus(String status) {
+    private static boolean checkStatus(Consumable status) {
         return statusHashMap.get(status) > 0;
     }
 }
