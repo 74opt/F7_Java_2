@@ -1,6 +1,7 @@
 package F7.ui;
 
 import java.util.*;
+import java.util.Map;
 
 import F7.Lanterna;
 import F7.Utils;
@@ -28,7 +29,9 @@ public class CombatMenu {
     private final static Random random = new Random();
 
     // Shield variables
+    @Deprecated
     private static boolean shieldUp;
+    @Deprecated
     private static boolean shieldCharging;
     private static int shieldTurns;
     private static int shieldChargingTurns;
@@ -45,27 +48,14 @@ public class CombatMenu {
     @Deprecated
     private static boolean flashbangActive; // affects enemy
 
-    // Timers for consumables
-    @Deprecated
-    private static int smokeTurns;
-    @Deprecated
-    private static int corrosiveTurns;
-    @Deprecated
-    private static int targetTurns;
-    @Deprecated
-    private static int amplifierTurns;
-    @Deprecated
-    private static int flashbangTurns;
-
-    private static HashMap<String, Integer> statusHashMap = new HashMap<>();
+    private static HashMap<Consumable, Integer> statusHashMap = new HashMap<>();
 
     public static void setStatusHashMap() {
-        statusHashMap.put(Players.player.getShield().getNAME(), 0);
-        statusHashMap.put(Consumables.smoke.getNAME(), 0);
-        statusHashMap.put(Consumables.corrosive.getNAME(), 0);
-        statusHashMap.put(Consumables.target.getNAME(), 0);
-        statusHashMap.put(Consumables.amplifier.getNAME(), 0);
-        statusHashMap.put(Consumables.flashbang.getNAME(), 0);
+        statusHashMap.put(Consumables.smoke, 0);
+        statusHashMap.put(Consumables.corrosive, 0);
+        statusHashMap.put(Consumables.target, 0);
+        statusHashMap.put(Consumables.amplifier, 0);
+        statusHashMap.put(Consumables.flashbang, 0);
     }
     
     public static void start() throws Exception {
@@ -96,104 +86,51 @@ public class CombatMenu {
 
         String shieldStatus;
 
-        if (shieldUp) {
+        // shieldTurns > 0 means shieldUp = true
+        // shieldTurns should override all other shield status checks
+
+        // shieldChargingTurns > 0 means shieldCharging = true
+        // both values < 0 means the shield is ready to be used
+
+        if (shieldTurns > 0) {
             shieldStatus = Ansi.colorize(String.format("Active (%s turns left)", Players.player.getShield().getTURNS() - shieldTurns), Attribute.TEXT_COLOR(46));
-        } else if (shieldCharging) {
+        } else if (shieldChargingTurns > 0) {
             shieldStatus = Ansi.colorize(String.format("Charging (%s turns left)", Players.player.getShield().getCOOLDOWN() - shieldChargingTurns), Attribute.TEXT_COLOR(208));
         } else {
             shieldStatus = Ansi.colorize("Ready", Attribute.TEXT_COLOR(50));
         }
 
         // TODO: change a buncha things to printf
-//        System.out.printf(
-//                """
-//                %s
-//                Assigned and Calibrated for: %s
-//
-//                %s
-//                %s %s
-//                %s %s (%s)
-//
-//                %s
-//                %s
-//
-//                Active Statuses:
-//                %s
-//                %s
-//                """,
-//                Ansi.colorize("Model-F v5.032 Targeting Chip", Attribute.TEXT_COLOR(10)),
-//                Players.player.getName(),
-//                Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), 9),
-//                Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)), Players.player.weaponEquipped().toString(true),
-//                Ansi.colorize("Shield:", Attribute.TEXT_COLOR(231)), Players.player.getShield().toString(true), shieldStatus,
-//                Ansi.colorize("Consumables:", Attribute.TEXT_COLOR(231)), Players.player.displayConsumables(), displayStatuses(), enemy.toString(false)
-//        );
+        Lanterna.print(
+                String.format("""
+                %s
+                Assigned and Calibrated for: %s
 
-        // can you find a way to turn these into methods
+                %s
+                %s %s
+                %s %s (%s)
+
+                %s
+                %s
+
+                Active Statuses:
+                %s
+                %s
+                """,
+                Ansi.colorize("Model-F v5.032 Targeting Chip", Attribute.TEXT_COLOR(10)),
+                Players.player.getName(),
+                Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^O"),
+                Ansi.colorize("Weapon Equipped:", Attribute.TEXT_COLOR(231)), Players.player.weaponEquipped().toString(true),
+                Ansi.colorize("Shield:", Attribute.TEXT_COLOR(231)), Players.player.getShield().toString(true), shieldStatus,
+                Ansi.colorize("Consumables:", Attribute.TEXT_COLOR(231)), Players.player.displayConsumables(), displayStatuses(), enemy.toString(false))
+        );
+
         if (isPlayerTurn) {
-//            if (shieldCharging) {
-//                shieldChargingTurns++;
-//
-//                if (shieldChargingTurns > Players.player.getShield().getCOOLDOWN()) {
-//                    shieldCharging = false;
-//                    shieldChargingTurns = 0;
-//                }
-//            }
-//
-//            if (shieldUp) {
-//                shieldTurns++;
-//
-//                if (shieldTurns > Players.player.getShield().getTURNS()) {
-//                    shieldCharging = true;
-//                    shieldChargingTurns = 0;
-//                    shieldUp = false;
-//                }
-//            }
-//
-//            if (smokeActive) {
-//                smokeTurns++;
-//
-//                if (smokeTurns > Consumables.smoke.getTURNS()) {
-//                    smokeActive = false;
-//                    smokeTurns = 0;
-//                }
-//            }
-//
-//            if (corrosiveActive) {
-//                corrosiveTurns++;
-//
-//                if (corrosiveTurns > Consumables.corrosive.getTURNS()) {
-//                    corrosiveActive = false;
-//                    corrosiveTurns = 0;
-//                }
-//            }
-//
-//            if (targetActive) {
-//                targetTurns++;
-//
-//                if (targetTurns > Consumables.target.getTURNS()) {
-//                    targetActive = false;
-//                    targetTurns = 0;
-//                }
-//            }
-//
-//            if (amplifierActive) {
-//                amplifierTurns++;
-//
-//                if (amplifierTurns > Consumables.amplifier.getTURNS()) {
-//                    amplifierActive = false;
-//                    amplifierTurns = 0;
-//                }
-//            }
-//
-//            if (flashbangActive) {
-//                flashbangTurns++;
-//
-//                if (flashbangTurns > Consumables.flashbang.getTURNS()) {
-//                    flashbangActive = false;
-//                    flashbangTurns = 0;
-//                }
-//            }
+            statusHashMap.forEach((key, value) -> {
+                if (value > 0) {
+                    statusHashMap.replace(key, value - 1);
+                }
+            });
 
             System.out.printf(
                 """
@@ -787,11 +724,22 @@ public class CombatMenu {
     private static String displayStatuses() {
         String status = "";
 
-        status += addStatus(smokeActive, Consumables.smoke.toString(), Consumables.smoke.getTURNS(), smokeTurns);
-        status += addStatus(corrosiveActive, Consumables.corrosive.toString(), Consumables.corrosive.getTURNS(), corrosiveTurns);
-        status += addStatus(targetActive, Consumables.target.toString(), Consumables.target.getTURNS(), targetTurns);
-        status += addStatus(amplifierActive, Consumables.amplifier.toString(), Consumables.amplifier.getTURNS(), amplifierTurns);
-        status += addStatus(flashbangActive, Consumables.flashbang.toString(), Consumables.flashbang.getTURNS(), flashbangTurns);
+        for (Map.Entry element : statusHashMap.entrySet()) {
+            Consumable key = (Consumable) element.getKey();
+            int value = statusHashMap.get(key);
+
+            status += addStatus(value > 0, key.toString(), key.getTURNS(), value);
+        }
+
+//        statusHashMap.forEach((key, value) -> {
+//            status += addStatus(value > 0, key.toString(), key.getTURNS(), value);
+//        });
+
+//        status += addStatus(smokeActive, Consumables.smoke.toString(), Consumables.smoke.getTURNS(), smokeTurns);
+//        status += addStatus(corrosiveActive, Consumables.corrosive.toString(), Consumables.corrosive.getTURNS(), corrosiveTurns);
+//        status += addStatus(targetActive, Consumables.target.toString(), Consumables.target.getTURNS(), targetTurns);
+//        status += addStatus(amplifierActive, Consumables.amplifier.toString(), Consumables.amplifier.getTURNS(), amplifierTurns);
+//        status += addStatus(flashbangActive, Consumables.flashbang.toString(), Consumables.flashbang.getTURNS(), flashbangTurns);
         
         return status;
     }
@@ -802,5 +750,9 @@ public class CombatMenu {
         } else {
             return "";
         }
+    }
+
+    private static boolean checkStatus(String status) {
+        return statusHashMap.get(status) > 0;
     }
 }
