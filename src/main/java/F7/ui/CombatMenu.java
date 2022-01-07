@@ -33,6 +33,8 @@ public class CombatMenu {
     private static boolean shieldUp;
     @Deprecated
     private static boolean shieldCharging;
+
+    // THESE TWO VALUES SHOULD NEVER BE NEGATIVE
     private static int shieldTurns;
     private static int shieldChargingTurns;
 
@@ -83,6 +85,7 @@ public class CombatMenu {
 
     private static void menu() throws Exception {
         Utils.clear();
+        Lanterna.clear();
 
         String shieldStatus;
 
@@ -396,16 +399,16 @@ public class CombatMenu {
     }
 
     private static void shield() throws Exception { //TODO pls
-        if (!shieldCharging && !shieldUp) {
+        if (shieldChargingTurns == 0 && shieldTurns == 0) {
             shieldUp = true;
             shieldTurns = 0;
             System.out.printf("%s has been activated, lasting for %s turns.", Players.player.getShield().getNAME(), Players.player.getShield().getTURNS());
             Thread.sleep(Utils.getSTANDARD());
             setTurn();
         } else {
-            if (shieldCharging) {
+            if (shieldChargingTurns > 0) {
                 System.out.printf("%s is still charging. %s turns until usable.", Players.player.getShield().getNAME(), 2);
-            } else if (shieldUp) {
+            } else if (shieldTurns > 0) {
                 System.out.printf("%s is already up.", Players.player.getShield().getNAME());
             }
             Thread.sleep(Utils.QUICK_STANDARD);

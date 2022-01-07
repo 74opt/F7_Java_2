@@ -129,7 +129,7 @@ public class MapMenu {
                 MainMenu.menu();
                 break;
             } else if (choice.getCharacter() == 'e') {
-                Lanterna.clearln(28);
+                Lanterna.clear(28);
                 break;
             }
         }

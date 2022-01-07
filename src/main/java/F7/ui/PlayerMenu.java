@@ -6,8 +6,6 @@ import com.diogonunes.jcolor.*; //https://github.com/dialex/JColor
 import com.googlecode.lanterna.input.KeyStroke;
 
 import java.io.IOException;
-import java.security.Key;
-import java.util.Arrays;
 
 public class PlayerMenu {
     public static void menu() throws Exception {
@@ -89,7 +87,7 @@ public class PlayerMenu {
                                     }
 
                                     for (int i = 10; i < 17; i++) {
-                                        Lanterna.clearln(i);
+                                        Lanterna.clear(i);
                                     }
 
                                     Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(false));
@@ -110,7 +108,7 @@ public class PlayerMenu {
                                     }
 
                                     for (int i = 10; i < 17; i++) {
-                                        Lanterna.clearln(i);
+                                        Lanterna.clear(i);
                                     }
                                     
                                     Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(false));
@@ -139,13 +137,13 @@ public class PlayerMenu {
 
                                             if (choice.getCharacter() == 'q') {
                                                 Players.player.setWeapon(null, Players.player.getEquippedIndex());
-                                                Lanterna.clearln(row);
-                                                Lanterna.clearln(10);
+                                                Lanterna.clear(row);
+                                                Lanterna.clear(10);
                                                 Lanterna.print(1, row, "^g> " + "^GNo Weapon");
                                                 Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(false));
                                                 break;
                                             } else if (choice.getCharacter() == 'e') {
-                                                Lanterna.clearln(row);
+                                                Lanterna.clear(row);
                                                 Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true));
                                                 break;
                                             }

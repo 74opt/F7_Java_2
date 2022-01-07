@@ -62,6 +62,16 @@ public class Lanterna {
         screen.refresh();
     }
 
+    public static void clear(int row) throws Exception {
+        String spaces = "";
+
+        for (int i = 0; i < initColumn; i++) {
+            spaces += " ";
+        }
+
+        print(0, row, spaces);
+    }
+
     // Printing to terminal
     public static void print(int column, int row, String text) throws Exception {
         final int finalColumn = Lanterna.column;
@@ -118,6 +128,11 @@ public class Lanterna {
                         case '9' -> color = 70; // Green
                         case '0' -> color = 65; // Green
 
+                        // In case I need to use ^
+                        case '^' -> {
+                            continue;
+                        }
+
                         default -> throw new Exception("^ not followed by character");
                     }
                     textGraphics.setForegroundColor(new TextColor.Indexed(color));
@@ -130,8 +145,16 @@ public class Lanterna {
                 }
             }
         }
-
         screen.refresh();
+    }
+
+    // Guess im obligated to use this
+    public static void printf(String text, String... args) throws Exception {
+        print(String.format(text, args));
+    }
+
+    public static void printf(int column, int row, String text, String... args) throws Exception {
+        print(column, row, String.format(text, args));
     }
 
     public static void println(String text) throws Exception {
@@ -140,13 +163,16 @@ public class Lanterna {
         column = 1;
     }
 
-    public static void clearln(int row) throws Exception {
-        String spaces = "";
-
-        for (int i = 0; i < initColumn; i++) {
-            spaces += " ";
-        }
-
-        print(0, row, spaces);
+    /**
+     * Absolute beauty of a method, the best the world has ever seen.
+     * Pronounced "print-flynn"
+     * @param text String to format with %s as the thing to fill in
+     * @param args Strings to insert into %s
+     * @throws Exception if a "^" character is followed by an invalid character
+     */
+    public static void printfln(String text, String... args) throws Exception {
+        print(String.format(text, args));
+        row++;
+        column = 1;
     }
 }
