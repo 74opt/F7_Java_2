@@ -69,14 +69,14 @@ public class Enemy {
     // Methods
     public String toString(boolean simple) {
         if (simple) {
-            return String.format("%s Level %s %s", RARITY.toString(), level, Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)));
+            return String.format("%s Level %s ^W%s", RARITY.toString(), level, NAME);
         } else {
             return String.format(
                 """
-                %s Level %s %s
+                %s Level %s ^W%s
                 %s
                 %s""", 
-                RARITY.toString(), level, Ansi.colorize(NAME, Attribute.TEXT_COLOR(231)), 
+                RARITY.toString(), level, NAME,
                 Utils.outOf("Health:", health, tempHealth, "^R"),
                 DESCRIPTION
             );

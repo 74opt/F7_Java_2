@@ -10,11 +10,13 @@ public class Main {
         Shields.setShieldHashMap();
         Rarities.setRaritiesArrayList();
         Consumables.setConsumableHashMap();
+        CombatMenu.setStatusHashMap();
 
         Lanterna.startScreen(150, 50);
 
-        MainMenu.menu();
+        //ystem.out.println(Lanterna.textBox("This is a horrible test", "^G", "^O"));
+        //Lanterna.print(Lanterna.textBox("This is\na horrible\ntest", "^G", "^O"));
 
-        // TODO: the construction classes are full of public attributes, how fix.
+        MainMenu.menu();
     }
 }

@@ -12,8 +12,7 @@ public class PlayerMenu {
         Lanterna.clear();
 
         // Stats View
-        Lanterna.println(
-            String.format("""
+        Lanterna.printfln("""
             ^CF7 Chassis - Model 891Z
             Created by RRS Industries
             ^WVersion: ^RIllegal. Software may be pirated or tampered with.
@@ -30,7 +29,7 @@ public class PlayerMenu {
             Players.player.getLevel(),
             Utils.outOf("^WExperience Points:", Players.player.expRequired(), Players.player.getExp(), "^g"),
             Utils.outOf("^WHealth:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
-            Players.player.weaponEquipped().toString(false))
+            Players.player.weaponEquipped().toString(false)
         );
 
         for (int i = 0; i < 4; i++) {
@@ -69,8 +68,6 @@ public class PlayerMenu {
                                 // TODO: running = false should be at the front if necessary
                                 case '1' -> {
                                     heal();
-                                    // Do i need running = false?
-                                    running = false;
                                 }
 
                                 case '2' -> {

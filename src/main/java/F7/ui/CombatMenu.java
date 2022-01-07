@@ -61,30 +61,30 @@ public class CombatMenu {
     }
     
     public static void start() throws Exception {
-        Utils.clear();
-        Lanterna.clear();
+        try {
+            Lanterna.clear();
 
-        isPlayerTurn = random.nextBoolean();
+            isPlayerTurn = random.nextBoolean();
 
-        setStatusHashMap();
+            int enemyRarity = Utils.randomRange(0, 101);
 
-        int enemyRarity = Utils.randomRange(0, 101);
+            enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
 
-        enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
+            enemy.setLevel(Players.player.getLevel() + Utils.randomRange(-2, 2));
 
-        enemy.setLevel(Players.player.getLevel() + Utils.randomRange(-2, 2));
-        
-        if (enemy.getLevel() <= 0) {
-            enemy.setLevel(1);
+            if (enemy.getLevel() <= 0) {
+                enemy.setLevel(1);
+            }
+
+            Lanterna.printf("%s ^Ghas come to fight!", enemy.toString(true));
+            Thread.sleep(Utils.getSTANDARD());
+            menu();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        
-        System.out.printf("%s has come to fight!", enemy.toString(true));
-        Thread.sleep(Utils.getSTANDARD());
-        menu();
     }
 
     private static void menu() throws Exception {
-        Utils.clear();
         Lanterna.clear();
 
         String shieldStatus;
@@ -103,7 +103,7 @@ public class CombatMenu {
             shieldStatus = Ansi.colorize("Ready", Attribute.TEXT_COLOR(50));
         }
 
-        // TODO: change a buncha things to printf
+        // TODO: change a buncha things to printf AND get rid of ansi colorize
         Lanterna.print(
                 String.format("""
                 %s

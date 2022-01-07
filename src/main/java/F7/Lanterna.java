@@ -149,11 +149,11 @@ public class Lanterna {
     }
 
     // Guess im obligated to use this
-    public static void printf(String text, String... args) throws Exception {
+    public static void printf(String text, Object... args) throws Exception {
         print(String.format(text, args));
     }
 
-    public static void printf(int column, int row, String text, String... args) throws Exception {
+    public static void printf(int column, int row, String text, Object... args) throws Exception {
         print(column, row, String.format(text, args));
     }
 
@@ -167,12 +167,39 @@ public class Lanterna {
      * Absolute beauty of a method, the best the world has ever seen.
      * Pronounced "print-flynn"
      * @param text String to format with %s as the thing to fill in
-     * @param args Strings to insert into %s
+     * @param args Objects to insert into %s
      * @throws Exception if a "^" character is followed by an invalid character
      */
-    public static void printfln(String text, String... args) throws Exception {
-        print(String.format(text, args));
+    public static void printfln(String text, Object... args) throws Exception {
+        printf(text, args);
         row++;
         column = 1;
+    }
+
+    // FIXME
+    public static String textBox(String text, String boxColor, String textColor) {
+        String box = boxColor + "╔═";
+
+        for (int i = 0; i < text.length(); i++) {
+            box += "═";
+        }
+
+        box += "═╗\n║ " + textColor;
+
+        for (char character : text.toCharArray()) {
+            if (character == '\n') {
+                box += boxColor + " ║\n║ " + textColor;
+            } else {
+                box += character;
+            }
+        }
+
+        box += boxColor + " ║\n╚═";
+
+        for (int i = 0; i < text.length(); i++) {
+            box += "═";
+        }
+
+        return box + "═╝";
     }
 }

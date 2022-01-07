@@ -202,7 +202,7 @@ public class Utils {
      * @return random integer between min and max
      */
     public static int randomRange(int min, int max) {
-        if (max < min) {
+        if (max > min) {
             return (int) ((Math.random() * (max - min)) + min);
         } else {
             return -1;
