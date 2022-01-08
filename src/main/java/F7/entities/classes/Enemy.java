@@ -69,13 +69,13 @@ public class Enemy {
     // Methods
     public String toString(boolean simple) {
         if (simple) {
-            return String.format("%s Level %s ^W%s", RARITY.toString(), level, NAME);
+            return String.format("%s ^GLevel %s ^W%s", RARITY.toString(), level, NAME);
         } else {
             return String.format(
                 """
-                %s Level %s ^W%s
+                %s ^GLevel %s ^W%s
                 %s
-                %s""", 
+                ^G%s""",
                 RARITY.toString(), level, NAME,
                 Utils.outOf("Health:", health, tempHealth, "^R"),
                 DESCRIPTION
