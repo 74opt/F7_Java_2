@@ -157,6 +157,7 @@ public class PlayerMenu {
         }).start();
     }
 
+    // TODO: CONVERT TO LANTERNA
     private static void heal() throws Exception {
         if (Players.player.getConsumables().contains(Consumables.medkit)) {
             double restoration = Utils.randomRange(15, 21) / 100.0;

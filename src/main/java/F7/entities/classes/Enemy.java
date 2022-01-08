@@ -1,8 +1,5 @@
 package F7.entities.classes;
 
-import com.diogonunes.jcolor.Ansi;
-import com.diogonunes.jcolor.Attribute;
-
 import F7.Utils;
 
 public class Enemy {
