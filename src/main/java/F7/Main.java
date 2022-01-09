@@ -14,7 +14,7 @@ public class Main {
 
         Lanterna.startScreen(150, 50);
 
-        //ystem.out.println(Lanterna.textBox("This is a horrible test", "^G", "^O"));
+        //System.out.println(Lanterna.textBox("This is a horrible test", "^G", "^O"));
         //Lanterna.print(Lanterna.textBox("This is\na horrible\ntest", "^G", "^O"));
 
         MainMenu.menu();

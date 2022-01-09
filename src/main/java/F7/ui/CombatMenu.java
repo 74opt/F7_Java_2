@@ -399,7 +399,6 @@ public class CombatMenu {
     private static void shield() throws Exception { //TODO pls
         if (shieldChargingTurns == 0 && shieldTurns == 0) {
             shieldUp = true;
-            shieldTurns = 0;
             Lanterna.printf("%s has been activated, lasting for %s turns.", Players.player.getShield().getNAME(), Players.player.getShield().getTURNS());
             Thread.sleep(Utils.getSTANDARD());
             setTurn();
@@ -468,7 +467,7 @@ public class CombatMenu {
                     //double damage = Utils.round(Players.player.getTempHealth() * (Utils.randomRange(15, 22) / 100.0), 2); // this way, i don't kill the player but still punish them for running
                     double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
 
-                    if (shieldUp) {
+                    if (shieldTurns > 0) {
                         damage *= (100 - Players.player.getShield().getDAMAGE_REDUCTION()) / 100.0; //* trying something out where i use the normal attack code but i'll make sure the player doesnt die
                         damage = Utils.round(damage, 2);
                     }
@@ -518,7 +517,7 @@ public class CombatMenu {
         if ((smokeActive ? Utils.chance(enemy.getAccuracy() - Utils.randomRange(30, 90)) : Utils.chance(enemy.getAccuracy())) && !flashbangActive) { // if hits
             double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
 
-            if (shieldUp) {
+            if (shieldTurns > 0) {
                 damage *= (100 - Players.player.getShield().getDAMAGE_REDUCTION()) / 100.0;
                 damage = Utils.round(damage, 2);
             }

@@ -175,7 +175,7 @@ public class PlayerMenu {
                 restoration -= overheal;
             }
 
-            System.out.printf("\n%s health restored.", Ansi.colorize("" + Utils.round(restoration, 2), Attribute.TEXT_COLOR(9)));
+            System.out.printf("\n^R%s^G health restored.", "" + Utils.round(restoration, 2));
         } else {
             System.out.printf("\nYou don't have %s available.", Consumables.medkit.toString());
         }

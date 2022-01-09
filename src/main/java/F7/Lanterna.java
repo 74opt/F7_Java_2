@@ -130,6 +130,9 @@ public class Lanterna {
 
                         // In case I need to use ^
                         case '^' -> {
+                            textGraphics.putString(column, row, "^");
+                            column++;
+                            i++;
                             continue;
                         }
 
