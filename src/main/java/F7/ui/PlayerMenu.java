@@ -175,9 +175,9 @@ public class PlayerMenu {
                 restoration -= overheal;
             }
 
-            System.out.printf("\n^R%s^G health restored.", "" + Utils.round(restoration, 2));
+            Lanterna.printf("\n^R%s^G health restored.", "" + Utils.round(restoration, 2));
         } else {
-            System.out.printf("\nYou don't have %s available.", Consumables.medkit.toString());
+            Lanterna.printf("\n^GYou don't have %s available.", Consumables.medkit.toString());
         }
         Thread.sleep(Utils.QUICK_STANDARD);
         menu();

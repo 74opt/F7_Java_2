@@ -207,7 +207,7 @@ public class CombatMenu {
 
         if (corrosiveActive) {
             int corrosiveDamage = (int) (enemy.getHealth() * (Utils.randomRange(17, 28) / 1000.0));
-            
+         
             enemy.setTempHealth(enemy.getTempHealth() - corrosiveDamage);
             Lanterna.printf("\nThe corrosive acid deals %s damage!", corrosiveDamage);
             Thread.sleep(Utils.QUICK_STANDARD);

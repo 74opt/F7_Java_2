@@ -3,10 +3,10 @@
 ## Unit 4: Iteration
 
 - [ ] Contains no infinite loops.
-- [ ] Includes a return statement inside a loop.
+- [x] Includes a return statement inside a loop.
 - [x] Uses a for loop.
 - [x] Uses a while loop.
-- [ ] Contains no “off-by-one” errors.
+- [x] Contains no “off-by-one” errors.
 - [x] Uses nested iteration (i.e. loops within loops).
 - [ ] Uses statement execution counts.
 
@@ -29,7 +29,7 @@
 - [ ] Includes a method that alters a static variable in a different class.
 - [x] Uses the this keyword.
 - [ ] Is reliable.
-- [ ] Creates no legal issues nor intellectual property concerns.
+- [x] Creates no legal issues nor intellectual property concerns.
 - [ ] Benefits at least one society, economy, or culture. (gaming culture lmao)
 
 ## Unit 6: Arrays
