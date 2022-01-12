@@ -2,11 +2,12 @@ package F7.ui;
 
 import java.util.*;
 import java.util.Map;
-
+import java.io.IOException;
 import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
 import F7.entities.classes.*;
+import com.googlecode.lanterna.input.KeyStroke;
 
 /*
 TODO: Todos part 2 
@@ -17,6 +18,9 @@ you must
 - lanterna
 */
 
+// BIG THING
+// PORT COMBAT 1.0 TO LANTERNA AND THEN WORK ON COMBAT 2.0
+
 // DOTADIW
 
 // TODO: Implement Combat 2.0
@@ -26,11 +30,6 @@ public class CombatMenu {
     private final static Random random = new Random();
 
     // Shield variables
-    @Deprecated // Replace with shieldTurns > 0
-    private static boolean shieldUp;
-    @Deprecated // Replace with shieldCharging > 0
-    private static boolean shieldCharging;
-
     // THESE TWO VALUES SHOULD NEVER BE NEGATIVE
     private static int shieldTurns;
     private static int shieldChargingTurns;
@@ -145,29 +144,29 @@ public class CombatMenu {
                 Players.player.weaponEquipped().getNAME()
             );
 
-            String choice = Utils.input(false);
+            new Thread(() -> {
+                boolean running = true;
 
-            switch (choice) {
-                case "1":
-                    attack();
-                    break;
-                case "2":
-                    consumable();
-                    break;
-                case "3":
-                    shield();
-                    break;
-                case "4":
-                    equip();
-                    break;
-                case "5":
-                    run();
-                    break;
-                default:
-                    Utils.invalidOption();
-                    menu();
-                    break;
-            }
+                while (running) {
+                    try {
+                        KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                        if (keyPressed != null) {
+                            try {
+                                switch (keyPressed.getCharacter()) {
+                                    case '1' -> {}
+                                    case '2' -> {}
+                                    case '3' -> {}
+                                    case '4' -> {}
+                                    case '5' -> {}
+                                }
+                            } catch (Exception ignored) {}
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         } else {
             //* do enemy things
             enemyAttack();
@@ -399,7 +398,7 @@ public class CombatMenu {
 
     private static void shield() throws Exception { //TODO pls
         if (shieldChargingTurns == 0 && shieldTurns == 0) {
-            shieldUp = true;
+            //shieldUp = true;
             Lanterna.printf("%s has been activated, lasting for %s turns.", Players.player.getShield().getNAME(), Players.player.getShield().getTURNS());
             Thread.sleep(Utils.getSTANDARD());
             setTurn();
