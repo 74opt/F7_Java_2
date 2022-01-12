@@ -101,8 +101,8 @@ public class CombatMenu {
 
         // TODO: change a buncha things to printf AND get rid of ansi colorize
         // TODO: also, any strings w/o a color tag gets ^G by default
-        Lanterna.print(
-                String.format("""
+        Lanterna.printf(
+                """
                 ^gModel-F v5.032 Targeting Chip
                 ^GAssigned and Calibrated for: ^W%s^G
 
@@ -113,7 +113,7 @@ public class CombatMenu {
                 ^WConsumables:
                 %s
 
-                Active Statuses:
+                ^GActive Statuses:
                 %s
                 %s
                 """,
@@ -123,7 +123,7 @@ public class CombatMenu {
                 Players.player.getShield().toString(true), shieldStatus,
                 Players.player.displayConsumables(),
                 displayStatuses(),
-                enemy.toString(false))
+                enemy.toString(false)
         );
 
         if (isPlayerTurn) {
@@ -277,6 +277,7 @@ public class CombatMenu {
 
         String choice = Utils.input(false);
 
+        // TODO: use that thing i did with weapon selection but with this thanks babe
         switch (choice) {
             case "1":
                 if (medkits > 0) {
