@@ -150,15 +150,26 @@ public class CombatMenu {
                 while (running) {
                     try {
                         KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-
+                                                                                            
                         if (keyPressed != null) {
                             try {
                                 switch (keyPressed.getCharacter()) {
-                                    case '1' -> {}
-                                    case '2' -> {}
-                                    case '3' -> {}
-                                    case '4' -> {}
-                                    case '5' -> {}
+                                    case '1' -> {
+                                        attack();
+                                    }
+                                    case '2' -> {
+                                        running = false;
+                                        consumable();
+                                    }
+                                    case '3' -> {
+                                        shield();
+                                    }
+                                    case '4' -> {
+                                        equip();
+                                    }
+                                    case '5' -> {
+                                        run();
+                                    }
                                 }
                             } catch (Exception ignored) {}
                         }
@@ -274,123 +285,149 @@ public class CombatMenu {
         Consumables.flashbang.toString(), flashbangs
         );
 
-        String choice = Utils.input(false);
+        final int medkitsFinal = medkits;
+        final int smokesFinal = smokes;
+        final int corrosivesFinal = corrosives;
+        final int targetsFinal = targets;
+        final int amplifiersFinal = amplifiers;
+        final int flashbangsFinal = flashbangs;
 
         // TODO: use that thing i did with weapon selection but with this thanks babe
-        switch (choice) {
-            case "1":
-                if (medkits > 0) {
-                    double restoration = Utils.randomRange(15, 21) / 100.0;
-                    restoration *= Players.player.getHealth();
-                    double overheal;
-            
-                    Players.player.getConsumables().remove(Consumables.medkit);
-                    Players.player.setTempHealth(Players.player.getTempHealth() + restoration);
+        // TODO: rewrite with the new hashmap although porting is most important, fixing shit code comes second
 
-                    if (Players.player.getTempHealth() > Players.player.getHealth()) {
-                        overheal = Players.player.getTempHealth() - Players.player.getHealth();
+        new Thread(() -> {
+            boolean running = true;
 
-                        Players.player.setTempHealth(Players.player.getHealth());
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
 
-                        restoration -= overheal;
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case '1' -> {
+                                    if (medkitsFinal > 0) {
+                                        running = false;
+                                        double restoration = Utils.randomRange(15, 21) / 100.0;
+                                        restoration *= Players.player.getHealth();
+                                        double overheal;
+                                
+                                        Players.player.getConsumables().remove(Consumables.medkit);
+                                        Players.player.setTempHealth(Players.player.getTempHealth() + restoration);
+                    
+                                        if (Players.player.getTempHealth() > Players.player.getHealth()) {
+                                            overheal = Players.player.getTempHealth() - Players.player.getHealth();
+                    
+                                            Players.player.setTempHealth(Players.player.getHealth());
+                    
+                                            restoration -= overheal;
+                                        }
+                    
+                                        Lanterna.printf("\n%s health restored.", "^O" + Utils.round(restoration, 2));
+                                        Thread.sleep(Utils.QUICK_STANDARD);
+                                        setTurn();
+                                        menu();
+                                    } else {
+                                        Lanterna.printf("You don't have %s available.", Consumables.medkit.toString());
+                                    }
+                                }
+                                case '2' -> {
+                                    if (smokesFinal > 0 && !smokeActive) {
+                                        running = false;
+                                        Players.player.getConsumables().remove(Consumables.smoke);
+                    
+                                        Lanterna.printf("%s used.", Consumables.smoke.toString());
+                                        smokeActive = true;
+                    
+                                        Thread.sleep(Utils.QUICK_STANDARD);
+                                        setTurn();
+                                        menu();
+                                    } else if (smokeActive) {
+                                        Lanterna.printf("%s is already active", Consumables.smoke.toString());
+                                    } else {
+                                        Lanterna.printf("You don't have %s available.", Consumables.smoke.toString());
+                                    }
+                                }
+                                case '3' -> {
+                                    if (corrosivesFinal > 0 && !corrosiveActive) {
+                                        running = false;
+                                        Players.player.getConsumables().remove(Consumables.corrosive);
+                    
+                                        Lanterna.printf("%s used.", Consumables.corrosive.toString());
+                                        corrosiveActive = true;
+                    
+                                        Thread.sleep(Utils.QUICK_STANDARD);
+                                        setTurn();
+                                        menu();
+                                    } else if (corrosiveActive) {
+                                        Lanterna.printf("%s is already active", Consumables.corrosive.toString());
+                                    } else {
+                                        Lanterna.printf("You don't have %s available.", Consumables.corrosive.toString());
+                                    }
+                                }
+                                case '4' -> {
+                                    if (targetsFinal > 0 && !targetActive) {
+                                        running = false;
+                                        Players.player.getConsumables().remove(Consumables.target);
+                    
+                                        Lanterna.printf("%s used.", Consumables.target.toString());
+                                        targetActive = true;
+                    
+                                        Thread.sleep(Utils.QUICK_STANDARD);
+                                        setTurn();
+                                        menu();
+                                    } else if (targetActive) {
+                                        Lanterna.printf("%s is already active", Consumables.target.toString());
+                                    } else {
+                                        Lanterna.printf("You don't have %s available.", Consumables.target.toString());
+                                    }
+                                }
+                                case '5' -> {
+                                    if (amplifiersFinal > 0 && !amplifierActive) {
+                                        running = false;
+                                        Players.player.getConsumables().remove(Consumables.amplifier);
+                    
+                                        Lanterna.printf("%s used.", Consumables.amplifier.toString());
+                                        amplifierActive = true;
+                    
+                                        Thread.sleep(Utils.QUICK_STANDARD);
+                                        setTurn();
+                                        menu();
+                                    } else if (amplifierActive) {
+                                        Lanterna.printf("%s is already active", Consumables.amplifier.toString());
+                                    } else {
+                                        Lanterna.printf("You don't have %s available.", Consumables.amplifier.toString());
+                                    }
+                                }
+                                case '6' -> {
+                                    if (flashbangsFinal > 0 && !flashbangActive) {
+                                        running = false;
+                                        Players.player.getConsumables().remove(Consumables.flashbang);
+                    
+                                        Lanterna.printf("%s used.", Consumables.flashbang.toString());
+                                        flashbangActive = true;
+                    
+                                        Thread.sleep(Utils.QUICK_STANDARD);
+                                        setTurn();
+                                        menu();
+                                    } else if (flashbangActive) {
+                                        Lanterna.printf("%s is already active", Consumables.flashbang.toString());
+                                    } else {
+                                        Lanterna.printf("You don't have %s available.", Consumables.flashbang.toString());
+                                    }
+                                }
+                                case '7' -> {
+                                    running = false;
+                                    menu();
+                                }
+                            }
+                        } catch (Exception ignored) {}
                     }
-
-                    Lanterna.printf("\n%s health restored.", "^O" + Utils.round(restoration, 2));
-                    Thread.sleep(Utils.QUICK_STANDARD);
-                    setTurn();
-                    menu();
-                } else {
-                    Lanterna.printf("You don't have %s available.", Consumables.medkit.toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                break;
-            case "2":
-                if (smokes > 0 && !smokeActive) {
-                    Players.player.getConsumables().remove(Consumables.smoke);
-
-                    Lanterna.printf("%s used.", Consumables.smoke.toString());
-                    smokeActive = true;
-
-                    Thread.sleep(Utils.QUICK_STANDARD);
-                    setTurn();
-                    menu();
-                } else if (smokeActive) {
-                    Lanterna.printf("%s is already active", Consumables.smoke.toString());
-                } else {
-                    Lanterna.printf("You don't have %s available.", Consumables.smoke.toString());
-                }
-                break;
-            case "3":
-                if (corrosives > 0 && !corrosiveActive) {
-                    Players.player.getConsumables().remove(Consumables.corrosive);
-
-                    Lanterna.printf("%s used.", Consumables.corrosive.toString());
-                    corrosiveActive = true;
-
-                    Thread.sleep(Utils.QUICK_STANDARD);
-                    setTurn();
-                    menu();
-                } else if (corrosiveActive) {
-                    Lanterna.printf("%s is already active", Consumables.corrosive.toString());
-                } else {
-                    Lanterna.printf("You don't have %s available.", Consumables.corrosive.toString());
-                }
-                break;
-            case "4":
-                if (targets > 0 && !targetActive) {
-                    Players.player.getConsumables().remove(Consumables.target);
-
-                    Lanterna.printf("%s used.", Consumables.target.toString());
-                    targetActive = true;
-
-                    Thread.sleep(Utils.QUICK_STANDARD);
-                    setTurn();
-                    menu();
-                } else if (targetActive) {
-                    Lanterna.printf("%s is already active", Consumables.target.toString());
-                } else {
-                    Lanterna.printf("You don't have %s available.", Consumables.target.toString());
-                }
-                break;
-            case "5":
-                if (amplifiers > 0 && !amplifierActive) {
-                    Players.player.getConsumables().remove(Consumables.amplifier);
-
-                    Lanterna.printf("%s used.", Consumables.amplifier.toString());
-                    amplifierActive = true;
-
-                    Thread.sleep(Utils.QUICK_STANDARD);
-                    setTurn();
-                    menu();
-                } else if (amplifierActive) {
-                    Lanterna.printf("%s is already active", Consumables.amplifier.toString());
-                } else {
-                    Lanterna.printf("You don't have %s available.", Consumables.amplifier.toString());
-                }
-                break;
-            case "6":
-                if (flashbangs > 0 && !flashbangActive) {
-                    Players.player.getConsumables().remove(Consumables.flashbang);
-
-                    Lanterna.printf("%s used.", Consumables.flashbang.toString());
-                    flashbangActive = true;
-
-                    Thread.sleep(Utils.QUICK_STANDARD);
-                    setTurn();
-                    menu();
-                } else if (flashbangActive) {
-                    Lanterna.printf("%s is already active", Consumables.flashbang.toString());
-                } else {
-                    Lanterna.printf("You don't have %s available.", Consumables.flashbang.toString());
-                }
-                break;
-            case "7":
-                menu();
-                break;
-            default:
-                Utils.invalidOption();
-                consumable();
-                break;
-        }
+            }
+        }).start();
 
         Thread.sleep(Utils.QUICK_STANDARD);
         menu();
@@ -414,7 +451,10 @@ public class CombatMenu {
         menu();
     }
 
-    private static void equip() throws Exception { // copy of the method from playermenu
+
+    // get rid of this method and use keyboard listener like in PlayerMenu
+    @Deprecated
+    private static void equip() throws Exception { 
         int index = 0;
         String[] possibilies = new String[4];
         Lanterna.println("Select a weapon to equip or type \"exit\" to exit:\n");
@@ -537,6 +577,10 @@ public class CombatMenu {
 
     //! warning: shit code
     // FIXME: this is shit code
+    // TODO: fix the shit code
+    //? this may be shit code
+    //* this is shit code
+    // shit code
     private static void enemyDead() throws Exception {
         HashMap<Rarity, Double> rarityMultipliers = new HashMap<Rarity, Double>();
         rarityMultipliers.put(Rarities.common, 1.0);

@@ -12,6 +12,10 @@ public class Player {
     private int equippedIndex;
     private Weapon[] weapons = new Weapon[4];
     private Shield shield;
+
+    // TODO: Consumables might be easier as a HashMap<Consumable, Integer> with integer being the amount of a certain consumable but like who has time
+    private HashMap<Consumable, Integer> consumablesHashMap = new HashMap<Consumable, Integer>();
+
     private ArrayList<Consumable> consumables = new ArrayList<>();
 
     // the following variables will be for skill points + tree

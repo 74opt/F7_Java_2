@@ -31,3 +31,14 @@ individual weapon upgrading (like attachments).
 in VSCode you can F1 and use "Format Document With" so that you get nice pretty formatting instead of dumb ugly formatting
 
 CONSOLE COMMANDS
+
+ROADMAP:
+MP1: Recreate F7
+MP2: Lanterna F7
+MP3: Networking F7
+MP4: Dumb Notes F7
+
+Need timeline rn:
+1. Finish Lanterna porting 
+2. Implement Combat 2.0
+3. Dumb Notes if possible
