@@ -15,11 +15,13 @@ public class Main {
         Shields.setShieldHashMap();
         Rarities.setRaritiesArrayList();
         Consumables.setConsumableHashMap();
-        CombatMenu.setStatusHashMap();
+        CombatMenu2.setCombatHashMaps();
 
         Lanterna.startScreen(150, 50);
 
-        MainMenu.menu();
+        //MainMenu.menu();
+
+        Lanterna.println(Utils.percentBar(100, 7281, 621, "^G"));
 
         // Base Keyboard Listening Thread:
         /*

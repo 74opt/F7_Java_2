@@ -184,6 +184,29 @@ public class Utils {
                 DOUBLE_DECIMAL.format(((current) / total) * 100));
     }
 
+    public static String percentBar(int length, double total, double current, String color) {
+        String bar = color;
+        double percentFilled = round(current / total, 3);
+
+        int fillAmount = (int) (percentFilled * length);
+
+        if (fillAmount == 0 && percentFilled != 0) {
+            fillAmount = 1;
+        }
+
+        length -= fillAmount;
+
+        for (int i = 0; i < fillAmount; i++) {
+            bar += "█";
+        }
+
+        for (int i = 0; i < length; i++) {
+            bar += "░";
+        }
+
+        return bar;
+    }
+
     /**
      * Generates a random integer from 0 to 100 and returns true or false depending 
      * on the percent chance of success.

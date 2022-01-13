@@ -83,7 +83,7 @@ public class MapMenu {
     }
 
     private static void fight() throws Exception {
-        CombatMenu.start();
+        CombatMenu2.start();
     }
 
     private static void inventory() throws Exception {

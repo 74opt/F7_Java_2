@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 // TODO: Crits
 public class Weapon {
     private final String NAME;
-    private int damage, accuracy, level, rof, critChance; // critChance is out of 100
-    double critMultiplier;
+    private int damage, accuracy, level, rof, critChance, reloadTime; // critChance is out of 100
+    private double critMultiplier;
     private final Rarity RARITY;
 
     // Setters and Getters

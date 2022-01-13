@@ -24,6 +24,7 @@ you must
 // DOTADIW
 
 // TODO: Implement Combat 2.0
+@Deprecated
 public class CombatMenu {
     private static Enemy enemy;
     private static boolean isPlayerTurn; 
