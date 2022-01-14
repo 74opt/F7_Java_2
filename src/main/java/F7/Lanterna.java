@@ -22,6 +22,10 @@ public class Lanterna {
     // TODO: MAKE SCROLLING TEXT METHOD
     private static final int SCROLL = 45; //taken from Utils.SCROLL
 
+    // Values good for 1920x1080
+    private static final int STANDARD_COLUMNS = 211;
+    private static final int STANDARD_ROWS = 61;
+
     // Probably not going to use since it relies on an infinite loop
     // Refreshes the screen 24 frames per second
     private static Thread refresh = new Thread(() -> {
@@ -40,6 +44,10 @@ public class Lanterna {
     public static int getGlobalColumn() {return column;}
 
     public static int getGlobalRow() {return row;}
+
+    public static int getSTANDARD_COLUMNS() {return STANDARD_COLUMNS;}
+
+    public static int getSTANDARD_ROWS() {return STANDARD_ROWS;}
     
     public static void startScreen(int paramInitColumn, int paramInitRow) throws IOException {
         initColumn = paramInitColumn;
@@ -70,6 +78,16 @@ public class Lanterna {
         }
 
         print(0, row, spaces);
+    }
+
+    public static void clear(int row, int column, int length) throws Exception {
+        String spaces = "";
+
+        for (int i = 0; i < length; i++) {
+            spaces += " ";
+        }
+
+        print(column, row, spaces);
     }
 
     // Printing to terminal

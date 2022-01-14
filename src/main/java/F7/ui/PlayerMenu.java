@@ -2,7 +2,6 @@ package F7.ui;
 import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
-import com.diogonunes.jcolor.*; //https://github.com/dialex/JColor
 import com.googlecode.lanterna.input.KeyStroke;
 
 import java.io.IOException;

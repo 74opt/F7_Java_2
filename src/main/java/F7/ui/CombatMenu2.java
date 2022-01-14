@@ -58,11 +58,11 @@ public class CombatMenu2 {
 
         String shieldStatus;
 
-        // shieldTurns > 0 means shieldUp = true
-        // shieldTurns should override all other shield status checks
+        //* shieldTurns > 0 means shieldUp = true
+        //* shieldTurns should override all other shield status checks
 
-        // shieldChargingTurns > 0 means shieldCharging = true
-        // both values < 0 means the shield is ready to be used
+        //* shieldChargingTurns > 0 means shieldCharging = true
+        //* both values < 0 means the shield is ready to be used
 
         if (shieldTime > 0) {
             shieldStatus = String.format("^gActive (%s turns left)", Players.player.getShield().getTURNS() - shieldTime);
@@ -72,50 +72,87 @@ public class CombatMenu2 {
             shieldStatus = "^CReady";
         }
 
-        // TODO: change a buncha things to printf AND get rid of ansi colorize
         // TODO: also, any strings w/o a color tag gets ^G by default
-        Lanterna.printf(
-                """
-                ^gModel-F v5.032 Targeting Chip
-                ^GAssigned and Calibrated for: ^W%s^G
 
-                %s
-                ^WWeapon Equipped: %s
-                ^WShield: %s (%s)
+        //! DO NOT USE ANY AUTO PRINTING, GIVE SPECIFIC COORDINATES
+        //* Sections for the UI
+        //* Player Stats
+        Lanterna.printf(1, 1, 
+            """
+            ^gModel-F v5.032 Targeting Chip
+            ^GAssigned and Calibrated for: ^W%s^G
 
-                ^WConsumables:
-                %s
-
-                ^GActive Statuses:
-                %s
-                %s
-                """,
-                Players.player.getName(),
-                Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^O"),
-                Players.player.weaponEquipped().toString(true),
-                Players.player.getShield().toString(true), shieldStatus,
-                Players.player.displayConsumables(),
-                //displayStatuses(),
-                enemy.toString(false)
+            %s
+                    %s""", 
+            Players.player.getName(),
+            Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
+            //! Make this update based on things
+            Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R")
         );
+
+        //* Enemy Stats
+        Lanterna.printf(106, 1, 
+            """
+            ^GDetected: ^W%s^G
+
+            %s
+                    %s""",
+            enemy.toString(true),
+            Utils.outOf("Health:", enemy.getHealth(), enemy.getTempHealth(), "^R"),
+            Utils.percentBar(70, enemy.getHealth(), enemy.getTempHealth(), "^R")
+        );
+
+        //* Player Weapons (Also maybe extended stats)
+
+
+        //* Info
+
+
+        //* Enemy Stats Extended
+
+
+        //* Statuses
+
+
+        //* Controls/Keybindings
+
+
+        // Lanterna.printf(
+        //         """
+        //         ^gModel-F v5.032 Targeting Chip
+        //         ^GAssigned and Calibrated for: ^W%s^G
+
+        //         %s
+        //         ^WWeapon Equipped: %s
+        //         ^WShield: %s (%s)
+
+        //         ^WConsumables:
+        //         %s
+
+        //         ^GActive Statuses:
+        //         %s
+        //         %s
+
+        //         1) Attack with ^W%s^G
+        //         2) Use Consumable
+        //         3) Enable Shield
+        //         4) Equip New Weapon
+        //         5) Run Away
+        //         """,
+        //         Players.player.getName(),
+        //         Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^O"),
+        //         Players.player.weaponEquipped().toString(true),
+        //         Players.player.getShield().toString(true), shieldStatus,
+        //         Players.player.displayConsumables(),
+        //         //displayStatuses(),
+        //         enemy.toString(false), Players.player.weaponEquipped().getNAME()
+        // );
 
         statusHashMap.forEach((key, value) -> {
             if (value > 0) {
                 statusHashMap.replace(key, value - 1);
             }
         });
-
-        Lanterna.printf(
-            """
-
-            1) Attack with ^W%s^G
-            2) Use Consumable
-            3) Enable Shield
-            4) Equip New Weapon
-            5) Run Away
-            """,
-            Players.player.weaponEquipped().getNAME()
-        );
 
         new Thread(() -> {
             boolean running = true;

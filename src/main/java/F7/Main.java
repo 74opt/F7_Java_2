@@ -17,11 +17,17 @@ public class Main {
         Consumables.setConsumableHashMap();
         CombatMenu2.setCombatHashMaps();
 
-        Lanterna.startScreen(150, 50);
+        Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
-        //MainMenu.menu();
+        MainMenu.menu();
 
-        Lanterna.println(Utils.percentBar(100, 32523, 21527, "^G"));
+        // TODO: Replace Combat2.png with new image in TeXit discord bot dms
+
+        // for (int i = 100; i >= 0; i--) {
+        //     Lanterna.println(Utils.percentBar(100, 100, i, "^G"));
+        //     Thread.sleep(Utils.getTWENTY_FOUR());
+        //     Lanterna.clear();
+        // }
         //System.out.println(System.currentTimeMillis());
 
         // Base Keyboard Listening Thread:
