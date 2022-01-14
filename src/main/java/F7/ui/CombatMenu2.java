@@ -11,13 +11,12 @@ import com.googlecode.lanterna.input.KeyStroke;
 
 public class CombatMenu2 {
     private static Enemy enemy;
-    private static boolean isPlayerTurn; 
     private final static Random random = new Random();
 
     // Shield variables
     // THESE TWO VALUES SHOULD NEVER BE NEGATIVE
-    private static int shieldTurns;
-    private static int shieldChargingTurns;
+    private static int shieldTime;
+    private static int shieldChargingTime;
 
     private static HashMap<Consumable, Integer> statusHashMap = new HashMap<>();
     private static HashMap<Rarity, Double> rarityMultipliers = new HashMap<>();
@@ -38,11 +37,6 @@ public class CombatMenu2 {
 
     public static void start() throws Exception {
         Lanterna.clear();
-
-        isPlayerTurn = random.nextBoolean();
-
-        // Only for testing
-        isPlayerTurn = true;
 
         int enemyRarity = Utils.randomRange(0, 101);
 
@@ -70,10 +64,10 @@ public class CombatMenu2 {
         // shieldChargingTurns > 0 means shieldCharging = true
         // both values < 0 means the shield is ready to be used
 
-        if (shieldTurns > 0) {
-            shieldStatus = String.format("^gActive (%s turns left)", Players.player.getShield().getTURNS() - shieldTurns);
-        } else if (shieldChargingTurns > 0) {
-            shieldStatus = String.format("^OCharging (%s turns left)", Players.player.getShield().getCOOLDOWN() - shieldChargingTurns);
+        if (shieldTime > 0) {
+            shieldStatus = String.format("^gActive (%s turns left)", Players.player.getShield().getTURNS() - shieldTime);
+        } else if (shieldChargingTime > 0) {
+            shieldStatus = String.format("^OCharging (%s turns left)", Players.player.getShield().getCOOLDOWN() - shieldChargingTime);
         } else {
             shieldStatus = "^CReady";
         }
@@ -105,66 +99,54 @@ public class CombatMenu2 {
                 enemy.toString(false)
         );
 
-        if (isPlayerTurn) {
-            statusHashMap.forEach((key, value) -> {
-                if (value > 0) {
-                    statusHashMap.replace(key, value - 1);
-                }
-            });
-
-            Lanterna.printf(
-                """
-
-                1) Attack with ^W%s^G
-                2) Use Consumable
-                3) Enable Shield
-                4) Equip New Weapon
-                5) Run Away
-                """,
-                Players.player.weaponEquipped().getNAME()
-            );
-
-            new Thread(() -> {
-                boolean running = true;
-
-                while (running) {
-                    try {
-                        KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-                                                                                            
-                        if (keyPressed != null) {
-                            try {
-                                // TODO: use WASD to navigate consumables or weapons
-                                // TODO: E key will use consumable OR use weapon
-
-                                switch (keyPressed.getCharacter()) {
-                                    case 'e' -> {
-                                        
-                                    }
-                                    case 'f' -> {
-                                        shield();
-                                    }
-                                    case 'r' -> {
-                                        run();
-                                    }
-                                }
-                            } catch (Exception ignored) {}
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-        } else {
-            //* do enemy things
-            enemyAttack();
-
-            if (Players.player.getHealth() <= 0) {
-                playerDead();
-            } else {
-                setTurn();
-                menu();
+        statusHashMap.forEach((key, value) -> {
+            if (value > 0) {
+                statusHashMap.replace(key, value - 1);
             }
-        }
+        });
+
+        Lanterna.printf(
+            """
+
+            1) Attack with ^W%s^G
+            2) Use Consumable
+            3) Enable Shield
+            4) Equip New Weapon
+            5) Run Away
+            """,
+            Players.player.weaponEquipped().getNAME()
+        );
+
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+                                                                                        
+                    if (keyPressed != null) {
+                        try {
+                            // TODO: use WASD to navigate consumables or weapons
+                            // TODO: E key will use consumable OR use weapon
+
+                            switch (keyPressed.getCharacter()) {
+                                case 'e' -> {
+                                    
+                                }
+                                case 'f' -> {
+                                    shield();
+                                }
+                                case 'r' -> {
+                                    run();
+                                }
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private static void attack() throws Exception {
@@ -190,16 +172,13 @@ public class CombatMenu2 {
 
     //! do not disappoint me again
     //! do not write shit code
+    //! ill have tallulah break each and every fucking bone in your body if you do
     private static void enemyDead() throws Exception {
 
     }
 
     private static void playerDead() throws Exception {
 
-    }
-
-    private static void setTurn() {
-        isPlayerTurn = !isPlayerTurn;
     }
 
     private static String displayConsumables() throws Exception {

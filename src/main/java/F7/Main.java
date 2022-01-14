@@ -21,7 +21,8 @@ public class Main {
 
         //MainMenu.menu();
 
-        Lanterna.println(Utils.percentBar(100, 7281, 621, "^G"));
+        Lanterna.println(Utils.percentBar(100, 32523, 21527, "^G"));
+        //System.out.println(System.currentTimeMillis());
 
         // Base Keyboard Listening Thread:
         /*

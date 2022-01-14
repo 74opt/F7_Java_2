@@ -186,7 +186,8 @@ public class Utils {
 
     public static String percentBar(int length, double total, double current, String color) {
         String bar = color;
-        double percentFilled = round(current / total, 3);
+        double percentFilled = current / total;
+        System.out.println(percentFilled);
 
         int fillAmount = (int) (percentFilled * length);
 
