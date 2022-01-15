@@ -90,8 +90,13 @@ public class CombatMenu2 {
             Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R")
         );
 
+        /// Player Updating Parts
+        new Thread(() -> {
+            System.out.println(Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
+        }).start();
+
         //* Enemy Stats
-        Lanterna.printf(106, 1, 
+        Lanterna.printf(106, 2, 
             """
             ^GDetected: ^W%s^G
 

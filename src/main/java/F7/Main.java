@@ -21,6 +21,20 @@ public class Main {
 
         MainMenu.menu();
 
+        // new Thread(() -> {
+        //     while (true) {
+        //         try {
+        //             Lanterna.print(Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
+        //         } catch (Exception e) {
+        //             e.printStackTrace();
+        //         }
+        // }
+        // }).start();
+
+        // new Thread(() -> {
+        //     Players.player.setTempHealth(Players.player.getTempHealth() - 1);
+        // }).start();
+
         // TODO: Replace Combat2.png with new image in TeXit discord bot dms
 
         // for (int i = 100; i >= 0; i--) {
