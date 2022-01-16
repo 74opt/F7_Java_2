@@ -11,6 +11,7 @@ import com.googlecode.lanterna.input.KeyStroke;
 
 public class CombatMenu2 {
     private static Enemy enemy;
+    private static boolean running;
     private final static Random random = new Random();
 
     // Shield variables
@@ -41,6 +42,8 @@ public class CombatMenu2 {
         int enemyRarity = Utils.randomRange(0, 101);
 
         enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
+
+        running = true;
 
         enemy.setLevel(Players.player.getLevel() + Utils.randomRange(-2, 2));
 
@@ -81,19 +84,9 @@ public class CombatMenu2 {
             """
             ^gModel-F v5.032 Targeting Chip
             ^GAssigned and Calibrated for: ^W%s^G
-
-            %s
-                    %s""", 
-            Players.player.getName(),
-            Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
-            //! Make this update based on things
-            Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R")
+            """,
+            Players.player.getName()
         );
-
-        /// Player Updating Parts
-        new Thread(() -> {
-            System.out.println(Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
-        }).start();
 
         //* Enemy Stats
         Lanterna.printf(106, 2, 
@@ -122,42 +115,40 @@ public class CombatMenu2 {
         //* Controls/Keybindings
 
 
-        // Lanterna.printf(
-        //         """
-        //         ^gModel-F v5.032 Targeting Chip
-        //         ^GAssigned and Calibrated for: ^W%s^G
+        //* Sections that must be updated
+        new Thread(() -> {
+            while (running) {
+                try {
+                    //TODO: Whenever a shown value is updated, clear that section's part or else layering issues
 
-        //         %s
-        //         ^WWeapon Equipped: %s
-        //         ^WShield: %s (%s)
+                    /// Player
+                    Lanterna.printf(1, 4,
+                        """
+                        %s
+                                %s""",
+                        Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
+                        Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
 
-        //         ^WConsumables:
-        //         %s
-
-        //         ^GActive Statuses:
-        //         %s
-        //         %s
-
-        //         1) Attack with ^W%s^G
-        //         2) Use Consumable
-        //         3) Enable Shield
-        //         4) Equip New Weapon
-        //         5) Run Away
-        //         """,
-        //         Players.player.getName(),
-        //         Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^O"),
-        //         Players.player.weaponEquipped().toString(true),
-        //         Players.player.getShield().toString(true), shieldStatus,
-        //         Players.player.displayConsumables(),
-        //         //displayStatuses(),
-        //         enemy.toString(false), Players.player.weaponEquipped().getNAME()
-        // );
-
-        statusHashMap.forEach((key, value) -> {
-            if (value > 0) {
-                statusHashMap.replace(key, value - 1);
+                    /// Enemy
+                    Lanterna.printf(106, 4,
+                        """
+                        %s
+                                %s""",
+                        Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
+                        Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }).start();
+
+
+
+//        statusHashMap.forEach((key, value) -> {
+//            if (value > 0) {
+//                statusHashMap.replace(key, value - 1);
+//            }
+//        });
 
         new Thread(() -> {
             boolean running = true;

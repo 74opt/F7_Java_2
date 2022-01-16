@@ -1,5 +1,8 @@
 package F7;
 
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
+import java.io.IOException;
 import F7.entities.construction.*;
 import F7.ui.*;
 
@@ -21,19 +24,26 @@ public class Main {
 
         MainMenu.menu();
 
-        // new Thread(() -> {
-        //     while (true) {
-        //         try {
-        //             Lanterna.print(Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
-        //         } catch (Exception e) {
-        //             e.printStackTrace();
-        //         }
-        // }
-        // }).start();
-
-        // new Thread(() -> {
-        //     Players.player.setTempHealth(Players.player.getTempHealth() - 1);
-        // }).start();
+        //* Code to quit at any time
+//        new Thread(() -> {
+//            boolean running = true;
+//
+//            while (running) {
+//                try {
+//                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+//                    if (keyPressed != null) {
+//                        if (keyPressed.getKeyType().equals(KeyType.Escape)) {
+//                            try {
+//                                running = false;
+//                                System.exit(0);
+//                            } catch (Exception ignored) {}
+//                        }
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
 
         // TODO: Replace Combat2.png with new image in TeXit discord bot dms
 
