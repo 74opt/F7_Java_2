@@ -190,7 +190,7 @@ public class CombatMenu2 {
         int infoIndex = 0;
         for (String s : information) {
             if (s != null) {
-                Lanterna.print(71, 14 + infoIndex, "^W[" + displayTime() + "]: " + s);
+                Lanterna.print(71, 14 + infoIndex, s);
                 infoIndex++;
             }
         }
@@ -230,13 +230,35 @@ public class CombatMenu2 {
                         statusHashMap.forEach((key, value) -> {
                             if (value > 0) {
                                 statusHashMap.replace(key, value - 1);
+                                if (value == 1) {
+                                    try {
+                                        addInfo(key.toString() + "^G effect ended");
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
                             }
                         });
+
+                        for (int i = 0; i < 6; i++) {
+                            Lanterna.clear(31 + i, 71, 69);
+                        }
+
+                        int statusIndexReplacement = 0;
+                        for (Map.Entry element : statusHashMap.entrySet()) {
+                            Consumable key = (Consumable) element.getKey();
+                            int value = statusHashMap.get(key);
+
+                            if (value > 0) {
+                                Lanterna.print(71, 31 + statusIndexReplacement, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
+                                statusIndexReplacement++;
+                            }
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 },
-                0,
+                1,
                 1,
                 TimeUnit.SECONDS
         );
@@ -360,19 +382,19 @@ public class CombatMenu2 {
 
     private static void addInfo(String info) throws Exception {
         if (Arrays.asList(information).contains(null)) {
-            information[Arrays.asList(information).indexOf(null)] = info;
+            information[Arrays.asList(information).indexOf(null)] = "^W[" + displayTime() + "]: " + info;
         } else {
             for (int i = 0; i < information.length - 1; i++) {
                 information[i] = information[i + 1];
             }
 
-            information[information.length - 1] = info;
+            information[information.length - 1] = "^W[" + displayTime() + "]: " + info;
         }
 
         int i = 0;
         for (String s : information) {
             if (s != null) {
-                Lanterna.print(71, 14 + i, "^W[" + displayTime() + "]: " + s);
+                Lanterna.print(71, 14 + i, s);
                 i++;
             }
         }

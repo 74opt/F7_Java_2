@@ -21,6 +21,7 @@ public class MapMenu {
         Lanterna.print(1, 1,
             "^CGMapping v75.221^G\nCoordinates: ^R#%&V;}!%@( ERROR ;}=@&!&(/?{\n" + currentMap.toString() +
             """
+            
             ^G1) Fight
             2) Access Inventory
             3) Save

@@ -3,12 +3,10 @@ package F7;
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
-import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.screen.TerminalScreen;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
-import com.googlecode.lanterna.input.KeyStroke;
 import java.io.IOException;
 
 public class Lanterna {
@@ -161,7 +159,6 @@ public class Lanterna {
         screen.refresh();
     }
 
-    // Guess im obligated to use this
     @Deprecated
     public static void printf(String text, Object... args) throws Exception {
         print(String.format(text, args));
@@ -176,32 +173,5 @@ public class Lanterna {
         print(text);
         row++;
         column = 1;
-    }
-
-    // maybe delete
-    public static String textBox(String text, String boxColor, String textColor) {
-        String box = boxColor + "╔═";
-
-        for (int i = 0; i < text.length(); i++) {
-            box += "═";
-        }
-
-        box += "═╗\n║ " + textColor;
-
-        for (char character : text.toCharArray()) {
-            if (character == '\n') {
-                box += boxColor + " ║\n║ " + textColor;
-            } else {
-                box += character;
-            }
-        }
-
-        box += boxColor + " ║\n╚═";
-
-        for (int i = 0; i < text.length(); i++) {
-            box += "═";
-        }
-
-        return box + "═╝";
     }
 }
