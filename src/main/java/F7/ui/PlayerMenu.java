@@ -25,32 +25,31 @@ public class PlayerMenu {
             
             ^WWeapons:
             """,
-            Players.player.getName(),
-            Players.player.getLevel(),
-            Utils.outOf("^WExperience Points:", Players.player.expRequired(), Players.player.getExp(), "^g"),
-            Utils.outOf("^WHealth:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
-            Players.player.weaponEquipped().toString(false)
+            Players.getPlayer().getName(),
+            Players.getPlayer().getLevel(),
+            Utils.outOf("^WExperience Points:", Players.getPlayer().expRequired(), Players.getPlayer().getExp(), "^g"),
+            Utils.outOf("^WHealth:", Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R"),
+            Players.getPlayer().weaponEquipped().toString(false)
         );
 
         for (int i = 0; i < 4; i++) {
-            if (i == Players.player.getEquippedIndex()) {
-                Lanterna.print(1, 18 + i, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+            if (i == Players.getPlayer().getEquippedIndex()) {
+                Lanterna.print(1, 19 + i, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)));
             } else {
-                Lanterna.print(1, 18 + i, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                Lanterna.print(1, 19 + i, (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
             }
         }
 
-        Lanterna.print(1, 22, "\n^WShield:\n" + Players.player.getShield().toString(false));
-        Lanterna.print(1, 28, "\n^WConsumables:\n" + Players.player.displayConsumables());
+        Lanterna.print(1, 23, "\n^WShield:\n" + Players.getPlayer().getShield().toString(false));
+        Lanterna.print(1, 29, "\n^WConsumables:\n" + Players.getPlayer().displayConsumables());
 
         // Commands
-        Lanterna.print(1, 37,
+        Lanterna.print(1, 38,
             """
             ^GW) Scroll up weapon list
             S) Scroll down weapon list
             D) Delete selected weapon
-            1) Heal
-            2) Exit"""
+            1) Exit"""
         );
 
         new Thread(() -> {
@@ -63,56 +62,51 @@ public class PlayerMenu {
                     if (keyPressed != null) {
                         try {
                             switch (keyPressed.getCharacter()) {
-                                // TODO: running = false should be at the front if necessary
                                 case '1' -> {
-                                    heal();
-                                }
-
-                                case '2' -> {
                                     running = false;
                                     MapMenu.menu();
                                 }
 
                                 // go from 0-3
                                 case 'w' -> { // --
-                                    if (Players.player.getEquippedIndex() == 0) {
-                                        Players.player.setEquippedIndex(3);
+                                    if (Players.getPlayer().getEquippedIndex() == 0) {
+                                        Players.getPlayer().setEquippedIndex(3);
                                     } else {
-                                        Players.player.setEquippedIndex(Players.player.getEquippedIndex() - 1);
+                                        Players.getPlayer().setEquippedIndex(Players.getPlayer().getEquippedIndex() - 1);
                                     }
 
                                     for (int i = 10; i < 17; i++) {
                                         Lanterna.clear(i);
                                     }
 
-                                    Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(false));
+                                    Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.getPlayer().weaponEquipped().toString(false));
 
                                     for (int i = 0; i < 4; i++) {
-                                        if (i == Players.player.getEquippedIndex()) {
-                                            Lanterna.print(1, 18 + i, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                        if (i == Players.getPlayer().getEquippedIndex()) {
+                                            Lanterna.print(1, 19 + i, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)));
                                         } else {
-                                            Lanterna.print(1, 18 + i, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                            Lanterna.print(1, 19 + i, (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
                                         }
                                     }
                                 }
                                 case 's' -> { // ++
-                                    if (Players.player.getEquippedIndex() == 3) {
-                                        Players.player.setEquippedIndex(0);
+                                    if (Players.getPlayer().getEquippedIndex() == 3) {
+                                        Players.getPlayer().setEquippedIndex(0);
                                     } else {
-                                        Players.player.setEquippedIndex(Players.player.getEquippedIndex() + 1);
+                                        Players.getPlayer().setEquippedIndex(Players.getPlayer().getEquippedIndex() + 1);
                                     }
 
                                     for (int i = 10; i < 17; i++) {
                                         Lanterna.clear(i);
                                     }
                                     
-                                    Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(false));
+                                    Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.getPlayer().weaponEquipped().toString(false));
 
                                     for (int i = 0; i < 4; i++) {
-                                        if (i == Players.player.getEquippedIndex()) {
-                                            Lanterna.print(1, 18 + i, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                        if (i == Players.getPlayer().getEquippedIndex()) {
+                                            Lanterna.print(1, 19 + i, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)));
                                         } else {
-                                            Lanterna.print(1, 18 + i, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                            Lanterna.print(1, 19 + i, (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
                                         }
                                     }
                                 }
@@ -120,26 +114,26 @@ public class PlayerMenu {
                                 // To delete weapon
                                 // TODO: woah can i get rid of the numbers entirely on this one
                                 case 'd' -> {
-                                    if (!Players.player.weaponEquipped().equals(Weapons.getFists())) {
+                                    if (!Players.getPlayer().weaponEquipped().equals(Weapons.getFists())) {
 
-                                        int row = 18 + Players.player.getEquippedIndex();
+                                        int row = 19 + Players.getPlayer().getEquippedIndex();
 
-                                        Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true) + " ^GAre you sure you want to delete this weapon? You can't get it back! (^gQ^G to confirm, ^RE^G to cancel)");
+                                        Lanterna.print(1, row, "^g> " + Players.getPlayer().weaponEquipped().toString(true) + " ^GAre you sure you want to delete this weapon? You can't get it back! (^gQ^G to confirm, ^RE^G to cancel)");
 
                                         // This is blocking, no other action can be done until Q or E is pressed
                                         while (true) {
                                             KeyStroke choice = Lanterna.getScreen().readInput();
 
                                             if (choice.getCharacter() == 'q') {
-                                                Players.player.setWeapon(null, Players.player.getEquippedIndex());
+                                                Players.getPlayer().setWeapon(null, Players.getPlayer().getEquippedIndex());
                                                 Lanterna.clear(row);
                                                 Lanterna.clear(10);
                                                 Lanterna.print(1, row, "^g> " + "^GNo Weapon");
-                                                Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.player.weaponEquipped().toString(false));
+                                                Lanterna.print(1, 10, "^WWeapon Equipped: " + Players.getPlayer().weaponEquipped().toString(false));
                                                 break;
                                             } else if (choice.getCharacter() == 'e') {
                                                 Lanterna.clear(row);
-                                                Lanterna.print(1, row, "^g> " + Players.player.weaponEquipped().toString(true));
+                                                Lanterna.print(1, row, "^g> " + Players.getPlayer().weaponEquipped().toString(true));
                                                 break;
                                             }
                                         }
@@ -153,32 +147,5 @@ public class PlayerMenu {
                 }
             }
         }).start();
-    }
-
-    // TODO: CONVERT TO LANTERNA
-    //  OR JUST GET RID OF THIS
-    private static void heal() throws Exception {
-        if (Players.player.getConsumables().contains(Consumables.medkit)) {
-            double restoration = Utils.randomRange(15, 21) / 100.0;
-            restoration *= Players.player.getHealth();
-            double overheal;
-            
-            Players.player.getConsumables().remove(Consumables.medkit);
-            Players.player.setTempHealth(Players.player.getTempHealth() + restoration);
-
-            if (Players.player.getTempHealth() > Players.player.getHealth()) {
-                overheal = Players.player.getTempHealth() - Players.player.getHealth();
-
-                Players.player.setTempHealth(Players.player.getHealth());
-
-                restoration -= overheal;
-            }
-
-            Lanterna.printf("\n^R%s^G health restored.", "" + Utils.round(restoration, 2));
-        } else {
-            Lanterna.printf("\n^GYou don't have %s available.", Consumables.medkit.toString());
-        }
-        Thread.sleep(Utils.QUICK_STANDARD);
-        menu();
     }
 }

@@ -28,9 +28,9 @@
 - [x] Includes a static method other than the main method.
 - [ ] Includes a method that alters a static variable in a different class.
 - [x] Uses the this keyword.
-- [ ] Is reliable.
+- [x] Is reliable.
 - [x] Creates no legal issues nor intellectual property concerns.
-- [ ] Benefits at least one society, economy, or culture. (gaming culture lmao)
+- [x] Benefits at least one society, economy, or culture. (gaming culture lmao)
 
 ## Unit 6: Arrays
 

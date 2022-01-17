@@ -7,16 +7,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import F7.Lanterna;
 import com.googlecode.lanterna.input.KeyStroke;
 import java.io.*;
-import java.util.concurrent.*;
 
 public class MapMenu {
     private static Map currentMap;
+    private static boolean running;
 
     public static Map getCurrentMap() {return currentMap;}
     public static void setCurrentMap(Map currentMap) {MapMenu.currentMap = currentMap;}
 
     public static void menu() throws Exception {
         Lanterna.clear();
+
+        running = true;
 
         Lanterna.print(1, 1,
             "^CGMapping v75.221^G\nCoordinates: ^R#%&V;}!%@( ERROR ;}=@&!&(/?{\n" + currentMap.toString() +
@@ -30,8 +32,6 @@ public class MapMenu {
         );
 
         new Thread(() -> {
-            boolean running = true;
-
             while (running) {
                 try {
                     KeyStroke keyPressed = Lanterna.getScreen().pollInput();
@@ -51,7 +51,6 @@ public class MapMenu {
                                     save();
                                 }
                                 case '4' -> {
-                                    running = false;
                                     exit();
                                 }
                                 case 'w' -> {
@@ -97,7 +96,7 @@ public class MapMenu {
         File mapSave = new File(Utils.getMAP_SAVE_PATH());
         ObjectMapper objectMapper = new ObjectMapper();
 
-        objectMapper.writeValue(playerSave, Players.player);
+        objectMapper.writeValue(playerSave, Players.getPlayer());
         objectMapper.writeValue(mapSave, currentMap);
 
         new Thread(() -> {
@@ -121,17 +120,19 @@ public class MapMenu {
 
     // TODO: Modify for Lanterna
     private static void exit() throws Exception {
-        Lanterna.print(1, 28, "^GAre you sure you want to quit? All unsaved progress will be lost. (^gQ^G to confirm, ^RE^G to cancel)");
+        Lanterna.print(14, 28, "^GAre you sure you want to quit? All unsaved progress will be lost. (^gQ^G to confirm, ^RE^G to cancel)");
 
         // Blocking, will not let player do anything until Q or E is pressed, taken from PlayerMenu
         while (true) {
             KeyStroke choice = Lanterna.getScreen().readInput();
 
             if (choice.getCharacter() == 'q') {
+                running = false;
                 MainMenu.menu();
                 break;
             } else if (choice.getCharacter() == 'e') {
                 Lanterna.clear(28);
+                Lanterna.print(1, 28, "^G4) Exit Game");
                 break;
             }
         }

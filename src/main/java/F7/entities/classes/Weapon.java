@@ -32,6 +32,9 @@ public class Weapon {
     public double getCritMultiplier() {return critMultiplier;}
     public void setCritMultiplier(int critMultiplier) {this.critMultiplier = critMultiplier;}
 
+    public int getReloadTime() {return reloadTime;}
+    public void setReloadTime(int reloadTime) {this.reloadTime = reloadTime;}
+
     public Rarity getRARITY() {return RARITY;}
 
     // Constructor
@@ -43,7 +46,8 @@ public class Weapon {
                   @JsonProperty("rof") int rof,
                   @JsonProperty("rarity") Rarity RARITY,
                   @JsonProperty("critChance") int critChance,
-                  @JsonProperty("critMultiplier") double critMultiplier) {
+                  @JsonProperty("critMultiplier") double critMultiplier,
+                  @JsonProperty("reloadTime") int reloadTime) {
         this.NAME = NAME;
         this.damage = damage;
         this.accuracy = accuracy;
@@ -52,6 +56,7 @@ public class Weapon {
         this.RARITY = RARITY;
         this.critChance = critChance;
         this.critMultiplier = critMultiplier;
+        this.reloadTime = reloadTime;
     }
 
     public Weapon(Weapon weapon) {
@@ -63,6 +68,7 @@ public class Weapon {
         this.RARITY = weapon.getRARITY();
         this.critChance = weapon.getCritChance();
         this.critMultiplier = weapon.getCritMultiplier();
+        this.reloadTime = weapon.getReloadTime();
     }
 
     // Methods 
@@ -77,13 +83,15 @@ public class Weapon {
                     ^WAccuracy: ^G%s%%
                     ^WRate of Fire: ^G%s
                     ^WCritical Chance: ^G%s%%
-                    ^WCritical Multiplier: ^Gx%s""",
+                    ^WCritical Multiplier: ^Gx%s
+                    ^WReload Speed: ^G%s %s""",
                     RARITY.toString(), level, NAME,
                     damage,
                     accuracy,
                     rof,
                     critChance,
-                    critMultiplier
+                    critMultiplier,
+                    reloadTime, (reloadTime == 1 ? "Second" : "Seconds")
             );
         }
     }

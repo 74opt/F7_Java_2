@@ -50,11 +50,11 @@ public class CombatMenu {
     private static HashMap<Consumable, Integer> statusHashMap = new HashMap<>();
 
     public static void setStatusHashMap() {
-        statusHashMap.put(Consumables.smoke, 0);
-        statusHashMap.put(Consumables.corrosive, 0);
-        statusHashMap.put(Consumables.target, 0);
-        statusHashMap.put(Consumables.amplifier, 0);
-        statusHashMap.put(Consumables.flashbang, 0);
+        statusHashMap.put(Consumables.getSmoke(), 0);
+        statusHashMap.put(Consumables.getCorrosive(), 0);
+        statusHashMap.put(Consumables.getTarget(), 0);
+        statusHashMap.put(Consumables.getAmplifier(), 0);
+        statusHashMap.put(Consumables.getFlashbang(), 0);
     }
     
     public static void start() throws Exception {
@@ -69,7 +69,7 @@ public class CombatMenu {
 
         enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
 
-        enemy.setLevel(Players.player.getLevel() + Utils.randomRange(-2, 2));
+        enemy.setLevel(Players.getPlayer().getLevel() + Utils.randomRange(-2, 2));
 
         if (enemy.getLevel() <= 0) {
             enemy.setLevel(1);
@@ -92,9 +92,9 @@ public class CombatMenu {
         // both values < 0 means the shield is ready to be used
 
         if (shieldTurns > 0) {
-            shieldStatus = String.format("^gActive (%s turns left)", Players.player.getShield().getTURNS() - shieldTurns);
+            shieldStatus = String.format("^gActive (%s turns left)", Players.getPlayer().getShield().getTURNS() - shieldTurns);
         } else if (shieldChargingTurns > 0) {
-            shieldStatus = String.format("^OCharging (%s turns left)", Players.player.getShield().getCOOLDOWN() - shieldChargingTurns);
+            shieldStatus = String.format("^OCharging (%s turns left)", Players.getPlayer().getShield().getCOOLDOWN() - shieldChargingTurns);
         } else {
             shieldStatus = "^CReady";
         }
@@ -117,11 +117,11 @@ public class CombatMenu {
                 %s
                 %s
                 """,
-                Players.player.getName(),
-                Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^O"),
-                Players.player.weaponEquipped().toString(true),
-                Players.player.getShield().toString(true), shieldStatus,
-                Players.player.displayConsumables(),
+                Players.getPlayer().getName(),
+                Utils.outOf("Health:", Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^O"),
+                Players.getPlayer().weaponEquipped().toString(true),
+                Players.getPlayer().getShield().toString(true), shieldStatus,
+                Players.getPlayer().displayConsumables(),
                 displayStatuses(),
                 enemy.toString(false)
         );
@@ -142,7 +142,7 @@ public class CombatMenu {
                 4) Equip New Weapon
                 5) Run Away
                 """,
-                Players.player.weaponEquipped().getNAME()
+                Players.getPlayer().weaponEquipped().getNAME()
             );
 
             new Thread(() -> {
@@ -183,7 +183,7 @@ public class CombatMenu {
             //* do enemy things
             enemyAttack();
 
-            if (Players.player.getHealth() <= 0) {
+            if (Players.getPlayer().getHealth() <= 0) {
                 playerDead();
             } else {
                 setTurn();
@@ -196,12 +196,12 @@ public class CombatMenu {
     private static void attack() throws Exception {
         int damage = 0; // Player damage fluctuates between 93% and 107%
 
-        for (int i = 0; i < Players.player.weaponEquipped().getRof(); i++) {
-            if (targetActive || Utils.chance(Players.player.weaponEquipped().getAccuracy())) {
+        for (int i = 0; i < Players.getPlayer().weaponEquipped().getRof(); i++) {
+            if (targetActive || Utils.chance(Players.getPlayer().weaponEquipped().getAccuracy())) {
                 if (amplifierActive) {
-                    damage += (int) (Players.player.weaponEquipped().getDamage() * (Utils.randomRange(109, 135) / 100.0));
+                    damage += (int) (Players.getPlayer().weaponEquipped().getDamage() * (Utils.randomRange(109, 135) / 100.0));
                 } else {
-                    damage += (int) (Players.player.weaponEquipped().getDamage() * (Utils.randomRange(93, 108) / 100.0));
+                    damage += (int) (Players.getPlayer().weaponEquipped().getDamage() * (Utils.randomRange(93, 108) / 100.0));
                 } 
             }
         }
@@ -213,7 +213,7 @@ public class CombatMenu {
             Thread.sleep(Utils.QUICK_STANDARD);
         }
 
-        Lanterna.printf("%s dealt %s damage to %s!", Players.player.weaponEquipped().getNAME(), damage, enemy.getNAME());
+        Lanterna.printf("%s dealt %s damage to %s!", Players.getPlayer().weaponEquipped().getNAME(), damage, enemy.getNAME());
         Thread.sleep(Utils.QUICK_STANDARD);
 
         if (corrosiveActive) {
@@ -242,7 +242,7 @@ public class CombatMenu {
         int amplifiers = 0;
         int flashbangs = 0;
 
-        for (Consumable consumable : Players.player.getConsumables()) { // yes this code is taken from Player
+        for (Consumable consumable : Players.getPlayer().getConsumables()) { // yes this code is taken from Player
             switch (consumable.getNAME()) {
                 case "Medkit":
                     medkits++;
@@ -278,12 +278,12 @@ public class CombatMenu {
         7) Exit
 
         """, 
-        Consumables.medkit.toString(), medkits,
-        Consumables.smoke.toString(), smokes,
-        Consumables.corrosive.toString(), corrosives,
-        Consumables.target.toString(), targets,
-        Consumables.amplifier.toString(), amplifiers,
-        Consumables.flashbang.toString(), flashbangs
+        Consumables.getMedkit().toString(), medkits,
+        Consumables.getSmoke().toString(), smokes,
+        Consumables.getCorrosive().toString(), corrosives,
+        Consumables.getTarget().toString(), targets,
+        Consumables.getAmplifier().toString(), amplifiers,
+        Consumables.getFlashbang().toString(), flashbangs
         );
 
         final int medkitsFinal = medkits;
@@ -310,16 +310,16 @@ public class CombatMenu {
                                     if (medkitsFinal > 0) {
                                         running = false;
                                         double restoration = Utils.randomRange(15, 21) / 100.0;
-                                        restoration *= Players.player.getHealth();
+                                        restoration *= Players.getPlayer().getHealth();
                                         double overheal;
                                 
-                                        Players.player.getConsumables().remove(Consumables.medkit);
-                                        Players.player.setTempHealth(Players.player.getTempHealth() + restoration);
+                                        Players.getPlayer().getConsumables().remove(Consumables.getMedkit());
+                                        Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() + restoration);
                     
-                                        if (Players.player.getTempHealth() > Players.player.getHealth()) {
-                                            overheal = Players.player.getTempHealth() - Players.player.getHealth();
+                                        if (Players.getPlayer().getTempHealth() > Players.getPlayer().getHealth()) {
+                                            overheal = Players.getPlayer().getTempHealth() - Players.getPlayer().getHealth();
                     
-                                            Players.player.setTempHealth(Players.player.getHealth());
+                                            Players.getPlayer().setTempHealth(Players.getPlayer().getHealth());
                     
                                             restoration -= overheal;
                                         }
@@ -329,92 +329,92 @@ public class CombatMenu {
                                         setTurn();
                                         menu();
                                     } else {
-                                        Lanterna.printf("You don't have %s available.", Consumables.medkit.toString());
+                                        Lanterna.printf("You don't have %s available.", Consumables.getMedkit().toString());
                                     }
                                 }
                                 case '2' -> {
                                     if (smokesFinal > 0 && !smokeActive) {
                                         running = false;
-                                        Players.player.getConsumables().remove(Consumables.smoke);
+                                        Players.getPlayer().getConsumables().remove(Consumables.getSmoke());
                     
-                                        Lanterna.printf("%s used.", Consumables.smoke.toString());
+                                        Lanterna.printf("%s used.", Consumables.getSmoke().toString());
                                         smokeActive = true;
                     
                                         Thread.sleep(Utils.QUICK_STANDARD);
                                         setTurn();
                                         menu();
                                     } else if (smokeActive) {
-                                        Lanterna.printf("%s is already active", Consumables.smoke.toString());
+                                        Lanterna.printf("%s is already active", Consumables.getSmoke().toString());
                                     } else {
-                                        Lanterna.printf("You don't have %s available.", Consumables.smoke.toString());
+                                        Lanterna.printf("You don't have %s available.", Consumables.getSmoke().toString());
                                     }
                                 }
                                 case '3' -> {
                                     if (corrosivesFinal > 0 && !corrosiveActive) {
                                         running = false;
-                                        Players.player.getConsumables().remove(Consumables.corrosive);
+                                        Players.getPlayer().getConsumables().remove(Consumables.getCorrosive());
                     
-                                        Lanterna.printf("%s used.", Consumables.corrosive.toString());
+                                        Lanterna.printf("%s used.", Consumables.getCorrosive().toString());
                                         corrosiveActive = true;
                     
                                         Thread.sleep(Utils.QUICK_STANDARD);
                                         setTurn();
                                         menu();
                                     } else if (corrosiveActive) {
-                                        Lanterna.printf("%s is already active", Consumables.corrosive.toString());
+                                        Lanterna.printf("%s is already active", Consumables.getCorrosive().toString());
                                     } else {
-                                        Lanterna.printf("You don't have %s available.", Consumables.corrosive.toString());
+                                        Lanterna.printf("You don't have %s available.", Consumables.getCorrosive().toString());
                                     }
                                 }
                                 case '4' -> {
                                     if (targetsFinal > 0 && !targetActive) {
                                         running = false;
-                                        Players.player.getConsumables().remove(Consumables.target);
+                                        Players.getPlayer().getConsumables().remove(Consumables.getTarget());
                     
-                                        Lanterna.printf("%s used.", Consumables.target.toString());
+                                        Lanterna.printf("%s used.", Consumables.getTarget().toString());
                                         targetActive = true;
                     
                                         Thread.sleep(Utils.QUICK_STANDARD);
                                         setTurn();
                                         menu();
                                     } else if (targetActive) {
-                                        Lanterna.printf("%s is already active", Consumables.target.toString());
+                                        Lanterna.printf("%s is already active", Consumables.getTarget().toString());
                                     } else {
-                                        Lanterna.printf("You don't have %s available.", Consumables.target.toString());
+                                        Lanterna.printf("You don't have %s available.", Consumables.getTarget().toString());
                                     }
                                 }
                                 case '5' -> {
                                     if (amplifiersFinal > 0 && !amplifierActive) {
                                         running = false;
-                                        Players.player.getConsumables().remove(Consumables.amplifier);
+                                        Players.getPlayer().getConsumables().remove(Consumables.getAmplifier());
                     
-                                        Lanterna.printf("%s used.", Consumables.amplifier.toString());
+                                        Lanterna.printf("%s used.", Consumables.getAmplifier().toString());
                                         amplifierActive = true;
                     
                                         Thread.sleep(Utils.QUICK_STANDARD);
                                         setTurn();
                                         menu();
                                     } else if (amplifierActive) {
-                                        Lanterna.printf("%s is already active", Consumables.amplifier.toString());
+                                        Lanterna.printf("%s is already active", Consumables.getAmplifier().toString());
                                     } else {
-                                        Lanterna.printf("You don't have %s available.", Consumables.amplifier.toString());
+                                        Lanterna.printf("You don't have %s available.", Consumables.getAmplifier().toString());
                                     }
                                 }
                                 case '6' -> {
                                     if (flashbangsFinal > 0 && !flashbangActive) {
                                         running = false;
-                                        Players.player.getConsumables().remove(Consumables.flashbang);
+                                        Players.getPlayer().getConsumables().remove(Consumables.getFlashbang());
                     
-                                        Lanterna.printf("%s used.", Consumables.flashbang.toString());
+                                        Lanterna.printf("%s used.", Consumables.getFlashbang().toString());
                                         flashbangActive = true;
                     
                                         Thread.sleep(Utils.QUICK_STANDARD);
                                         setTurn();
                                         menu();
                                     } else if (flashbangActive) {
-                                        Lanterna.printf("%s is already active", Consumables.flashbang.toString());
+                                        Lanterna.printf("%s is already active", Consumables.getFlashbang().toString());
                                     } else {
-                                        Lanterna.printf("You don't have %s available.", Consumables.flashbang.toString());
+                                        Lanterna.printf("You don't have %s available.", Consumables.getFlashbang().toString());
                                     }
                                 }
                                 case '7' -> {
@@ -437,14 +437,14 @@ public class CombatMenu {
     private static void shield() throws Exception { //TODO pls
         if (shieldChargingTurns == 0 && shieldTurns == 0) {
             //shieldUp = true;
-            Lanterna.printf("%s has been activated, lasting for %s turns.", Players.player.getShield().getNAME(), Players.player.getShield().getTURNS());
+            Lanterna.printf("%s has been activated, lasting for %s turns.", Players.getPlayer().getShield().getNAME(), Players.getPlayer().getShield().getTURNS());
             Thread.sleep(Utils.getSTANDARD());
             setTurn();
         } else {
             if (shieldChargingTurns > 0) {
-                Lanterna.printf("%s is still charging. %s turns until usable.", Players.player.getShield().getNAME(), 2);
+                Lanterna.printf("%s is still charging. %s turns until usable.", Players.getPlayer().getShield().getNAME(), 2);
             } else if (shieldTurns > 0) {
-                Lanterna.printf("%s is already up.", Players.player.getShield().getNAME());
+                Lanterna.printf("%s is already up.", Players.getPlayer().getShield().getNAME());
             }
             Thread.sleep(Utils.QUICK_STANDARD);
         }
@@ -461,9 +461,9 @@ public class CombatMenu {
         Lanterna.println("Select a weapon to equip or type \"exit\" to exit:\n");
 
         for (int i = 0; i < 4; i++) {
-            if (Players.player.getWeapons()[i] != null) {
+            if (Players.getPlayer().getWeapons()[i] != null) {
                 Lanterna.print(i + 1 + ") ");
-                Lanterna.println(Players.player.getWeapons()[i].toString(false));
+                Lanterna.println(Players.getPlayer().getWeapons()[i].toString(false));
                 Lanterna.println("");
                 possibilies[i] = "" + (i + 1);
             }
@@ -490,8 +490,8 @@ public class CombatMenu {
                 break;
         }
 
-        Players.player.setEquippedIndex(index - 1);
-        Lanterna.printf("%s has been equipped.", Players.player.getWeapons()[index - 1].getNAME());
+        Players.getPlayer().setEquippedIndex(index - 1);
+        Lanterna.printf("%s has been equipped.", Players.getPlayer().getWeapons()[index - 1].getNAME());
         Thread.sleep(Utils.QUICK_STANDARD);
         setTurn();
         menu();
@@ -505,26 +505,26 @@ public class CombatMenu {
         switch (choice) {
             case "y":
                 if (Utils.chance(67)) {
-                    //double damage = Utils.round(Players.player.getTempHealth() * (Utils.randomRange(15, 22) / 100.0), 2); // this way, i don't kill the player but still punish them for running
+                    //double damage = Utils.round(Players.getPlayer().getTempHealth() * (Utils.randomRange(15, 22) / 100.0), 2); // this way, i don't kill the player but still punish them for running
                     double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
 
                     if (shieldTurns > 0) {
-                        damage *= (100 - Players.player.getShield().getDAMAGE_REDUCTION()) / 100.0; //* trying something out where i use the normal attack code but i'll make sure the player doesnt die
+                        damage *= (100 - Players.getPlayer().getShield().getDAMAGE_REDUCTION()) / 100.0; //* trying something out where i use the normal attack code but i'll make sure the player doesnt die
                         damage = Utils.round(damage, 2);
                     }
 
-                    while (damage >= Players.player.getTempHealth()) {
+                    while (damage >= Players.getPlayer().getTempHealth()) {
                         damage *= .75;
                     }
 
                     damage = Utils.round(damage, 2);
 
-                    Players.player.setTempHealth(Players.player.getTempHealth() - damage); // TODO: make the damage relate to enemy level as well instead of just removing percentage
+                    Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() - damage); // TODO: make the damage relate to enemy level as well instead of just removing percentage
 
                     Lanterna.printf("%s was able to hit you while you were running, dealing %s damage!", enemy.getNAME(), damage);
                     Thread.sleep(Utils.getSTANDARD());
                     
-                    if (Players.player.getHealth() <= 0) {
+                    if (Players.getPlayer().getHealth() <= 0) {
                         Lanterna.print("You died!");
                         Thread.sleep(Utils.QUICK_STANDARD);
                         DeathMenu.menu();
@@ -559,11 +559,11 @@ public class CombatMenu {
             double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
 
             if (shieldTurns > 0) {
-                damage *= (100 - Players.player.getShield().getDAMAGE_REDUCTION()) / 100.0;
+                damage *= (100 - Players.getPlayer().getShield().getDAMAGE_REDUCTION()) / 100.0;
                 damage = Utils.round(damage, 2);
             }
 
-            Players.player.setTempHealth(Players.player.getTempHealth() - damage); //* Gordon: permanent damage idea might not implement
+            Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() - damage); //* Gordon: permanent damage idea might not implement
             Lanterna.printf("%s dealt %s damage!", enemy.getNAME(), damage); //
             Thread.sleep(Utils.getSTANDARD());
             setTurn();
@@ -591,7 +591,7 @@ public class CombatMenu {
         rarityMultipliers.put(Rarities.godly, 3.0);
         
         int exp = (int) (((200 + 300 * Math.pow(enemy.getLevel(), 1.6)) * (Utils.randomRange(73, 97) / 100.0)) * rarityMultipliers.get(enemy.getRARITY())); //? should i change 1.6 to less?
-        Players.player.setExp(Players.player.getExp() + exp);
+        Players.getPlayer().setExp(Players.getPlayer().getExp() + exp);
 
         Lanterna.printf("\nYou defeated %s! %s exp awarded.", enemy.getNAME(), exp);
         Thread.sleep(Utils.getSTANDARD());
@@ -602,15 +602,15 @@ public class CombatMenu {
             int weaponRarity = Utils.randomRange(0, enemy.getRARITY().getCHANCE() + 5);
 
             if (weaponRarity <= Rarities.common.getCHANCE()) {
-                weapon = Weapons.weaponHashMap.get(Rarities.common)[random.nextInt(Weapons.weaponHashMap.get(Rarities.common).length)];
+                weapon = Weapons.getWeaponHashMap().get(Rarities.common)[random.nextInt(Weapons.getWeaponHashMap().get(Rarities.common).length)];
             } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE()) {
-                weapon = Weapons.weaponHashMap.get(Rarities.uncommon)[random.nextInt(Weapons.weaponHashMap.get(Rarities.uncommon).length)];
+                weapon = Weapons.getWeaponHashMap().get(Rarities.uncommon)[random.nextInt(Weapons.getWeaponHashMap().get(Rarities.uncommon).length)];
             } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE()) {
-                weapon = Weapons.weaponHashMap.get(Rarities.rare)[random.nextInt(Weapons.weaponHashMap.get(Rarities.rare).length)];
+                weapon = Weapons.getWeaponHashMap().get(Rarities.rare)[random.nextInt(Weapons.getWeaponHashMap().get(Rarities.rare).length)];
             } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE() + Rarities.exceptional.getCHANCE()) {
-                weapon = Weapons.weaponHashMap.get(Rarities.exceptional)[random.nextInt(Weapons.weaponHashMap.get(Rarities.exceptional).length)];
+                weapon = Weapons.getWeaponHashMap().get(Rarities.exceptional)[random.nextInt(Weapons.getWeaponHashMap().get(Rarities.exceptional).length)];
             } else if (weaponRarity <= Rarities.common.getCHANCE() + Rarities.uncommon.getCHANCE() + Rarities.rare.getCHANCE() + Rarities.exceptional.getCHANCE() + Rarities.godly.getCHANCE()) {
-                weapon = Weapons.weaponHashMap.get(Rarities.godly)[random.nextInt(Weapons.weaponHashMap.get(Rarities.godly).length)];
+                weapon = Weapons.getWeaponHashMap().get(Rarities.godly)[random.nextInt(Weapons.getWeaponHashMap().get(Rarities.godly).length)];
             } else { // if goes above 100 you get a shield! yay!!!!
                 weapon = null; //! bad idea, should do like 33%-50% (must decide on value) chance to loot, then create different probabilities as to what you could be looting
                                // although i would like 100% of getting currency if i ever implement that
@@ -640,14 +640,14 @@ public class CombatMenu {
 
                     switch (choice) {
                         case "y":
-                            if (Players.player.getShield() != null) {
+                            if (Players.getPlayer().getShield() != null) {
                                 Lanterna.printf("%s already equipped. Do you want to replace the shield? (Y/N)");
 
                                 String takeShield = Utils.input(false);
 
                                 switch (takeShield) {
                                     case "y":
-                                        Players.player.setShield(shield);
+                                        Players.getPlayer().setShield(shield);
                                         Lanterna.printf("%s equipped.", shield.toString(true));
                                         Thread.sleep(Utils.QUICK_STANDARD);
                                         MapMenu.menu();
@@ -660,7 +660,7 @@ public class CombatMenu {
                                         break;
                                 }
                             } else {
-                                Players.player.setShield(shield);
+                                Players.getPlayer().setShield(shield);
                                 Lanterna.printf("%s equipped.", shield.toString(true));
                                 Thread.sleep(Utils.QUICK_STANDARD);
                                 MapMenu.menu();
@@ -694,10 +694,10 @@ public class CombatMenu {
 
                 switch (choice) {
                     case "y":
-                        int search = Arrays.asList(Players.player.getWeapons()).indexOf(null);
+                        int search = Arrays.asList(Players.getPlayer().getWeapons()).indexOf(null);
 
                         if (search != -1) {
-                            Players.player.setWeapon(weapon, search);
+                            Players.getPlayer().setWeapon(weapon, search);
                             Lanterna.printf("%s equipped.\n", weapon.toString(true));
                         } else {
                             while (true) {
@@ -707,9 +707,9 @@ public class CombatMenu {
                                 String[] possibilies = new String[4];
 
                                 for (int i = 0; i < 4; i++) {
-                                    if (Players.player.getWeapons()[i] != null) {
+                                    if (Players.getPlayer().getWeapons()[i] != null) {
                                         Lanterna.print(i + 1 + ") ");
-                                        Lanterna.println(Players.player.getWeapons()[i].toString(false));
+                                        Lanterna.println(Players.getPlayer().getWeapons()[i].toString(false));
                                         Lanterna.println("");
                                         possibilies[i] = "" + (i + 1);
                                     }
@@ -727,7 +727,7 @@ public class CombatMenu {
                                             index = Integer.parseInt(choice);
 
                                             Lanterna.printf("%s equipped in slot %s.", weapon.toString(true), index);
-                                            Players.player.setWeapon(weapon, index - 1);
+                                            Players.getPlayer().setWeapon(weapon, index - 1);
 
                                             Thread.sleep(Utils.QUICK_STANDARD);
                                             MapMenu.menu();
@@ -780,11 +780,11 @@ public class CombatMenu {
 //            status += addStatus(value > 0, key.toString(), key.getTURNS(), value);
 //        });
 
-//        status += addStatus(smokeActive, Consumables.smoke.toString(), Consumables.smoke.getTURNS(), smokeTurns);
-//        status += addStatus(corrosiveActive, Consumables.corrosive.toString(), Consumables.corrosive.getTURNS(), corrosiveTurns);
-//        status += addStatus(targetActive, Consumables.target.toString(), Consumables.target.getTURNS(), targetTurns);
-//        status += addStatus(amplifierActive, Consumables.amplifier.toString(), Consumables.amplifier.getTURNS(), amplifierTurns);
-//        status += addStatus(flashbangActive, Consumables.flashbang.toString(), Consumables.flashbang.getTURNS(), flashbangTurns);
+//        status += addStatus(smokeActive, Consumables.getSmoke().toString(), Consumables.getSmoke().getTURNS(), smokeTurns);
+//        status += addStatus(corrosiveActive, Consumables.getCorrosive().toString(), Consumables.getCorrosive().getTURNS(), corrosiveTurns);
+//        status += addStatus(targetActive, Consumables.getTarget().toString(), Consumables.getTarget().getTURNS(), targetTurns);
+//        status += addStatus(amplifierActive, Consumables.getAmplifier().toString(), Consumables.getAmplifier().getTURNS(), amplifierTurns);
+//        status += addStatus(flashbangActive, Consumables.getFlashbang().toString(), Consumables.getFlashbang().getTURNS(), flashbangTurns);
         
         return status;
     }

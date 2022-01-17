@@ -52,16 +52,16 @@ public class Map {
         dir.put("right", new Integer[] {1, 0});
 
         for (int i = 0; i < tiles; i++) {
-            if (!(MAP[Players.player.getY() + dir.get(direction)[1]][Players.player.getX() + dir.get(direction)[0]].getCOLLISION_ENABLED())) {
-                int oldX = Players.player.getX();
-                int oldY = Players.player.getY();
+            if (!(MAP[Players.getPlayer().getY() + dir.get(direction)[1]][Players.getPlayer().getX() + dir.get(direction)[0]].getCOLLISION_ENABLED())) {
+                int oldX = Players.getPlayer().getX();
+                int oldY = Players.getPlayer().getY();
 
                 // Sets up player's new position
-                Players.player.setX(Players.player.getX() + dir.get(direction)[0]);
-                Players.player.setY(Players.player.getY() + dir.get(direction)[1]);
+                Players.getPlayer().setX(Players.getPlayer().getX() + dir.get(direction)[0]);
+                Players.getPlayer().setY(Players.getPlayer().getY() + dir.get(direction)[1]);
 
                 MAP[oldY][oldX] = PARENT.MAP[oldY][oldX];
-                MAP[Players.player.getY()][Players.player.getX()] = Maps.getPlayer();
+                MAP[Players.getPlayer().getY()][Players.getPlayer().getX()] = Maps.getPlayer();
             } else {
                 return;
             }

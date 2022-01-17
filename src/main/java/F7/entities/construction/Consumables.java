@@ -4,17 +4,29 @@ import java.util.*;
 import F7.entities.classes.*;
 
 public class Consumables {
-    public static Consumable medkit = new Consumable("Medkit", 0, Rarities.common); // this is the only one that doesnt rely on a timer or boolean, just heals in an instant
+    private static final Consumable medkit = new Consumable("Medkit", 0, Rarities.common); // this is the only one that doesnt rely on a timer or boolean, just heals in an instant
 
-    public static Consumable smoke = new Consumable("Smoke Grenade", 3, Rarities.common);
+    private static final Consumable smoke = new Consumable("Smoke Grenade", 10, Rarities.common);
 
-    public static Consumable corrosive = new Consumable("Corrosive Acid Grenade", 2, Rarities.uncommon);
+    private static final Consumable corrosive = new Consumable("Corrosive Acid Grenade", 5, Rarities.uncommon);
 
-    public static Consumable target = new Consumable("Targeting-Assistance Chip", 1, Rarities.uncommon);
+    private static final Consumable target = new Consumable("Targeting-Assistance Chip", 8, Rarities.uncommon);
 
-    public static Consumable amplifier = new Consumable("Damage Amplifier", 2, Rarities.rare);
+    private static final Consumable amplifier = new Consumable("Damage Amplifier", 6, Rarities.rare);
 
-    public static Consumable flashbang = new Consumable("Flashbang", 1, Rarities.rare);
+    private static final Consumable flashbang = new Consumable("Flashbang", 5, Rarities.rare);
+
+    public static Consumable getMedkit() {return medkit;}
+
+    public static Consumable getSmoke() {return smoke;}
+
+    public static Consumable getCorrosive() {return corrosive;}
+
+    public static Consumable getTarget() {return target;}
+
+    public static Consumable getAmplifier() {return amplifier;}
+
+    public static Consumable getFlashbang() {return flashbang;}
 
     public static HashMap<Rarity, Consumable[]> consumableHashMap = new HashMap<>();
 

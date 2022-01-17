@@ -13,35 +13,14 @@ public class Lanterna {
     private static Terminal terminal;
     private static Screen screen;
     private static TextGraphics textGraphics;
-    private static int column;
-    private static int row;
     private static int initColumn;
     private static int initRow; // Don't know if ill need this
-    // TODO: MAKE SCROLLING TEXT METHOD
-    private static final int SCROLL = 45; //taken from Utils.SCROLL
 
     // Values good for 1920x1080
     private static final int STANDARD_COLUMNS = 211;
     private static final int STANDARD_ROWS = 61;
 
-    // Probably not going to use since it relies on an infinite loop
-    // Refreshes the screen 24 frames per second
-    private static Thread refresh = new Thread(() -> {
-        while (true) {
-            try {
-                screen.refresh();
-                Thread.sleep(16);
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
-            }
-        }
-    });
-
     public static Screen getScreen() {return screen;}
-
-    public static int getGlobalColumn() {return column;}
-
-    public static int getGlobalRow() {return row;}
 
     public static int getSTANDARD_COLUMNS() {return STANDARD_COLUMNS;}
 
@@ -54,16 +33,11 @@ public class Lanterna {
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);
         textGraphics = screen.newTextGraphics();
-        column = 1;
-        row = 1;
 
         screen.startScreen();
     }
 
     public static void clear() throws IOException {
-        column = 1;
-        row = 1;
-
         screen.clear();
         screen.refresh();
     }
@@ -91,7 +65,7 @@ public class Lanterna {
     // Printing to terminal
     @Deprecated
     public static void print(String text) throws Exception {
-        print(Lanterna.column, Lanterna.row, text);
+        //print(Lanterna.column, Lanterna.row, text);
 
         screen.refresh();
     }
@@ -171,7 +145,7 @@ public class Lanterna {
     @Deprecated
     public static void println(String text) throws Exception {
         print(text);
-        row++;
-        column = 1;
+        //row++;
+        // = 1;
     }
 }

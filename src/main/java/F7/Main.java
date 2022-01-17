@@ -1,8 +1,5 @@
 package F7;
 
-import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
-import java.io.IOException;
 import F7.entities.construction.*;
 import F7.ui.*;
 
@@ -23,58 +20,5 @@ public class Main {
         Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
         MainMenu.menu();
-
-        //* Code to quit at any time
-//        new Thread(() -> {
-//            boolean running = true;
-//
-//            while (running) {
-//                try {
-//                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-//                    if (keyPressed != null) {
-//                        if (keyPressed.getKeyType().equals(KeyType.Escape)) {
-//                            try {
-//                                running = false;
-//                                System.exit(0);
-//                            } catch (Exception ignored) {}
-//                        }
-//                    }
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-
-        // TODO: Replace Combat2.png with new image in TeXit discord bot dms
-
-        // for (int i = 100; i >= 0; i--) {
-        //     Lanterna.println(Utils.percentBar(100, 100, i, "^G"));
-        //     Thread.sleep(Utils.getTWENTY_FOUR());
-        //     Lanterna.clear();
-        // }
-        //System.out.println(System.currentTimeMillis());
-
-        // Base Keyboard Listening Thread:
-        /*
-        new Thread(() -> {
-            boolean running = true;
-
-            while (running) {
-                try {
-                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-
-                    if (keyPressed != null) {
-                        try {
-                            switch (keyPressed.getCharacter()) {
-                                
-                            }
-                        } catch (Exception ignored) {}
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        */
     }
 }

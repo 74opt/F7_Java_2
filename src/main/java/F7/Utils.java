@@ -20,6 +20,8 @@ public class Utils {
     private static final int TWENTY_FOUR_FRAMES = 42;
     /** 2 seconds, used as a standard waiting time for Thread.sleep() */
     private static final int STANDARD = 2000;
+
+    // TODO: these stay public until i deal with DeathMenu
     /** 1.5 seconds, used as a standard waiting time for Thread.sleep() */
     public static final int QUICK_STANDARD = 1500;
     /** .045 seconds, used for the time between each character appearing in Utils.scrollText() */
@@ -34,9 +36,6 @@ public class Utils {
 
     // Random
     private static Random random = new Random();
-
-    // Standard Coordinates
-    private static final int BOX_COLUMN = 65;
 
     /**
      * @return Time for 24 frame refresh rate
@@ -72,11 +71,6 @@ public class Utils {
      * @return Standard DecimalFormat for presenting doubles with 2 decimal places
      */
     public static DecimalFormat getDOUBLE_DECIMAL() {return DOUBLE_DECIMAL;}
-
-    /**
-     * @return Standard Column to put boxes into
-     */
-    public static int getBOX_COLUMN() {return BOX_COLUMN;}
 
     /**
      * Takes in an input from the user with text to prompt was the user should input.

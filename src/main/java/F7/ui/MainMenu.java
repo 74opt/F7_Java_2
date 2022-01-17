@@ -87,7 +87,7 @@ public class MainMenu {
     }
 
     private static void start() throws Exception {
-        Lanterna.print("\n^WWhat is your name?\n^g> ^G");
+        Lanterna.print(1, 37, "\n^WWhat is your name?\n^g> ^G");
         String name = "";
         boolean running = true;
 
@@ -105,15 +105,15 @@ public class MainMenu {
                             case Backspace, Delete -> {
                                 name = name.substring(0, name.length() - 1);
 
-                                Lanterna.print(name.length() + 3, Lanterna.getGlobalRow(), " ");
-                                Lanterna.print(3, Lanterna.getGlobalRow(), name);
+                                Lanterna.print(name.length() + 3, 39, " ");
+                                Lanterna.print(3, 39, name);
                             }
                             case Enter -> running = false;
                             default -> {
                                 try {
                                     name += keyPressed.getCharacter();
 
-                                    Lanterna.print(3, Lanterna.getGlobalRow(), name);
+                                    Lanterna.print(3, 39, name);
                                 } catch (Exception ignored) {}
                             }
                         }
@@ -124,11 +124,11 @@ public class MainMenu {
             }
         }
 
-        MapMenu.setCurrentMap(new Map(Maps.plains));
-        Players.player = new Player(name);
+        MapMenu.setCurrentMap(new Map(Maps.getPlains()));
+        Players.setPlayer(new Player(name));
 
         //! IS FOR TESTING DELETE LATER
-        //Players.player = Players.presentation;
+        //Players.getPlayer() = Players.presentation;
 
         MapMenu.getCurrentMap().spawnPlayer(19, 8);
 
@@ -137,12 +137,16 @@ public class MainMenu {
 
     // this appears to be working and i sure hope it does buddy
     private static void load() throws Exception  {
-        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
 
-        Players.player = objectMapper.readValue(new File(Utils.getPLAYER_SAVE_PATH()), Player.class);
-        MapMenu.setCurrentMap(objectMapper.readValue(new File(Utils.getMAP_SAVE_PATH()), Map.class));
+            Players.setPlayer(objectMapper.readValue(new File(Utils.getPLAYER_SAVE_PATH()), Player.class));
+            MapMenu.setCurrentMap(objectMapper.readValue(new File(Utils.getMAP_SAVE_PATH()), Map.class));
 
-        MapMenu.getCurrentMap().spawnPlayer(Players.player.getX(), Players.player.getY());
+            MapMenu.getCurrentMap().spawnPlayer(Players.getPlayer().getX(), Players.getPlayer().getY());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         MapMenu.menu();
     }

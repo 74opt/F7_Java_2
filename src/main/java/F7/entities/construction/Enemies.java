@@ -22,8 +22,7 @@ public class Enemies {
 
     private static Enemy angel = new Enemy("Angel", "They've had enough\nof your hubris.\nYou go against the\nnatural law. ", 8, 10, 1, 95, Rarities.godly);
 
-    // TODO: make private
-    public static HashMap<Rarity, Enemy[]> enemyHashMap = new HashMap<>();
+    private static HashMap<Rarity, Enemy[]> enemyHashMap = new HashMap<>();
 
     public static HashMap<Rarity, Enemy[]> getEnemyHashMap() {return enemyHashMap;}
 

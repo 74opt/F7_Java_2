@@ -1,10 +1,10 @@
 package F7.ui;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.Map;
 import java.io.IOException;
-import java.util.concurrent.*;
-
 import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
@@ -29,11 +29,11 @@ public class CombatMenu2 {
     private static HashMap<Rarity, Double> rarityMultipliers = new HashMap<>();
 
     public static void setCombatHashMaps() {
-        statusHashMap.put(Consumables.smoke, 0);
-        statusHashMap.put(Consumables.corrosive, 2);
-        statusHashMap.put(Consumables.target, 0);
-        statusHashMap.put(Consumables.amplifier, 0);
-        statusHashMap.put(Consumables.flashbang, 5);
+        statusHashMap.put(Consumables.getSmoke(), 0);
+        statusHashMap.put(Consumables.getCorrosive(), 0);
+        statusHashMap.put(Consumables.getTarget(), 0);
+        statusHashMap.put(Consumables.getAmplifier(), 0);
+        statusHashMap.put(Consumables.getFlashbang(), 0);
 
         rarityMultipliers.put(Rarities.common, 1.0);
         rarityMultipliers.put(Rarities.uncommon, 1.5);
@@ -53,13 +53,13 @@ public class CombatMenu2 {
         running = true;
         timeElapsed = 0;
 
-        enemy.setLevel(Players.player.getLevel() + Utils.randomRange(-2, 2));
+        enemy.setLevel(Players.getPlayer().getLevel() + Utils.randomRange(-2, 2));
 
         if (enemy.getLevel() <= 0) {
             enemy.setLevel(1);
         }
 
-        Lanterna.printf("%s ^Ghas come to fight!", enemy.toString(true));
+        Lanterna.printf(1, 1, "%s ^Ghas come to fight!", enemy.toString(true));
         Thread.sleep(Utils.getSTANDARD());
         menu();
     }
@@ -134,10 +134,10 @@ public class CombatMenu2 {
             ^WLevel: %s
             %s
                     %s""",
-            Players.player.getName(),
-            Players.player.getLevel(),
-            Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
-            Utils.percentBar(80, Players.player.getHealth(), Players.player.getTempHealth(), "^R")
+            Players.getPlayer().getName(),
+            Players.getPlayer().getLevel(),
+            Utils.outOf("Health:", Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R"),
+            Utils.percentBar(80, Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R")
         );
 
         //* Enemy Stats
@@ -154,18 +154,20 @@ public class CombatMenu2 {
         );
 
         //* Player extended
-        Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.player.weaponEquipped().toString(false));
-        Lanterna.print(1, 20, "^WWeapons: ");
+        Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.getPlayer().weaponEquipped().toString(false));
+        Lanterna.print(1, 21, "^WWeapons: ");
 
         for (int i = 0; i < 4; i++) {
-            if (i == Players.player.getEquippedIndex()) {
-                Lanterna.printf(1, i + 21, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+            if (i == Players.getPlayer().getEquippedIndex()) {
+                Lanterna.printf(1, (i * 2) + 22, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)));
             } else {
-                Lanterna.printf(1, i + 21, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                Lanterna.printf(1, (i * 2) + 22, (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
             }
         }
 
-        Lanterna.print(1, 26, "^WConsumables:\n" + Players.player.displayConsumables());
+        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+
+        Lanterna.print(1, 39, "^WShield (status here):\n" + Players.getPlayer().getShield().toString(false));
 
         //* Enemy Stats Extended
         Lanterna.printf(141, 11, "" +
@@ -214,54 +216,54 @@ public class CombatMenu2 {
             """
             ^WControls:
             ^WW^W) ^GMove up item list                      ^gF^W) ^GInteract with selected item                        ^RR^W) ^GRun away
-            ^WS^W) ^GMove down item list                    ^OX^W) ^GUse shield"""
+            ^WS^W) ^GMove down item list                    ^OX^W) ^GUse shield
+            
+            ^WConsumable Controls:
+            ^w[M]edkit                                  ^g[C]orrosive Acid Grenade                              ^7[D]amage Amplifier
+            ^wSm[o]ke Grenade                           ^g[T]argeting-Assistance Chip                           ^7F[l]ashbang"""
         );
 
-        //* Updates time-related things
-        // if this works
-        final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
-        final ScheduledFuture<?> timeHandler = scheduledExecutorService.scheduleWithFixedDelay(
-                () -> {
-                    try {
-                        timeElapsed++;
-                        Lanterna.clear(12, 85, 54);
-                        Lanterna.print(85, 12, "^G" + displayTime());
+        // Handles updates every second
+        new Thread(() -> {
+            while (running) {
+                try {
+                    Thread.sleep(1000);
+                    timeElapsed++;
+                    Lanterna.clear(12, 85, 54);
+                    Lanterna.print(85, 12, "^G" + displayTime());
 
-                        statusHashMap.forEach((key, value) -> {
-                            if (value > 0) {
-                                statusHashMap.replace(key, value - 1);
-                                if (value == 1) {
-                                    try {
-                                        addInfo(key.toString() + "^G effect ended");
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                    statusHashMap.forEach((key, value) -> {
+                        if (value > 0) {
+                            statusHashMap.replace(key, value - 1);
+                            if (value == 1) {
+                                try {
+                                    addInfo(key.toString() + "^G effect ended");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
                                 }
                             }
-                        });
-
-                        for (int i = 0; i < 6; i++) {
-                            Lanterna.clear(31 + i, 71, 69);
                         }
+                    });
 
-                        int statusIndexReplacement = 0;
-                        for (Map.Entry element : statusHashMap.entrySet()) {
-                            Consumable key = (Consumable) element.getKey();
-                            int value = statusHashMap.get(key);
-
-                            if (value > 0) {
-                                Lanterna.print(71, 31 + statusIndexReplacement, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
-                                statusIndexReplacement++;
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    for (int i = 0; i < 6; i++) {
+                        Lanterna.clear(32 + i, 71, 69);
                     }
-                },
-                1,
-                1,
-                TimeUnit.SECONDS
-        );
+
+                    int statusIndexReplacement = 0;
+                    for (Map.Entry element : statusHashMap.entrySet()) {
+                        Consumable key = (Consumable) element.getKey();
+                        int value = statusHashMap.get(key);
+
+                        if (value > 0) {
+                            Lanterna.print(71, 32 + statusIndexReplacement, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
+                            statusIndexReplacement++;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
         //* Interactions
         new Thread(() -> {
@@ -274,54 +276,50 @@ public class CombatMenu2 {
                             switch (keyPressed.getCharacter()) {
                                 // Go up list
                                 case 'w' -> {
-                                    if (Players.player.getEquippedIndex() == 0) {
-                                        Players.player.setEquippedIndex(3);
+                                    if (Players.getPlayer().getEquippedIndex() == 0) {
+                                        Players.getPlayer().setEquippedIndex(3);
                                     } else {
-                                        Players.player.setEquippedIndex(Players.player.getEquippedIndex() - 1);
+                                        Players.getPlayer().setEquippedIndex(Players.getPlayer().getEquippedIndex() - 1);
                                     }
 
-                                    for (int i = 11; i < 33; i++) {
+                                    for (int i = 11; i < 31; i++) {
                                         Lanterna.clear(i, 1, 69);
                                     }
 
-                                    Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.player.weaponEquipped().toString(false));
-                                    Lanterna.print(1, 20, "^WWeapons: ");
+                                    Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.getPlayer().weaponEquipped().toString(false));
+                                    Lanterna.print(1, 21, "^WWeapons: ");
 
                                     for (int i = 0; i < 4; i++) {
-                                        if (i == Players.player.getEquippedIndex()) {
-                                            Lanterna.printf(1, i + 21, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                        if (i == Players.getPlayer().getEquippedIndex()) {
+                                            Lanterna.printf(1, (i * 2) + 22, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)));
                                         } else {
-                                            Lanterna.printf(1, i + 21, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                            Lanterna.printf(1, (i * 2) + 22, (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
                                         }
                                     }
-
-                                    Lanterna.print(1, 26, "^WConsumables:\n" + Players.player.displayConsumables());
                                 }
 
                                 // Go down list
                                 case 's' -> {
-                                    if (Players.player.getEquippedIndex() == 3) {
-                                        Players.player.setEquippedIndex(0);
+                                    if (Players.getPlayer().getEquippedIndex() == 3) {
+                                        Players.getPlayer().setEquippedIndex(0);
                                     } else {
-                                        Players.player.setEquippedIndex(Players.player.getEquippedIndex() + 1);
+                                        Players.getPlayer().setEquippedIndex(Players.getPlayer().getEquippedIndex() + 1);
                                     }
 
-                                    for (int i = 11; i < 33; i++) {
+                                    for (int i = 11; i < 31; i++) {
                                         Lanterna.clear(i, 1, 69);
                                     }
 
-                                    Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.player.weaponEquipped().toString(false));
-                                    Lanterna.print(1, 20, "^WWeapons: ");
+                                    Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.getPlayer().weaponEquipped().toString(false));
+                                    Lanterna.print(1, 21, "^WWeapons: ");
 
                                     for (int i = 0; i < 4; i++) {
-                                        if (i == Players.player.getEquippedIndex()) {
-                                            Lanterna.printf(1, i + 21, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                        if (i == Players.getPlayer().getEquippedIndex()) {
+                                            Lanterna.printf(1, (i * 2) + 22, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)));
                                         } else {
-                                            Lanterna.printf(1, i + 21, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                            Lanterna.printf(1, (i * 2) + 22, (Players.getPlayer().getWeapons()[i] == null ? "^GNo Weapon" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
                                         }
                                     }
-
-                                    Lanterna.print(1, 26, "^WConsumables:\n" + Players.player.displayConsumables());
                                 }
 
                                 // Interact
@@ -337,6 +335,96 @@ public class CombatMenu2 {
                                 // Run (q and e to confirm/deny
                                 case 'r' -> {
                                     run();
+                                }
+
+                                //* Consumable cases
+                                // Medkit
+                                case 'm' -> {
+                                    if (Players.getPlayer().hasConsumable(Consumables.getMedkit())) {
+                                        Players.getPlayer().removeConsumable(Consumables.getMedkit());
+                                        addInfo(Consumables.getMedkit().toString() + " used");
+
+                                        for (int i = 0; i < 7; i++) {
+                                            Lanterna.clear(31 + i, 1, 69);
+                                        }
+
+                                        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+                                    }
+                                }
+
+                                // Smoke Grenade
+                                case 'o' -> {
+                                    if (Players.getPlayer().hasConsumable(Consumables.getSmoke())) {
+                                        Players.getPlayer().removeConsumable(Consumables.getSmoke());
+                                        statusHashMap.put(Consumables.getSmoke(), statusHashMap.get(Consumables.getSmoke()) + Consumables.getSmoke().getTURNS());
+                                        addInfo(Consumables.getSmoke().toString() + "^G used");
+
+                                        for (int i = 0; i < 7; i++) {
+                                            Lanterna.clear(31 + i, 1, 69);
+                                        }
+
+                                        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+                                    }
+                                }
+
+                                // Corrosion
+                                case 'c' -> {
+                                    if (Players.getPlayer().hasConsumable(Consumables.getCorrosive())) {
+                                        Players.getPlayer().removeConsumable(Consumables.getCorrosive());
+                                        statusHashMap.put(Consumables.getCorrosive(), statusHashMap.get(Consumables.getCorrosive()) + Consumables.getCorrosive().getTURNS());
+                                        addInfo(Consumables.getCorrosive().toString() + "^G used");
+
+                                        for (int i = 0; i < 7; i++) {
+                                            Lanterna.clear(31 + i, 1, 69);
+                                        }
+
+                                        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+                                    }
+                                }
+
+                                // Targeting
+                                case 't' -> {
+                                    if (Players.getPlayer().hasConsumable(Consumables.getTarget())) {
+                                        Players.getPlayer().removeConsumable(Consumables.getTarget());
+                                        statusHashMap.put(Consumables.getTarget(), statusHashMap.get(Consumables.getTarget()) + Consumables.getTarget().getTURNS());
+                                        addInfo(Consumables.getTarget().toString() + "^G used");
+
+                                        for (int i = 0; i < 7; i++) {
+                                            Lanterna.clear(31 + i, 1, 69);
+                                        }
+
+                                        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+                                    }
+                                }
+
+                                // Damage -> {
+                                case 'd' -> {
+                                    if (Players.getPlayer().hasConsumable(Consumables.getAmplifier())) {
+                                        Players.getPlayer().removeConsumable(Consumables.getAmplifier());
+                                        statusHashMap.put(Consumables.getAmplifier(), statusHashMap.get(Consumables.getAmplifier()) + Consumables.getAmplifier().getTURNS());
+                                        addInfo(Consumables.getAmplifier().toString() + "^G used");
+
+                                        for (int i = 0; i < 7; i++) {
+                                            Lanterna.clear(31 + i, 1, 69);
+                                        }
+
+                                        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+                                    }
+                                }
+
+                                // Flashbang
+                                case 'l' -> {
+                                    if (Players.getPlayer().hasConsumable(Consumables.getFlashbang())) {
+                                        Players.getPlayer().removeConsumable(Consumables.getFlashbang());
+                                        statusHashMap.put(Consumables.getFlashbang(), statusHashMap.get(Consumables.getFlashbang()) + Consumables.getFlashbang().getTURNS());
+                                        addInfo(Consumables.getFlashbang().toString() + "^G used");
+
+                                        for (int i = 0; i < 7; i++) {
+                                            Lanterna.clear(31 + i, 1, 69);
+                                        }
+
+                                        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+                                    }
                                 }
                             }
                         } catch (Exception e) {

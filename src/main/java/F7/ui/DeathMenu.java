@@ -13,12 +13,12 @@ public class DeathMenu {
         Thread.sleep(Utils.QUICK_STANDARD);
         Utils.scrollText("Reviving you.\n", Utils.SCROLL);
 
-        Players.player.setTempHealth(Players.player.getHealth());
+        Players.getPlayer().setTempHealth(Players.getPlayer().getHealth());
 
-        if (Utils.chance(50) && !Players.player.weaponEquipped().equals(Weapons.getFists())) { //* 50% chance of destroying equipped weapon on death
-            Utils.scrollText(String.format("%s has been destroyed in the process.\n", Players.player.weaponEquipped().toString(true)), Utils.SCROLL);
+        if (Utils.chance(50) && !Players.getPlayer().weaponEquipped().equals(Weapons.getFists())) { //* 50% chance of destroying equipped weapon on death
+            Utils.scrollText(String.format("%s has been destroyed in the process.\n", Players.getPlayer().weaponEquipped().toString(true)), Utils.SCROLL);
             
-            Players.player.getWeapons()[Players.player.getEquippedIndex()] = null;
+            Players.getPlayer().getWeapons()[Players.getPlayer().getEquippedIndex()] = null;
         }
 
         Thread.sleep(Utils.QUICK_STANDARD);

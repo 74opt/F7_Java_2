@@ -38,7 +38,7 @@ public class Maps {
     private static Tile f = new Tile("^R7", false);
     public static Tile getPlayer() {return f;}
 
-    public static Map plains = new Map("Kwéleches Plains", new Tile[][]
+    private static Map plains = new Map("Kwéleches Plains", new Tile[][]
         {{k,k,k,k,k,r,r,h,y,r,r,r,r,y,h,h,h,h,y,r,h,y,r,h,y,h,y,y,h,r,h,r,r,r,h,y,r,h,h,h,r,y,y,y,a,a,u,u,u,u,u,u,u,u,u,u,u,u,u,u},
         {k,k,k,k,y,h,r,r,h,y,y,h,g,g,g,g,g,g,g,g,g,g,g,g,r,y,h,g,g,d,g,g,g,h,r,h,g,g,g,g,g,r,y,a,a,a,u,u,u,u,u,u,u,u,u,u,u,u,u,u},
         {k,k,k,h,y,y,r,h,r,r,g,g,g,y,g,g,g,g,g,y,g,g,g,g,g,g,g,g,g,d,g,g,g,g,g,g,g,g,g,g,g,g,v,a,a,u,u,u,u,u,u,u,u,u,u,u,u,a,a,u},
@@ -60,4 +60,6 @@ public class Maps {
         {k,k,k,k,k,k,k,k,y,h,r,r,r,v,v,a,a,u,u,u,u,u,u,a,a,v,v,v,v,v,v,v,v,v,v,v,v,v,v,v,r,v,v,v,v,v,v,v,v,v,a,a,a,a,a,a,a,u,u,u},
         {k,k,k,k,k,k,k,k,r,r,a,a,a,a,a,a,u,u,u,u,u,u,u,u,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,u,u,u,u,u,u,u,u,u}}
     );
+
+    public static Map getPlains() {return plains;}
 }

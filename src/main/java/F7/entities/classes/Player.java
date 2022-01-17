@@ -100,7 +100,7 @@ public class Player {
         this.shield = Shields.scrap;
         this.x = 19;
         this.y = 8;
-        this.consumables = new ArrayList<>(Arrays.asList(Consumables.medkit, Consumables.medkit, Consumables.medkit, Consumables.target));
+        this.consumables = new ArrayList<>(Arrays.asList(Consumables.getMedkit(), Consumables.getMedkit(), Consumables.getMedkit(), Consumables.getTarget()));
         this.healthLevel = 0;
         this.damageLevel = 0;
         this.evasionLevel = 0;
@@ -181,12 +181,31 @@ public class Player {
         %s^W: ^G%s
         %s^W: ^G%s
         %s^W: ^G%s""",
-        Consumables.medkit.toString(), medkits,
-        Consumables.smoke.toString(), smokes,
-        Consumables.corrosive.toString(), corrosives,
-        Consumables.target.toString(), targets,
-        Consumables.amplifier.toString(), amplifiers,
-        Consumables.flashbang.toString(), flashbangs
+        Consumables.getMedkit().toString(), medkits,
+        Consumables.getSmoke().toString(), smokes,
+        Consumables.getCorrosive().toString(), corrosives,
+        Consumables.getTarget().toString(), targets,
+        Consumables.getAmplifier().toString(), amplifiers,
+        Consumables.getFlashbang().toString(), flashbangs
         );
+    }
+
+    public boolean hasConsumable(Consumable consumable) {
+        for (Consumable c : consumables) {
+            if (c.toString().equals(consumable.toString())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void removeConsumable(Consumable consumable) {
+        for (Consumable c : consumables) {
+            if (c.toString().equals(consumable.toString())) {
+                consumables.remove(c);
+                break;
+            }
+        }
     }
 }
