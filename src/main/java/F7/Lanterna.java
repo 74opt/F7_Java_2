@@ -91,23 +91,15 @@ public class Lanterna {
     }
 
     // Printing to terminal
-    public static void print(int column, int row, String text) throws Exception {
-        final int finalColumn = Lanterna.column;
-        final int finalRow = Lanterna.row;
-
-        Lanterna.column = column;
-        Lanterna.row = row;
-
-        print(text);
-
-        Lanterna.column = finalColumn;
-        Lanterna.row = finalRow;
+    @Deprecated
+    public static void print(String text) throws Exception {
+        print(Lanterna.column, Lanterna.row, text);
 
         screen.refresh();
     }
 
     // uses global rows and columns
-    public static void print(String text) throws Exception {
+    public static void print(int column, int row, String text) throws Exception {
         final int finalColumn = column;
 
         char[] charArray = text.toCharArray();
@@ -170,6 +162,7 @@ public class Lanterna {
     }
 
     // Guess im obligated to use this
+    @Deprecated
     public static void printf(String text, Object... args) throws Exception {
         print(String.format(text, args));
     }
@@ -178,26 +171,14 @@ public class Lanterna {
         print(column, row, String.format(text, args));
     }
 
+    @Deprecated
     public static void println(String text) throws Exception {
         print(text);
         row++;
         column = 1;
     }
 
-    /**
-     * Absolute beauty of a method, the best the world has ever seen.
-     * Pronounced "print-flynn"
-     * @param text String to format with %s as the thing to fill in
-     * @param args Objects to insert into %s
-     * @throws Exception if a "^" character is followed by an invalid character
-     */
-    public static void printfln(String text, Object... args) throws Exception {
-        printf(text, args);
-        row++;
-        column = 1;
-    }
-
-    // FIXME
+    // maybe delete
     public static String textBox(String text, String boxColor, String textColor) {
         String box = boxColor + "╔═";
 

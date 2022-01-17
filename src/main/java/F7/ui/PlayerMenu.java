@@ -11,7 +11,7 @@ public class PlayerMenu {
         Lanterna.clear();
 
         // Stats View
-        Lanterna.printfln("""
+        Lanterna.printf(1, 1, """
             ^CF7 Chassis - Model 891Z
             Created by RRS Industries
             ^WVersion: ^RIllegal. Software may be pirated or tampered with.
@@ -23,7 +23,8 @@ public class PlayerMenu {
             
             ^WWeapon Equipped: %s
             
-            ^WWeapons:""",
+            ^WWeapons:
+            """,
             Players.player.getName(),
             Players.player.getLevel(),
             Utils.outOf("^WExperience Points:", Players.player.expRequired(), Players.player.getExp(), "^g"),
@@ -33,19 +34,18 @@ public class PlayerMenu {
 
         for (int i = 0; i < 4; i++) {
             if (i == Players.player.getEquippedIndex()) {
-                Lanterna.println("^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                Lanterna.print(1, 18 + i, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
             } else {
-                Lanterna.println((Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                Lanterna.print(1, 18 + i, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
             }
         }
 
-        Lanterna.println("\n^WShield:\n" + Players.player.getShield().toString(false));
-        Lanterna.println("\n^WConsumables:\n" + Players.player.displayConsumables());
+        Lanterna.print(1, 22, "\n^WShield:\n" + Players.player.getShield().toString(false));
+        Lanterna.print(1, 28, "\n^WConsumables:\n" + Players.player.displayConsumables());
 
         // Commands
-        Lanterna.println(
+        Lanterna.print(1, 37,
             """
-            
             ^GW) Scroll up weapon list
             S) Scroll down weapon list
             D) Delete selected weapon
@@ -156,6 +156,7 @@ public class PlayerMenu {
     }
 
     // TODO: CONVERT TO LANTERNA
+    //  OR JUST GET RID OF THIS
     private static void heal() throws Exception {
         if (Players.player.getConsumables().contains(Consumables.medkit)) {
             double restoration = Utils.randomRange(15, 21) / 100.0;

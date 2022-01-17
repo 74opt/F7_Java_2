@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import F7.Lanterna;
 import com.googlecode.lanterna.input.KeyStroke;
 import java.io.*;
+import java.util.concurrent.*;
 
 public class MapMenu {
     private static Map currentMap;
@@ -17,7 +18,7 @@ public class MapMenu {
     public static void menu() throws Exception {
         Lanterna.clear();
 
-        Lanterna.println(
+        Lanterna.print(1, 1,
             "^CGMapping v75.221^G\nCoordinates: ^R#%&V;}!%@( ERROR ;}=@&!&(/?{\n" + currentMap.toString() +
             """
             ^G1) Fight

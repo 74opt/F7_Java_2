@@ -74,7 +74,7 @@ public class Weapon {
                     """
                     %s ^GLevel %s ^W%s
                     ^WDamage: ^G%s
-                    ^WAccuracy: ^G%s
+                    ^WAccuracy: ^G%s%%
                     ^WRate of Fire: ^G%s
                     ^WCritical Chance: ^G%s%%
                     ^WCritical Multiplier: ^Gx%s""",

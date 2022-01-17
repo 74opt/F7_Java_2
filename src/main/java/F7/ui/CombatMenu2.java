@@ -3,6 +3,8 @@ package F7.ui;
 import java.util.*;
 import java.util.Map;
 import java.io.IOException;
+import java.util.concurrent.*;
+
 import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
@@ -42,6 +44,7 @@ public class CombatMenu2 {
 
     public static void start() throws Exception {
         Lanterna.clear();
+
 
         int enemyRarity = Utils.randomRange(0, 101);
 
@@ -170,7 +173,7 @@ public class CombatMenu2 {
             ^WEnemy Info:
             %s
             ^WDamage: ^G%s
-            ^WAccuracy: ^G%s
+            ^WAccuracy: ^G%s%%
             
             ^WDescription:
             ^G%s""",
@@ -215,30 +218,93 @@ public class CombatMenu2 {
         );
 
         //* Updates time-related things
-        startTime();
+        // if this works
+        final ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(3);
+        final ScheduledFuture<?> timeHandler = scheduledExecutorService.scheduleWithFixedDelay(
+                () -> {
+                    try {
+                        timeElapsed++;
+                        Lanterna.clear(12, 85, 54);
+                        Lanterna.print(85, 12, "^G" + displayTime());
+
+                        statusHashMap.forEach((key, value) -> {
+                            if (value > 0) {
+                                statusHashMap.replace(key, value - 1);
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                0,
+                1,
+                TimeUnit.SECONDS
+        );
 
         //* Interactions
         new Thread(() -> {
             while (running) {
                 try {
                     KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-                                                                                        
+
                     if (keyPressed != null) {
                         try {
                             switch (keyPressed.getCharacter()) {
                                 // Go up list
                                 case 'w' -> {
+                                    if (Players.player.getEquippedIndex() == 0) {
+                                        Players.player.setEquippedIndex(3);
+                                    } else {
+                                        Players.player.setEquippedIndex(Players.player.getEquippedIndex() - 1);
+                                    }
 
+                                    for (int i = 11; i < 33; i++) {
+                                        Lanterna.clear(i, 1, 69);
+                                    }
+
+                                    Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.player.weaponEquipped().toString(false));
+                                    Lanterna.print(1, 20, "^WWeapons: ");
+
+                                    for (int i = 0; i < 4; i++) {
+                                        if (i == Players.player.getEquippedIndex()) {
+                                            Lanterna.printf(1, i + 21, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                        } else {
+                                            Lanterna.printf(1, i + 21, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                        }
+                                    }
+
+                                    Lanterna.print(1, 26, "^WConsumables:\n" + Players.player.displayConsumables());
                                 }
 
                                 // Go down list
                                 case 's' -> {
+                                    if (Players.player.getEquippedIndex() == 3) {
+                                        Players.player.setEquippedIndex(0);
+                                    } else {
+                                        Players.player.setEquippedIndex(Players.player.getEquippedIndex() + 1);
+                                    }
 
+                                    for (int i = 11; i < 33; i++) {
+                                        Lanterna.clear(i, 1, 69);
+                                    }
+
+                                    Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.player.weaponEquipped().toString(false));
+                                    Lanterna.print(1, 20, "^WWeapons: ");
+
+                                    for (int i = 0; i < 4; i++) {
+                                        if (i == Players.player.getEquippedIndex()) {
+                                            Lanterna.printf(1, i + 21, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+                                        } else {
+                                            Lanterna.printf(1, i + 21, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+                                        }
+                                    }
+
+                                    Lanterna.print(1, 26, "^WConsumables:\n" + Players.player.displayConsumables());
                                 }
 
                                 // Interact
                                 case 'f' -> {
-                                    
+
                                 }
 
                                 // Shield
@@ -251,38 +317,15 @@ public class CombatMenu2 {
                                     run();
                                 }
                             }
-                        } catch (Exception ignored) {}
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-    }
-
-    private static void startTime() throws Exception {
-        new Thread(() -> {
-            while (running) {
-                try {
-                    Thread.sleep(1000);
-                    timeElapsed++;
-                    Lanterna.clear(12, 85, 54);
-                    Lanterna.print(85, 12, "^G" + displayTime());
-
-                    statusHashMap.forEach((key, value) -> {
-                        if (value > 0) {
-                            statusHashMap.replace(key, value - 1);
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
-    private static void attack() throws Exception {
-
     }
 
     private static void shield() throws Exception {
@@ -337,7 +380,7 @@ public class CombatMenu2 {
 
     private static String displayTime() {
         long minutes = timeElapsed / 60;
-        long seconds = timeElapsed - minutes;
+        long seconds = timeElapsed - (minutes * 60);
 
         if (("" + seconds).length() < 2) {
             return String.format("%s:0%s", minutes, seconds);

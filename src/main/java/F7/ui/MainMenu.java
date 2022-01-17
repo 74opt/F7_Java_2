@@ -49,7 +49,7 @@ public class MainMenu {
     public static void menu() throws Exception {
         Lanterna.clear();
 
-        Lanterna.println(
+        Lanterna.print(1, 1,
                 LOGO + "\n" +
                 """
                 ^G1) New Game

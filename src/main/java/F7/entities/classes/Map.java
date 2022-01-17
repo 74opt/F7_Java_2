@@ -44,7 +44,7 @@ public class Map {
         MAP[y][x] = Maps.getPlayer();
     }
 
-    public boolean movePlayer(String direction, int tiles) {
+    public void movePlayer(String direction, int tiles) {
         HashMap<String, Integer[]> dir = new HashMap<>();
         dir.put("up", new Integer[] {0, -1});
         dir.put("down", new Integer[] {0, 1});
@@ -63,10 +63,9 @@ public class Map {
                 MAP[oldY][oldX] = PARENT.MAP[oldY][oldX];
                 MAP[Players.player.getY()][Players.player.getX()] = Maps.getPlayer();
             } else {
-                return false;
+                return;
             }
         }
-        return true;
     }
 
     @Override
