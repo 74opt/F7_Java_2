@@ -583,7 +583,7 @@ public class CombatMenu {
     //* this is shit code
     // shit code
     private static void enemyDead() throws Exception {
-        HashMap<Rarity, Double> rarityMultipliers = new HashMap<Rarity, Double>();
+        HashMap<Rarity, Double> rarityMultipliers = new HashMap<>();
         rarityMultipliers.put(Rarities.common, 1.0);
         rarityMultipliers.put(Rarities.uncommon, 1.5);
         rarityMultipliers.put(Rarities.rare, 2.0);

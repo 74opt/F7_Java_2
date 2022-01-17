@@ -9,9 +9,13 @@ import F7.entities.construction.*;
 import F7.entities.classes.*;
 import com.googlecode.lanterna.input.KeyStroke;
 
+// I'm gonna DOTADIW your mom
+
 public class CombatMenu2 {
     private static Enemy enemy;
     private static boolean running;
+    private static long timeElapsed;
+    private static String[] information = new String[15];
     private final static Random random = new Random();
 
     // Shield variables
@@ -24,10 +28,10 @@ public class CombatMenu2 {
 
     public static void setCombatHashMaps() {
         statusHashMap.put(Consumables.smoke, 0);
-        statusHashMap.put(Consumables.corrosive, 0);
+        statusHashMap.put(Consumables.corrosive, 2);
         statusHashMap.put(Consumables.target, 0);
         statusHashMap.put(Consumables.amplifier, 0);
-        statusHashMap.put(Consumables.flashbang, 0);
+        statusHashMap.put(Consumables.flashbang, 5);
 
         rarityMultipliers.put(Rarities.common, 1.0);
         rarityMultipliers.put(Rarities.uncommon, 1.5);
@@ -44,6 +48,7 @@ public class CombatMenu2 {
         enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
 
         running = true;
+        timeElapsed = 0;
 
         enemy.setLevel(Players.player.getLevel() + Utils.randomRange(-2, 2));
 
@@ -59,116 +64,189 @@ public class CombatMenu2 {
     private static void menu() throws Exception {
         Lanterna.clear();
 
-        String shieldStatus;
-
-        //* shieldTurns > 0 means shieldUp = true
-        //* shieldTurns should override all other shield status checks
-
-        //* shieldChargingTurns > 0 means shieldCharging = true
-        //* both values < 0 means the shield is ready to be used
-
-        if (shieldTime > 0) {
-            shieldStatus = String.format("^gActive (%s turns left)", Players.player.getShield().getTURNS() - shieldTime);
-        } else if (shieldChargingTime > 0) {
-            shieldStatus = String.format("^OCharging (%s turns left)", Players.player.getShield().getCOOLDOWN() - shieldChargingTime);
-        } else {
-            shieldStatus = "^CReady";
-        }
-
         // TODO: also, any strings w/o a color tag gets ^G by default
 
         //! DO NOT USE ANY AUTO PRINTING, GIVE SPECIFIC COORDINATES
         //* Sections for the UI
+
+        //! These parts stay constant throughout a fight
+        //* Lines to separate the sections
+        // Setting the color of the lines with this print statement
+        Lanterna.print(0, 0, "^G");
+
+        // Line splitting player and enemy
+        for (int i = 0; i < 10; i++) {
+            Lanterna.print(105, i, "║");
+        }
+
+        // First horizontal line
+        for (int i = 0; i < 211; i++) {
+            switch (i) {
+                case 105 -> Lanterna.print(i, 10, "╩");
+                case 70, 140 -> Lanterna.print(i, 10, "╦");
+                default -> Lanterna.print(i, 10, "═");
+            }
+        }
+
+        // Line separating Player extended and middle column
+        for (int i = 11; i < 50; i++) {
+            if (i == 30) {
+                Lanterna.print(70, i, "╠");
+            } else {
+                Lanterna.print(70, i, "║");
+            }
+        }
+
+        // Line separating middle column and enemy extended
+        for (int i = 11; i < 50; i++) {
+            if (i == 30) {
+                Lanterna.print(140, i, "╣");
+            } else {
+                Lanterna.print(140, i, "║");
+            }
+        }
+
+        // Line separating info and statuses
+        for (int i = 71; i < 140; i++) {
+            Lanterna.print(i, 30, "═");
+        }
+
+        // Second horizontal line
+        for (int i = 0; i < 211; i++) {
+            if (i == 70 || i == 140) {
+                Lanterna.print(i, 50, "╩");
+            } else {
+                Lanterna.print(i, 50, "═");
+            }
+        }
+
+        addInfo("^GStarted combat with ^W" + enemy.getNAME());
+
         //* Player Stats
         Lanterna.printf(1, 1, 
             """
             ^gModel-F v5.032 Targeting Chip
             ^GAssigned and Calibrated for: ^W%s^G
-            """,
-            Players.player.getName()
+            
+            ^WLevel: %s
+            %s
+                    %s""",
+            Players.player.getName(),
+            Players.player.getLevel(),
+            Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
+            Utils.percentBar(80, Players.player.getHealth(), Players.player.getTempHealth(), "^R")
         );
 
         //* Enemy Stats
         Lanterna.printf(106, 2, 
             """
-            ^GDetected: ^W%s^G
+            ^GEnemy Detected:
+            ^W%s^G
 
             %s
                     %s""",
             enemy.toString(true),
             Utils.outOf("Health:", enemy.getHealth(), enemy.getTempHealth(), "^R"),
-            Utils.percentBar(70, enemy.getHealth(), enemy.getTempHealth(), "^R")
+            Utils.percentBar(80, enemy.getHealth(), enemy.getTempHealth(), "^R")
         );
 
-        //* Player Weapons (Also maybe extended stats)
+        //* Player extended
+        Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.player.weaponEquipped().toString(false));
+        Lanterna.print(1, 20, "^WWeapons: ");
 
+        for (int i = 0; i < 4; i++) {
+            if (i == Players.player.getEquippedIndex()) {
+                Lanterna.printf(1, i + 21, "^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
+            } else {
+                Lanterna.printf(1, i + 21, (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");
+            }
+        }
 
-        //* Info
-
+        Lanterna.print(1, 26, "^WConsumables:\n" + Players.player.displayConsumables());
 
         //* Enemy Stats Extended
+        Lanterna.printf(141, 11, "" +
+            """
+            ^WEnemy Info:
+            %s
+            ^WDamage: ^G%s
+            ^WAccuracy: ^G%s
+            
+            ^WDescription:
+            ^G%s""",
+            enemy.toString(true),
+            enemy.getDamage(),
+            enemy.getAccuracy(),
+            enemy.getDESCRIPTION()
+        );
 
+        //* Info
+        Lanterna.print(71, 11, "^WInfo:");
+        Lanterna.print(71, 12, "^WTime Elapsed: ^G" + displayTime());
+
+        int infoIndex = 0;
+        for (String s : information) {
+            if (s != null) {
+                Lanterna.print(71, 14 + infoIndex, "^W[" + displayTime() + "]: " + s);
+                infoIndex++;
+            }
+        }
 
         //* Statuses
+        Lanterna.print(71, 31, "^WStatuses:");
 
+        int statusIndex = 0;
+        for (Map.Entry element : statusHashMap.entrySet()) {
+            Consumable key = (Consumable) element.getKey();
+            int value = statusHashMap.get(key);
+
+            if (value > 0) {
+                Lanterna.print(71, 31 + statusIndex, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
+                statusIndex++;
+            }
+        }
 
         //* Controls/Keybindings
+        Lanterna.print(1, 51,
+            """
+            ^WControls:
+            ^WW^W) ^GMove up item list                      ^gF^W) ^GInteract with selected item                        ^RR^W) ^GRun away
+            ^WS^W) ^GMove down item list                    ^OX^W) ^GUse shield"""
+        );
 
+        //* Updates time-related things
+        startTime();
 
-        //* Sections that must be updated
+        //* Interactions
         new Thread(() -> {
-            while (running) {
-                try {
-                    //TODO: Whenever a shown value is updated, clear that section's part or else layering issues
-
-                    /// Player
-                    Lanterna.printf(1, 4,
-                        """
-                        %s
-                                %s""",
-                        Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
-                        Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
-
-                    /// Enemy
-                    Lanterna.printf(106, 4,
-                        """
-                        %s
-                                %s""",
-                        Utils.outOf("Health:", Players.player.getHealth(), Players.player.getTempHealth(), "^R"),
-                        Utils.percentBar(70, Players.player.getHealth(), Players.player.getTempHealth(), "^R"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-
-
-//        statusHashMap.forEach((key, value) -> {
-//            if (value > 0) {
-//                statusHashMap.replace(key, value - 1);
-//            }
-//        });
-
-        new Thread(() -> {
-            boolean running = true;
-
             while (running) {
                 try {
                     KeyStroke keyPressed = Lanterna.getScreen().pollInput();
                                                                                         
                     if (keyPressed != null) {
                         try {
-                            // TODO: use WASD to navigate consumables or weapons
-                            // TODO: E key will use consumable OR use weapon
-
                             switch (keyPressed.getCharacter()) {
-                                case 'e' -> {
+                                // Go up list
+                                case 'w' -> {
+
+                                }
+
+                                // Go down list
+                                case 's' -> {
+
+                                }
+
+                                // Interact
+                                case 'f' -> {
                                     
                                 }
-                                case 'f' -> {
+
+                                // Shield
+                                case 'x' -> {
                                     shield();
                                 }
+
+                                // Run (q and e to confirm/deny
                                 case 'r' -> {
                                     run();
                                 }
@@ -176,6 +254,27 @@ public class CombatMenu2 {
                         } catch (Exception ignored) {}
                     }
                 } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private static void startTime() throws Exception {
+        new Thread(() -> {
+            while (running) {
+                try {
+                    Thread.sleep(1000);
+                    timeElapsed++;
+                    Lanterna.clear(12, 85, 54);
+                    Lanterna.print(85, 12, "^G" + displayTime());
+
+                    statusHashMap.forEach((key, value) -> {
+                        if (value > 0) {
+                            statusHashMap.replace(key, value - 1);
+                        }
+                    });
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -194,7 +293,7 @@ public class CombatMenu2 {
 
     }
 
-    // These methods should be inaccessible to the player 
+    //* These methods should be inaccessible to the player
     private static void enemyAttack() throws Exception {
         String[] missText = {
             "just barely gets you, but misses!", "tries to attack, but you dodge it!", "embarrassingly misses!", "accidentally hits the ground!", "attacks the air instead of you!", "almost hits you by an inch!",
@@ -203,39 +302,47 @@ public class CombatMenu2 {
         };
     }
 
-    //! do not disappoint me again
-    //! do not write shit code
-    //! ill have tallulah break each and every fucking bone in your body if you do
+    // be sure to unshit code
     private static void enemyDead() throws Exception {
-
+        running = false;
     }
 
     private static void playerDead() throws Exception {
-
-    }
-
-    private static String displayConsumables() throws Exception {
-        String status = "";
-
-        for (Map.Entry element : statusHashMap.entrySet()) {
-            Consumable key = (Consumable) element.getKey();
-            int value = statusHashMap.get(key);
-
-            status += addStatus(value > 0, key.toString(), key.getTURNS(), value);
-        }
-        
-        return status;
-    }
-
-    private static String addStatus(boolean condition, String consumableName, int time, int timer) {
-        if (condition) {
-            return String.format("%s (%s turns left)\n", consumableName, time - timer);
-        } else {
-            return "";
-        }
+        running = false;
     }
 
     private static boolean checkStatus(Consumable status) {
         return statusHashMap.get(status) > 0;
+    }
+
+    private static void addInfo(String info) throws Exception {
+        if (Arrays.asList(information).contains(null)) {
+            information[Arrays.asList(information).indexOf(null)] = info;
+        } else {
+            for (int i = 0; i < information.length - 1; i++) {
+                information[i] = information[i + 1];
+            }
+
+            information[information.length - 1] = info;
+        }
+
+        int i = 0;
+        for (String s : information) {
+            if (s != null) {
+                Lanterna.print(71, 14 + i, "^W[" + displayTime() + "]: " + s);
+                i++;
+            }
+        }
+    }
+
+    private static String displayTime() {
+        long minutes = timeElapsed / 60;
+        long seconds = timeElapsed - minutes;
+
+        if (("" + seconds).length() < 2) {
+            return String.format("%s:0%s", minutes, seconds);
+        }
+
+        return String.format("%s:%s", minutes, seconds);
     }
 }

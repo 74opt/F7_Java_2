@@ -13,7 +13,7 @@
 ## Unit 5: Writing Classes
 
 - [x] Uses only public classes.
-- [ ] Uses only private attributes to encapsulate data. (ASK HOLMER ABOUT RECORDS (MAYBE JUST TURN INTO CLASSES IF NOT)) (ALSO UTILS CLASS USES PUBLIC ATTRIBUTES)
+- [ ] Uses only private attributes to encapsulate data.
 - [x] Uses only public constructors.
 - [x] Uses at least one public and at least one private method.
 - [x] Includes all necessary accessor and mutator methods. (GET RID OF UNNECESSARY)
@@ -39,7 +39,7 @@
 - [x] Uses an initializer list to create an array.
 - [x] Uses iteration to traverse an array.
 - [x] Uses an enhanced for loop.
-- [ ] Uses at least one of the following algorithms:
+- [x] Uses at least one of the following algorithms:
   - [ ] Determines the minimum and maximum values in an array.
   - [ ] Computes the sum, average, and mode of an array.
   - [ ] Determines if at least one element of an array has a particular property.
@@ -47,5 +47,5 @@
   - [ ] Accesses all consecutive pairs of elements in an array.
   - [ ] Determines the presence or absence of duplicate elements.
   - [ ] Determines the number of elements meeting specific criteria.
-  - [ ] Shifts elements of an array left or right.
+  - [x] Shifts elements of an array left or right.
   - [ ] Reverses the order of the elements of an array.

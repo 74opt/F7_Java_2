@@ -40,6 +40,8 @@ public class Enemy {
 
     public Rarity getRARITY() {return RARITY;}
 
+    public String getDESCRIPTION() {return DESCRIPTION;}
+
     // Constructor
     public Enemy(String NAME, String SPRITE, int health, int damage, int level, int accuracy, Rarity RARITY) {
         this.NAME = NAME;
@@ -72,6 +74,8 @@ public class Enemy {
                 """
                 %s ^GLevel %s ^W%s
                 %s
+                
+                ^WDescription:
                 ^G%s""",
                 RARITY.toString(), level, NAME,
                 Utils.outOf("Health:", health, tempHealth, "^R"),

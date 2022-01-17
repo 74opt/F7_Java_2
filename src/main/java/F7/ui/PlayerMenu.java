@@ -33,7 +33,6 @@ public class PlayerMenu {
 
         for (int i = 0; i < 4; i++) {
             if (i == Players.player.getEquippedIndex()) {
-                // TODO: DISPLAY EQUIPPED WEAPON USING simple = false
                 Lanterna.println("^g> " + (Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)));
             } else {
                 Lanterna.println((Players.player.getWeapons()[i] == null ? "^GNo Weapon" : Players.player.getWeapons()[i].toString(true)) + "  ");

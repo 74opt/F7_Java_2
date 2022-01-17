@@ -2,6 +2,7 @@ package F7.entities.construction;
 
 import F7.entities.classes.Player;
 import F7.entities.classes.Weapon;
+import F7.entities.construction.Consumables;
 
 public class Players {
     // This is the player that should be used for the entire game
