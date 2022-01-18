@@ -4,17 +4,17 @@ import java.util.*;
 import F7.entities.classes.*;
 
 public class Consumables {
-    private static final Consumable medkit = new Consumable("Medkit", 0, Rarities.common); // this is the only one that doesnt rely on a timer or boolean, just heals in an instant
+    private static final Consumable medkit = new Consumable("Medkit", 0, Rarities.getCommon()); // this is the only one that doesnt rely on a timer or boolean, just heals in an instant
 
-    private static final Consumable smoke = new Consumable("Smoke Grenade", 10, Rarities.common);
+    private static final Consumable smoke = new Consumable("Smoke Grenade", 10, Rarities.getCommon());
 
-    private static final Consumable corrosive = new Consumable("Corrosive Acid Grenade", 5, Rarities.uncommon);
+    private static final Consumable corrosive = new Consumable("Corrosive Acid Grenade", 5, Rarities.getUncommon());
 
-    private static final Consumable target = new Consumable("Targeting-Assistance Chip", 8, Rarities.uncommon);
+    private static final Consumable target = new Consumable("Targeting-Assistance Chip", 8, Rarities.getUncommon());
 
-    private static final Consumable amplifier = new Consumable("Damage Amplifier", 6, Rarities.rare);
+    private static final Consumable amplifier = new Consumable("Damage Amplifier", 6, Rarities.getRare());
 
-    private static final Consumable flashbang = new Consumable("Flashbang", 5, Rarities.rare);
+    private static final Consumable flashbang = new Consumable("Flashbang", 5, Rarities.getRare());
 
     public static Consumable getMedkit() {return medkit;}
 
@@ -33,8 +33,8 @@ public class Consumables {
     public static HashMap<Rarity, Consumable[]> getConsumableHashMap() {return consumableHashMap;}
 
     public static void setConsumableHashMap() {
-        consumableHashMap.put(Rarities.common, new Consumable[] {medkit, smoke});
-        consumableHashMap.put(Rarities.uncommon, new Consumable[] {corrosive, target});
-        consumableHashMap.put(Rarities.rare, new Consumable[] {amplifier, flashbang});
+        consumableHashMap.put(Rarities.getCommon(), new Consumable[] {medkit, smoke});
+        consumableHashMap.put(Rarities.getUncommon(), new Consumable[] {corrosive, target});
+        consumableHashMap.put(Rarities.getRare(), new Consumable[] {amplifier, flashbang});
     }
 }

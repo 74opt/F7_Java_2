@@ -95,9 +95,9 @@ public class Player {
         this.tempHealth = 50;
         this.level = 1;
         this.exp = 0;
-        this.weapons[0] = Weapons.getWeaponHashMap().get(Rarities.common)[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.common).length)];
+        this.weapons[0] = Weapons.getWeaponHashMap().get(Rarities.getCommon())[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.getCommon()).length)];
         this.equippedIndex = 0;
-        this.shield = Shields.scrap;
+        this.shield = Shields.getShieldHashMap().get(Rarities.getCommon())[Utils.randomRange(0, Shields.getShieldHashMap().get(Rarities.getCommon()).length)];
         this.x = 19;
         this.y = 8;
         this.consumables = new ArrayList<>(Arrays.asList(Consumables.getMedkit(), Consumables.getMedkit(), Consumables.getMedkit(), Consumables.getTarget()));

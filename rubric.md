@@ -2,23 +2,23 @@
 
 ## Unit 4: Iteration
 
-- [ ] Contains no infinite loops.
+- [x] Contains no infinite loops.
 - [x] Includes a return statement inside a loop.
 - [x] Uses a for loop.
 - [x] Uses a while loop.
 - [x] Contains no “off-by-one” errors.
 - [x] Uses nested iteration (i.e. loops within loops).
-- [ ] Uses statement execution counts.
+- [x] Uses statement execution counts.
 
 ## Unit 5: Writing Classes
 
 - [x] Uses only public classes.
-- [ ] Uses only private attributes to encapsulate data.
+- [x] Uses only private attributes to encapsulate data.
 - [x] Uses only public constructors.
 - [x] Uses at least one public and at least one private method.
 - [x] Includes all necessary accessor and mutator methods. (GET RID OF UNNECESSARY)
 - [x] Includes a constructor with an object as one of its parameters.
-- [ ] Includes a class with instance variables but no constructor.
+- [x] Includes a class with instance variables but no constructor.
 - [x] Includes Javadoc comments (i.e. /** */).
 - [x] Includes at least one precondition and one postcondition.
 - [x] Includes non-void methods.
@@ -26,7 +26,7 @@
 - [x] Includes a toString method and prints an object.
 - [x] Includes a void method other than the main method.
 - [x] Includes a static method other than the main method.
-- [ ] Includes a method that alters a static variable in a different class.
+- [x] Includes a method that alters a static variable in a different class.
 - [x] Uses the this keyword.
 - [x] Is reliable.
 - [x] Creates no legal issues nor intellectual property concerns.

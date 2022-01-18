@@ -2,7 +2,6 @@ package F7.ui;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Random;
 import java.util.Map;
 import java.io.IOException;
 import F7.Lanterna;
@@ -14,17 +13,12 @@ import com.googlecode.lanterna.input.KeyStroke;
 // I'm gonna DOTADIW your mom
 
 // TODO:
-//  - SHIELDS
-//  - WEAPONS
-//  - RUNNING
-//  - ENEMY ATTACKS
-//  - CONSUMABLE EFFECTS
+//  - ENEMY DEATH
 public class CombatMenu2 {
     private static Enemy enemy;
     private static boolean running;
     private static long timeElapsed;
     private static String[] information = new String[15];
-    private final static Random random = new Random();
 
     // Shield variables
     // THESE TWO VALUES SHOULD NEVER BE NEGATIVE
@@ -32,9 +26,10 @@ public class CombatMenu2 {
     private static int shieldChargingTime;
 
     private static HashMap<Consumable, Integer> statusHashMap = new HashMap<>();
-    private static HashMap<Rarity, Double> rarityMultipliers = new HashMap<>();
     private static HashMap<Weapon, Integer> weaponReload = new HashMap<>();
     private static HashMap<Weapon, Integer> weaponRof = new HashMap<>();
+
+    public static Enemy getEnemy() {return enemy;}
 
     private static void setCombatHashMaps() {
         statusHashMap.put(Consumables.getSmoke(), 0);
@@ -42,12 +37,6 @@ public class CombatMenu2 {
         statusHashMap.put(Consumables.getTarget(), 0);
         statusHashMap.put(Consumables.getAmplifier(), 0);
         statusHashMap.put(Consumables.getFlashbang(), 0);
-
-        rarityMultipliers.put(Rarities.common, 1.0);
-        rarityMultipliers.put(Rarities.uncommon, 1.5);
-        rarityMultipliers.put(Rarities.rare, 2.0);
-        rarityMultipliers.put(Rarities.exceptional, 2.5);
-        rarityMultipliers.put(Rarities.godly, 3.0);
 
         for (Weapon w : Players.getPlayer().getWeapons()) {
             weaponReload.put((w == null ? Weapons.getFists() : w), 0);
@@ -181,7 +170,7 @@ public class CombatMenu2 {
 
         Lanterna.print(1, 34, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
 
-        Lanterna.print(1, 42, String.format("^WShield (Shield %s):\n%s", shieldStatus(), Players.getPlayer().getShield().toString(false)));
+        Lanterna.printf(1, 42, "^WShield (%s):\n%s", shieldStatus(), Players.getPlayer().getShield().toString(false));
 
         Lanterna.print(1, 47, "^GCharging Timer: " + Utils.percentBar(30, Players.getPlayer().getShield().getCOOLDOWN(), shieldChargingTime, "^O"));
         Lanterna.print(1, 48, "^GShield Timer:   " + Utils.percentBar(30, Players.getPlayer().getShield().getTURNS(), shieldTime, "^C"));
@@ -242,10 +231,14 @@ public class CombatMenu2 {
 
         // Handles updates every second
         new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             while (running) {
                 try {
-                    Thread.sleep(1000);
-
                     //* Time Handler
                     timeElapsed++;
                     Lanterna.clear(12, 85, 54);
@@ -266,6 +259,31 @@ public class CombatMenu2 {
                         }
                     });
 
+                    /// Corrosion Code
+                    if (checkStatus(Consumables.getCorrosive())) {
+                        int corrosiveDamage = (int) (enemy.getHealth() * (Utils.randomRange(17, 28) / 1000.0));
+
+                        enemy.setTempHealth(enemy.getTempHealth() - corrosiveDamage);
+
+                        addInfo(Consumables.getCorrosive().toString() + " ^Gdealt " + corrosiveDamage + " damage to " + enemy.getNAME());
+
+                        for (int i = 0; i < 2; i++) {
+                            Lanterna.clear(5, 106 + i, 105);
+                        }
+
+                        Lanterna.printf(106, 5,
+                                """
+                                %s
+                                        %s""",
+                                Utils.outOf("Health:", enemy.getHealth(), enemy.getTempHealth(), "^R"),
+                                Utils.percentBar(80, enemy.getHealth(), enemy.getTempHealth(), "^R")
+                        );
+
+                        if (enemy.getTempHealth() <= 0) {
+                            enemyDead();
+                        }
+                    }
+
                     for (int i = 0; i < 6; i++) {
                         Lanterna.clear(32 + i, 71, 69);
                     }
@@ -282,7 +300,34 @@ public class CombatMenu2 {
                     }
 
                     //* Shield Handler
+                    if (shieldStatus().equals("Up")) {
+                        shieldTime--;
 
+                        Lanterna.clear(42, 1, 68);
+
+                        Lanterna.printf(1, 42, "^WShield (%s):", shieldStatus());
+                        Lanterna.print(1, 48, "^GShield Timer:   " + Utils.percentBar(30, Players.getPlayer().getShield().getTURNS(), shieldTime, "^C"));
+
+                        if (shieldTime == 0) {
+                            addInfo(Players.getPlayer().getShield().getNAME() + " charging");
+
+                            shieldChargingTime = Players.getPlayer().getShield().getCOOLDOWN();
+
+                            Lanterna.printf(1, 42, "^WShield (%s):", shieldStatus());
+                            Lanterna.print(1, 47, "^GCharging Timer: " + Utils.percentBar(30, Players.getPlayer().getShield().getCOOLDOWN(), shieldChargingTime, "^O"));
+                        }
+                    } else if (shieldStatus().equals("Charging")) {
+                        shieldChargingTime--;
+
+                        Lanterna.clear(42, 1, 68);
+
+                        Lanterna.printf(1, 42, "^WShield (%s):", shieldStatus());
+                        Lanterna.print(1, 47, "^GCharging Timer: " + Utils.percentBar(30, Players.getPlayer().getShield().getCOOLDOWN(), shieldChargingTime, "^O"));
+
+                        if (shieldChargingTime == 0) {
+                            addInfo(Players.getPlayer().getShield().getNAME() + " finished charging");
+                        }
+                    }
 
                     //* Weapon Reload Handler
                     weaponReload.forEach((key, value) -> {
@@ -292,6 +337,11 @@ public class CombatMenu2 {
                             if (value == 1) {
                                 try {
                                     addInfo(key.getNAME() + " reloaded");
+
+                                    weaponRof.put(key, key.getRof());
+
+                                    Lanterna.clear((Arrays.asList(Players.getPlayer().getWeapons()).indexOf(key == Weapons.getFists() ? null : key) * 3) + 22, 1, 68);
+                                    Lanterna.print(1, (Arrays.asList(Players.getPlayer().getWeapons()).indexOf(key == Weapons.getFists() ? null : key) * 3) + 22, String.format("^G%s/%s", weaponRof.get(key), (key.getRof())));
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -308,6 +358,9 @@ public class CombatMenu2 {
                     if (timeElapsed % 4 == 0 && Utils.chance(70) && !checkStatus(Consumables.getFlashbang())) {
                         enemyAttack();
                     }
+
+                    // Please wait a second ok
+                    Thread.sleep(1000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -376,17 +429,14 @@ public class CombatMenu2 {
                                 }
 
                                 // Attack
-                                case 'f' -> {
-                                    playerAttack();
-                                }
+                                case 'f' -> playerAttack();
 
                                 // Shield
-                                case 'x' -> {
-                                    shield();
-                                }
+                                case 'x' -> shield();
 
-                                // Run (q and e to confirm/deny
+                                // Run
                                 case 'r' -> {
+                                    running = false;
                                     run();
                                 }
 
@@ -398,10 +448,10 @@ public class CombatMenu2 {
                                         addInfo(Consumables.getMedkit().toString() + " used");
 
                                         for (int i = 0; i < 7; i++) {
-                                            Lanterna.clear(31 + i, 1, 69);
+                                            Lanterna.clear(34 + i, 1, 69);
                                         }
 
-                                        Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+                                        Lanterna.print(1, 34, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
 
                                         double restoration = Utils.randomRange(15, 21) / 100.0;
                                         restoration *= Players.getPlayer().getHealth();
@@ -460,18 +510,97 @@ public class CombatMenu2 {
         }).start();
     }
 
-    private static void playerAttack() {
+    private static void playerAttack() throws Exception {
+        if (weaponRof.get(Players.getPlayer().weaponEquipped()) > 0) {
+            weaponRof.put(Players.getPlayer().weaponEquipped(), weaponRof.get(Players.getPlayer().weaponEquipped()) - 1);
 
-    }
+            int damage = 0;
 
-    private static void shield() {
-        if (!shieldStatus().equals("Up") && !shieldStatus().equals("Charging")) {
-            shieldTime = Players.getPlayer().getShield().getTURNS();
+            if (checkStatus(Consumables.getTarget()) || Utils.chance(Players.getPlayer().weaponEquipped().getAccuracy())) {
+                if (checkStatus(Consumables.getAmplifier())) {
+                    damage += (int) (Players.getPlayer().weaponEquipped().getDamage() * (Utils.randomRange(109, 135) / 100.0));
+                } else {
+                    damage += (int) (Players.getPlayer().weaponEquipped().getDamage() * (Utils.randomRange(93, 108) / 100.0));
+                }
+            }
+
+            enemy.setTempHealth(enemy.getTempHealth() - damage);
+
+            if (damage != 0) {
+                addInfo(String.format("%s dealt %s damage to %s", Players.getPlayer().weaponEquipped().getNAME(), damage, enemy.getNAME()));
+            } else {
+                addInfo(String.format("%s missed", Players.getPlayer().weaponEquipped().getNAME()));
+            }
+
+            // Modify enemy main and player extended
+            Lanterna.clear((Players.getPlayer().getEquippedIndex() * 3) + 22, 1, 68);
+
+            for (int i = 0; i < 2; i++) {
+                Lanterna.clear(5, 106 + i, 105);
+            }
+
+            Lanterna.print(1, (Players.getPlayer().getEquippedIndex() * 3) + 22, String.format("^G%s/%s", weaponRof.get(Players.getPlayer().weaponEquipped()), (Players.getPlayer().weaponEquipped().getRof())));
+
+            Lanterna.printf(106, 5,
+                """
+                %s
+                        %s""",
+                Utils.outOf("Health:", enemy.getHealth(), enemy.getTempHealth(), "^R"),
+                Utils.percentBar(80, enemy.getHealth(), enemy.getTempHealth(), "^R")
+            );
+
+            if (enemy.getTempHealth() <= 0) {
+                enemyDead();
+            }
+        } else {
+            if (!(weaponReload.get(Players.getPlayer().weaponEquipped()) > 0)) {
+                weaponReload.put(Players.getPlayer().weaponEquipped(), Players.getPlayer().weaponEquipped().getReloadTime());
+                Lanterna.clear((Players.getPlayer().getEquippedIndex() * 3) + 23, 1, 68);
+                Lanterna.print(1, (Players.getPlayer().getEquippedIndex() * 3) + 23, Utils.percentBar(50, Players.getPlayer().weaponEquipped().getReloadTime(), weaponReload.get(Players.getPlayer().weaponEquipped()), "^G"));
+            }
         }
     }
 
-    private static void run() throws Exception {
+    private static void shield() throws Exception {
+        if (!shieldStatus().equals("Up") && !shieldStatus().equals("Charging")) {
+            shieldTime = Players.getPlayer().getShield().getTURNS();
 
+            addInfo(Players.getPlayer().getShield().getNAME() + " activated");
+
+            Lanterna.printf(1, 42, "^WShield (%s):", shieldStatus());
+            Lanterna.print(1, 48, "^GShield Timer:   " + Utils.percentBar(30, Players.getPlayer().getShield().getTURNS(), shieldTime, "^C"));
+        }
+    }
+
+    private static void run() {
+        new Thread(() -> {
+            try {
+                addInfo("Attempting to run away...");
+                Thread.sleep(Utils.getSTANDARD());
+
+                if (Utils.chance(67)) {
+                    double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
+
+                    if (shieldStatus().equals("Up")) {
+                        damage *= (100 - Players.getPlayer().getShield().getDAMAGE_REDUCTION()) / 100.0; //* trying something out where i use the normal attack code but i'll make sure the player doesnt die
+                    }
+
+                    while (damage >= Players.getPlayer().getTempHealth()) {
+                        damage *= .75;
+                    }
+
+                    damage = Utils.round(damage, 2);
+
+                    Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() - damage);
+
+                    addInfo(String.format("%s was able to hit you, dealing %s damage", enemy.getNAME(), damage));
+                }
+
+                MapMenu.menu();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     //* These methods should be inaccessible to the player
@@ -485,17 +614,35 @@ public class CombatMenu2 {
         if (checkStatus(Consumables.getSmoke()) ? Utils.chance(enemy.getAccuracy() - Utils.randomRange(30, 90)) : Utils.chance(enemy.getAccuracy())) {
             double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
 
-            System.out.println("placeholder");
+            if (shieldStatus().equals("Up")) {
+                damage *= (100 - Players.getPlayer().getShield().getDAMAGE_REDUCTION()) / 100.0;
+                damage = Utils.round(damage, 2);
+            }
+
+            Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() - damage);
+            addInfo(String.format("%s dealt %s damage to %s", enemy.getNAME(), damage, Players.getPlayer().getName()));
+
+            Lanterna.clear(5, 1, 103);
+            Lanterna.printf(1, 5,
+                """
+                %s
+                        %s""",
+                Utils.outOf("Health:", Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R"),
+                Utils.percentBar(80, Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R")
+            );
+        } else {
+            addInfo(String.format("%s %s", enemy.getNAME(), missText[Utils.randomRange(0, missText.length)]));
         }
     }
 
-    // be sure to unshit code
     private static void enemyDead() throws Exception {
         running = false;
+        WinMenu.menu();
     }
 
     private static void playerDead() throws Exception {
         running = false;
+        DeathMenu.menu();
     }
 
     private static boolean checkStatus(Consumable status) {
@@ -544,10 +691,10 @@ public class CombatMenu2 {
             addInfo(consumable.toString() + "^G used");
 
             for (int i = 0; i < 7; i++) {
-                Lanterna.clear(31 + i, 1, 69);
+                Lanterna.clear(34 + i, 1, 69);
             }
 
-            Lanterna.print(1, 31, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+            Lanterna.print(1, 34, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
         }
     }
 

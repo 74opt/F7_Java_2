@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 /**
- * Utils contains static variables and methods to aid in several features in the rest of F7
+ * Utils contains static variables and methods to aid in several features in the rest of F7.
  */
 public class Utils {
     /* Time values in milliseconds,
@@ -73,83 +73,6 @@ public class Utils {
     public static DecimalFormat getDOUBLE_DECIMAL() {return DOUBLE_DECIMAL;}
 
     /**
-     * Takes in an input from the user with text to prompt was the user should input.
-     * @param output text prompted to the user, best if argument isn't empty
-     * @param caseSensitive if the text inputted should keep its case
-     * @return string that was inputted by the user, put into lowercase if case sensitivity is false
-     * @deprecated Unusable with Lanterna
-     */
-    @Deprecated
-    public static String input(String output, boolean caseSensitive) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print(Ansi.colorize(output, Attribute.TEXT_COLOR(231)) +
-                Ansi.colorize("\n> ", Attribute.TEXT_COLOR(40)));
-
-        if (caseSensitive) {
-            return scanner.nextLine();
-        } else {
-            return scanner.nextLine().toLowerCase(Locale.US);
-        }
-    }
-
-    /**
-     * Takes in an input from the user.
-     * @param caseSensitive if the text inputted should keep its case
-     * @return string that was inputted by the user, put into lowercase if case sensitivity is false
-     * @deprecated Unusable with Lanterna
-     */
-    @Deprecated
-    public static String input(boolean caseSensitive) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print(Ansi.colorize("> ", Attribute.TEXT_COLOR(40)));
-
-        if (caseSensitive) {
-            return scanner.nextLine();
-        } else {
-            return scanner.nextLine().toLowerCase(Locale.US);
-        }
-    }
-
-    /**
-     * Tells the user if their input wasn't allowed.
-     * @deprecated Unusable with Lanterna
-     */
-    @Deprecated
-    public static void invalidOption() throws InterruptedException {
-        System.out.println("Invalid Option.");
-        Thread.sleep(QUICK_STANDARD);
-    }
-
-    /**
-     * Clears the terminal.
-     * @deprecated Unusable with Lanterna
-     */
-    @Deprecated
-    public static void clear() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
-    /**
-     * Creates scrolling text where each character appears one at a time.
-     * @param text text to print out, given that text is not an empty string
-     * @param time time between each character in milliseconds
-     * @throws InterruptedException Thrown when a thread is waiting, sleeping,
-     *                              or otherwise occupied, and the thread is
-     *                              interrupted, either before or during the activity.
-     * @deprecated Unusable with Lanterna
-     */
-    @Deprecated
-    public static void scrollText(String text, long time) throws InterruptedException {
-        for (char character : text.toCharArray()) {
-            System.out.print(character);
-            Thread.sleep(time);
-        }
-    }
-
-    /**
      * Returns a string that contains a percentage of how much of an item left out 
      * of the total possible amount of items, comparing integers.
      * @param value the item that is being compared
@@ -170,10 +93,9 @@ public class Utils {
     /**
      * Returns a string that contains a percentage of how much of an item left out 
      * of the total possible amount of items, comparing doubles.
-     * Precondition: total is not negative, current is not negative, color is between 0 and 255
      * @param value the item that is being compared
      * @param total the total amount of the item, being 0 or above
-     * @param current the current amount of the item
+     * @param current the current amount of the item, 0 or above
      * @param color color to display the item and values between 0 and 255
      * @return string that displays the item, the current amount out of the total
      *         possible amount, and the percentage.
@@ -186,6 +108,14 @@ public class Utils {
                 DOUBLE_DECIMAL.format(((current) / total) * 100));
     }
 
+    /**
+     * Returns a bar highlighting the percentage of a value versus the percentage of that value filled
+     * @param length length of the bar
+     * @param total the total amount of the value
+     * @param current the current amount of the value
+     * @param color color of the bar
+     * @return bar that displays the percentage of the value versus how much of that value is filled
+     */
     public static String percentBar(int length, double total, double current, String color) {
         String bar = color;
         double percentFilled = current / total;

@@ -4,15 +4,25 @@ import F7.entities.classes.Rarity;
 import java.util.ArrayList;
 
 public class Rarities { // rarities must equal 100 when summed
-    public static Rarity common = new Rarity("Common", "^w", 60);
+    private static Rarity common = new Rarity("Common", "^w", 60);
 
-    public static Rarity uncommon = new Rarity("Uncommon", "^g", 20);
+    private static Rarity uncommon = new Rarity("Uncommon", "^g", 20);
 
-    public static Rarity rare = new Rarity("Rare", "^7", 13);
+    private static Rarity rare = new Rarity("Rare", "^7", 13);
 
-    public static Rarity exceptional = new Rarity("Exceptional", "^p", 6);
+    private static Rarity exceptional = new Rarity("Exceptional", "^p", 6);
 
-    public static Rarity godly = new Rarity("Godly", "^O", 1);
+    private static Rarity godly = new Rarity("Godly", "^O", 1);
+
+    public static Rarity getCommon() {return common;}
+
+    public static Rarity getUncommon() {return uncommon;}
+
+    public static Rarity getRare() {return rare;}
+
+    public static Rarity getExceptional() {return exceptional;}
+
+    public static Rarity getGodly() {return godly;}
 
     private static ArrayList<Rarity> rarityArrayList = new ArrayList<>();
 
