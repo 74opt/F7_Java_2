@@ -44,12 +44,12 @@ public class Shield {
             return String.format("""
             %s ^G%s
             ^W%s ^G%s%%
-            ^W%s ^G%s turns
-            ^W%s ^G%s turns""",
+            ^W%s ^G%s %s
+            ^W%s ^G%s %s""",
             RARITY.toString(), NAME,
             "Damage Reduction:", DAMAGE_REDUCTION,
-            "Active Time:", TURNS,
-            "Cooldown Time:", COOLDOWN
+            "Active Time:", TURNS, TURNS == 1 ? "Second" : "Seconds",
+            "Cooldown Time:", COOLDOWN, TURNS == 1 ? "Second" : "Seconds"
             ); 
         }
     }

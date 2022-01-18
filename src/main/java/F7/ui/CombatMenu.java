@@ -565,15 +565,12 @@ public class CombatMenu {
 
             Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() - damage); //* Gordon: permanent damage idea might not implement
             Lanterna.printf("%s dealt %s damage!", enemy.getNAME(), damage); //
-            Thread.sleep(Utils.getSTANDARD());
-            setTurn();
-            menu();
         } else {
             Lanterna.printf("%s %s", enemy.getNAME(), missText[random.nextInt(missText.length)]);
-            Thread.sleep(Utils.getSTANDARD());
-            setTurn();
-            menu();
         }
+        Thread.sleep(Utils.getSTANDARD());
+        setTurn();
+        menu();
     }
 
     //! warning: shit code
@@ -776,16 +773,6 @@ public class CombatMenu {
             status += addStatus(value > 0, key.toString(), key.getTURNS(), value);
         }
 
-//        statusHashMap.forEach((key, value) -> {
-//            status += addStatus(value > 0, key.toString(), key.getTURNS(), value);
-//        });
-
-//        status += addStatus(smokeActive, Consumables.getSmoke().toString(), Consumables.getSmoke().getTURNS(), smokeTurns);
-//        status += addStatus(corrosiveActive, Consumables.getCorrosive().toString(), Consumables.getCorrosive().getTURNS(), corrosiveTurns);
-//        status += addStatus(targetActive, Consumables.getTarget().toString(), Consumables.getTarget().getTURNS(), targetTurns);
-//        status += addStatus(amplifierActive, Consumables.getAmplifier().toString(), Consumables.getAmplifier().getTURNS(), amplifierTurns);
-//        status += addStatus(flashbangActive, Consumables.getFlashbang().toString(), Consumables.getFlashbang().getTURNS(), flashbangTurns);
-        
         return status;
     }
 

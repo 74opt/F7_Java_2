@@ -14,7 +14,6 @@ public class Lanterna {
     private static Screen screen;
     private static TextGraphics textGraphics;
     private static int initColumn;
-    private static int initRow; // Don't know if ill need this
 
     // Values good for 1920x1080
     private static final int STANDARD_COLUMNS = 211;
@@ -28,7 +27,6 @@ public class Lanterna {
     
     public static void startScreen(int paramInitColumn, int paramInitRow) throws IOException {
         initColumn = paramInitColumn;
-        initRow = paramInitRow;
         terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(paramInitColumn, paramInitRow)).createTerminal();
         screen = new TerminalScreen(terminal);
         screen.setCursorPosition(null);

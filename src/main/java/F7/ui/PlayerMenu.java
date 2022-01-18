@@ -1,9 +1,9 @@
 package F7.ui;
+
 import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
 import com.googlecode.lanterna.input.KeyStroke;
-
 import java.io.IOException;
 
 public class PlayerMenu {
@@ -112,7 +112,6 @@ public class PlayerMenu {
                                 }
 
                                 // To delete weapon
-                                // TODO: woah can i get rid of the numbers entirely on this one
                                 case 'd' -> {
                                     if (!Players.getPlayer().weaponEquipped().equals(Weapons.getFists())) {
 

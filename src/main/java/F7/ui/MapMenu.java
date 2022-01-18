@@ -56,22 +56,18 @@ public class MapMenu {
                                 case 'w' -> {
                                     currentMap.movePlayer("up", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
-                                    Lanterna.getScreen().refresh();
                                 }
                                 case 'a' -> {
                                     currentMap.movePlayer("left", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
-                                    Lanterna.getScreen().refresh();
                                 }
                                 case 's' -> {
                                     currentMap.movePlayer("down", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
-                                    Lanterna.getScreen().refresh();
                                 }
                                 case 'd' -> {
                                     currentMap.movePlayer("right", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
-                                    Lanterna.getScreen().refresh();
                                 }
                             }
                         } catch (Exception ignored) {}
