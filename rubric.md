@@ -16,7 +16,7 @@
 - [x] Uses only private attributes to encapsulate data.
 - [x] Uses only public constructors.
 - [x] Uses at least one public and at least one private method.
-- [x] Includes all necessary accessor and mutator methods. (GET RID OF UNNECESSARY)
+- [x] Includes all necessary accessor and mutator methods. 
 - [x] Includes a constructor with an object as one of its parameters.
 - [x] Includes a class with instance variables but no constructor.
 - [x] Includes Javadoc comments (i.e. /** */).
