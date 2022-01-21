@@ -1,4 +1,7 @@
-If using VSCode:
+Need several instances for this networking thing to work, run from powershell from now on.
+Try not to x out, use normal method to exit out with System.exit(0);
+If you need to x out, end java instance with task manager
+
 To run on matt computer
 & 'C:\Program Files\Eclipse Adoptium\jdk-17.0.1.12-hotspot\bin\javaw.exe' '-XX:+ShowCodeDetailsInExceptionMessages' '@C:\Users\selbo\AppData\Local\Temp\cp_53jdaua5u0wcceffzk1yvuxo9.argfile' 'F7.Main'
 

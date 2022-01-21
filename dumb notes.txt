@@ -9,7 +9,7 @@ Try implementing crafting
 
 If crafting, enemies will drop parts
 
-Try adding skill tree and skill points (time to do next)
+Try adding skill tree and skill points 
 
 Damage types + weaknesses/strength
 (Inspired by warframe/pokemon)
@@ -23,8 +23,6 @@ find way to make shields utilize levels
 Make each enemy inherit from the Enemy class (so they can do fun special thingamajigs) (Using extends keyword just so you know)
     should i do same with weapons? because yknow fun stuff!
     and consumables too! (might not actually hm)
-
-Convert to lanterna (DO NOW)
 
 individual weapon upgrading (like attachments).
 

@@ -18,7 +18,7 @@ public class CombatMenu2 {
     private static Enemy enemy;
     private static boolean running;
     private static long timeElapsed;
-    private static String[] information = new String[15];
+    private static String[] information;
 
     // Shield variables
     // THESE TWO VALUES SHOULD NEVER BE NEGATIVE
@@ -55,6 +55,7 @@ public class CombatMenu2 {
 
         running = true;
         timeElapsed = 0;
+        information = new String[15];
 
         enemy.setLevel(Players.getPlayer().getLevel() + Utils.randomRange(-2, 2));
 
@@ -68,166 +69,7 @@ public class CombatMenu2 {
     }
 
     private static void menu() throws Exception {
-        Lanterna.clear();
-
-        //! DO NOT USE ANY AUTO PRINTING, GIVE SPECIFIC COORDINATES
-        //* Sections for the UI
-
-        //! These parts stay constant throughout a fight
-        //* Lines to separate the sections
-        // Setting the color of the lines with this print statement
-        Lanterna.print(0, 0, "^G");
-
-        // Line splitting player and enemy
-        for (int i = 0; i < 10; i++) {
-            Lanterna.print(105, i, "║");
-        }
-
-        // First horizontal line
-        for (int i = 0; i < 211; i++) {
-            switch (i) {
-                case 105 -> Lanterna.print(i, 10, "╩");
-                case 70, 140 -> Lanterna.print(i, 10, "╦");
-                default -> Lanterna.print(i, 10, "═");
-            }
-        }
-
-        // Line separating Player extended and middle column
-        for (int i = 11; i < 50; i++) {
-            if (i == 30) {
-                Lanterna.print(70, i, "╠");
-            } else {
-                Lanterna.print(70, i, "║");
-            }
-        }
-
-        // Line separating middle column and enemy extended
-        for (int i = 11; i < 50; i++) {
-            if (i == 30) {
-                Lanterna.print(140, i, "╣");
-            } else {
-                Lanterna.print(140, i, "║");
-            }
-        }
-
-        // Line separating info and statuses
-        for (int i = 71; i < 140; i++) {
-            Lanterna.print(i, 30, "═");
-        }
-
-        // Second horizontal line
-        for (int i = 0; i < 211; i++) {
-            if (i == 70 || i == 140) {
-                Lanterna.print(i, 50, "╩");
-            } else {
-                Lanterna.print(i, 50, "═");
-            }
-        }
-
-        addInfo("^GStarted combat with ^W" + enemy.getNAME());
-
-        //* Player Stats
-        Lanterna.printf(1, 1, 
-            """
-            ^gModel-F v5.032 Targeting Chip
-            ^GAssigned and Calibrated for: ^W%s^G
-            
-            ^WLevel: %s
-            %s
-                    %s""",
-            Players.getPlayer().getName(),
-            Players.getPlayer().getLevel(),
-            Utils.outOf("Health:", Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R"),
-            Utils.percentBar(80, Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R")
-        );
-
-        //* Enemy Stats
-        Lanterna.printf(106, 2, 
-            """
-            ^GEnemy Detected:
-            ^W%s^G
-
-            %s
-                    %s""",
-            enemy.toString(true),
-            Utils.outOf("Health:", enemy.getHealth(), enemy.getTempHealth(), "^R"),
-            Utils.percentBar(80, enemy.getHealth(), enemy.getTempHealth(), "^R")
-        );
-
-        //* Player extended
-        Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.getPlayer().weaponEquipped().toString(false));
-        Lanterna.print(1, 20, "^WWeapons: ");
-
-        for (int i = 0; i < 4; i++) {
-            if (i == Players.getPlayer().getEquippedIndex()) {
-                Lanterna.printf(1, (i * 3) + 21, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GFists" : Players.getPlayer().getWeapons()[i].toString(true)));
-            } else {
-                Lanterna.printf(1, (i * 3) + 21, (Players.getPlayer().getWeapons()[i] == null ? "^GFists" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
-            }
-            Lanterna.print(1, (i * 3) + 22, String.format("^G%s/%s", weaponRof.get(Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i]), (Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i]).getRof()));
-            Lanterna.print(1, (i * 3) + 23, Utils.percentBar(50, (Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i]).getReloadTime(), weaponReload.get((Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i])), "^G"));
-        }
-
-        Lanterna.print(1, 34, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
-
-        Lanterna.printf(1, 42, "^WShield (%s):\n%s", shieldStatus(), Players.getPlayer().getShield().toString(false));
-
-        Lanterna.print(1, 47, "^GCharging Timer: " + Utils.percentBar(30, Players.getPlayer().getShield().getCOOLDOWN(), shieldChargingTime, "^O"));
-        Lanterna.print(1, 48, "^GShield Timer:   " + Utils.percentBar(30, Players.getPlayer().getShield().getTURNS(), shieldTime, "^C"));
-
-        //* Enemy Stats Extended
-        Lanterna.printf(141, 11, "" +
-            """
-            ^WEnemy Info:
-            %s
-            ^WDamage: ^G%s
-            ^WAccuracy: ^G%s%%
-            
-            ^WDescription:
-            ^G%s""",
-            enemy.toString(true),
-            enemy.getDamage(),
-            enemy.getAccuracy(),
-            enemy.getDESCRIPTION()
-        );
-
-        //* Info
-        Lanterna.print(71, 11, "^WInfo:");
-        Lanterna.print(71, 12, "^WTime Elapsed: ^G" + displayTime());
-
-        int infoIndex = 0;
-        for (String s : information) {
-            if (s != null) {
-                Lanterna.print(71, 14 + infoIndex, s);
-                infoIndex++;
-            }
-        }
-
-        //* Statuses
-        Lanterna.print(71, 31, "^WStatuses:");
-
-        int statusIndex = 0;
-        for (Map.Entry element : statusHashMap.entrySet()) {
-            Consumable key = (Consumable) element.getKey();
-            int value = statusHashMap.get(key);
-
-            if (value > 0) {
-                Lanterna.print(71, 31 + statusIndex, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
-                statusIndex++;
-            }
-        }
-
-        //* Controls/Keybindings
-        Lanterna.print(1, 51,
-            """
-            ^WControls:
-            ^WW^W) ^GMove up weapon list                    ^gF^W) ^GAttack with selected weapon                       ^RR^W) ^GRun away
-            ^WS^W) ^GMove down weapon list                  ^OX^W) ^GUse shield
-            
-            ^WConsumable Controls:
-            ^w[M]edkit                                  ^g[C]orrosive Acid Grenade                              ^7[D]amage Amplifier
-            ^wSm[o]ke Grenade                           ^g[T]argeting-Assistance Chip                           ^7F[l]ashbang"""
-        );
+        initialDraw();
 
         // Handles updates every second
         new Thread(() -> {
@@ -508,6 +350,181 @@ public class CombatMenu2 {
                 }
             }
         }).start();
+    }
+
+    private static void initialDraw() throws Exception {
+        Lanterna.clear();
+
+        //! DO NOT USE ANY AUTO PRINTING, GIVE SPECIFIC COORDINATES
+        //* Sections for the UI
+
+        //! These parts stay constant throughout a fight
+        //* Lines to separate the sections
+        // Setting the color of the lines with this print statement
+        Lanterna.print(0, 0, "^G");
+
+        // Line splitting player and enemy
+        for (int i = 0; i < 10; i++) {
+            Lanterna.print(105, i, "║");
+        }
+
+        // First horizontal line
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 211; i++) {
+                    switch (i) {
+                        case 105 -> Lanterna.print(i, 10, "╩");
+                        case 70, 140 -> Lanterna.print(i, 10, "╦");
+                        default -> Lanterna.print(i, 10, "═");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        // Second horizontal line
+        for (int i = 0; i < 211; i++) {
+            if (i == 70 || i == 140) {
+                Lanterna.print(i, 50, "╩");
+            } else {
+                Lanterna.print(i, 50, "═");
+            }
+        }
+
+        // Line separating Player extended and middle column
+        new Thread(() -> {
+            try {
+                for (int i = 11; i < 50; i++) {
+                    if (i == 30) {
+                        Lanterna.print(70, i, "╠");
+                    } else {
+                        Lanterna.print(70, i, "║");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+        
+        // Line separating middle column and enemy extended
+        for (int i = 11; i < 50; i++) {
+            if (i == 30) {
+                Lanterna.print(140, i, "╣");
+            } else {
+                Lanterna.print(140, i, "║");
+            }
+        }
+
+        // Line separating info and statuses
+        for (int i = 71; i < 140; i++) {
+            Lanterna.print(i, 30, "═");
+        }
+
+        addInfo("^GStarted combat with ^W" + enemy.getNAME());
+
+        //* Player Stats
+        Lanterna.printf(1, 1, 
+            """
+            ^gModel-F v5.032 Targeting Chip
+            ^GAssigned and Calibrated for: ^W%s^G
+            
+            ^WLevel: %s
+            %s
+                    %s""",
+            Players.getPlayer().getName(),
+            Players.getPlayer().getLevel(),
+            Utils.outOf("Health:", Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R"),
+            Utils.percentBar(80, Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R")
+        );
+
+        //* Enemy Stats
+        Lanterna.printf(106, 2, 
+            """
+            ^GEnemy Detected:
+            ^W%s^G
+
+            %s
+                    %s""",
+            enemy.toString(true),
+            Utils.outOf("Health:", enemy.getHealth(), enemy.getTempHealth(), "^R"),
+            Utils.percentBar(80, enemy.getHealth(), enemy.getTempHealth(), "^R")
+        );
+
+        //* Player extended
+        Lanterna.printf(1, 11, "^WEquipped:\n%s", Players.getPlayer().weaponEquipped().toString(false));
+        Lanterna.print(1, 20, "^WWeapons: ");
+
+        for (int i = 0; i < 4; i++) {
+            if (i == Players.getPlayer().getEquippedIndex()) {
+                Lanterna.printf(1, (i * 3) + 21, "^g> " + (Players.getPlayer().getWeapons()[i] == null ? "^GFists" : Players.getPlayer().getWeapons()[i].toString(true)));
+            } else {
+                Lanterna.printf(1, (i * 3) + 21, (Players.getPlayer().getWeapons()[i] == null ? "^GFists" : Players.getPlayer().getWeapons()[i].toString(true)) + "  ");
+            }
+            Lanterna.print(1, (i * 3) + 22, String.format("^G%s/%s", weaponRof.get(Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i]), (Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i]).getRof()));
+            Lanterna.print(1, (i * 3) + 23, Utils.percentBar(50, (Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i]).getReloadTime(), weaponReload.get((Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i])), "^G"));
+        }
+
+        Lanterna.print(1, 34, "^WConsumables:\n" + Players.getPlayer().displayConsumables());
+
+        Lanterna.printf(1, 42, "^WShield (%s):\n%s", shieldStatus(), Players.getPlayer().getShield().toString(false));
+
+        Lanterna.print(1, 47, "^GCharging Timer: " + Utils.percentBar(30, Players.getPlayer().getShield().getCOOLDOWN(), shieldChargingTime, "^O"));
+        Lanterna.print(1, 48, "^GShield Timer:   " + Utils.percentBar(30, Players.getPlayer().getShield().getTURNS(), shieldTime, "^C"));
+
+        //* Enemy Stats Extended
+        Lanterna.printf(141, 11, "" +
+            """
+            ^WEnemy Info:
+            %s
+            ^WDamage: ^G%s
+            ^WAccuracy: ^G%s%%
+            
+            ^WDescription:
+            ^G%s""",
+            enemy.toString(true),
+            enemy.getDamage(),
+            enemy.getAccuracy(),
+            enemy.getDESCRIPTION()
+        );
+
+        //* Info
+        Lanterna.print(71, 11, "^WInfo:");
+        Lanterna.print(71, 12, "^WTime Elapsed: ^G" + displayTime());
+
+        int infoIndex = 0;
+        for (String s : information) {
+            if (s != null) {
+                Lanterna.print(71, 14 + infoIndex, s);
+                infoIndex++;
+            }
+        }
+
+        //* Statuses
+        Lanterna.print(71, 31, "^WStatuses:");
+
+        int statusIndex = 0;
+        for (Map.Entry element : statusHashMap.entrySet()) {
+            Consumable key = (Consumable) element.getKey();
+            int value = statusHashMap.get(key);
+
+            if (value > 0) {
+                Lanterna.print(71, 31 + statusIndex, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
+                statusIndex++;
+            }
+        }
+
+        //* Controls/Keybindings
+        Lanterna.print(1, 51,
+            """
+            ^WControls:
+            ^WW^W) ^GMove up weapon list                    ^gF^W) ^GAttack with selected weapon                       ^RR^W) ^GRun away
+            ^WS^W) ^GMove down weapon list                  ^OX^W) ^GUse shield
+            
+            ^WConsumable Controls:
+            ^w[M]edkit                                  ^g[C]orrosive Acid Grenade                              ^7[D]amage Amplifier
+            ^wSm[o]ke Grenade                           ^g[T]argeting-Assistance Chip                           ^7F[l]ashbang"""
+        );
     }
 
     private static void playerAttack() throws Exception {

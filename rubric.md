@@ -1,51 +1,48 @@
-# Rubric for Project
+# Rubric
 
-## Unit 4: Iteration
+## Unit 7: ArrayList
 
-- [x] Contains no infinite loops.
-- [x] Includes a return statement inside a loop.
-- [x] Uses a for loop.
-- [x] Uses a while loop.
-- [x] Contains no “off-by-one” errors.
-- [x] Uses nested iteration (i.e. loops within loops).
-- [x] Uses statement execution counts.
+- [x] Uses the generic type ArrayList<E>, where the generic type E specifies the type of the elements. 
+- [x] Uses the raw type ArrayList.
+- [x] Imports the java.util package.
+- [ ] Both calls and uses the return value (if non-void) of each of the following ArrayList methods:
+  - [ ] int size()
+  - [ ] boolean add(E obj)
+  - [ ] void add(int index, E obj)
+  - [ ] E get(int index)
+  - [ ] E set(int index, E obj)
+  - [ ] E remove(int index)
+- [x] Uses iteration to traverse an ArrayList
+- [ ] Deletes an element of an ArrayList during traversal without skipping an element.
+- [ ] Throws no ArrayIndexOutOfBoundsExceptions.
+- [ ] Throws no ConcurrentModificationExceptions.
+- [ ] Checks each element in an ArrayList  in order until a desired value is found or all elements in the ArrayList have been checked.
+- [ ] Uses selection sort.
+- [ ] Uses insertion sort.
+- [ ] Compares selection and insertion sort with statement execution counts.
+- [ ] Safeguards personal privacy.
+- [ ] Benefits personal security.
 
-## Unit 5: Writing Classes
+## Unit 8: 2D Array
 
-- [x] Uses only public classes.
-- [x] Uses only private attributes to encapsulate data.
-- [x] Uses only public constructors.
-- [x] Uses at least one public and at least one private method.
-- [x] Includes all necessary accessor and mutator methods. 
-- [x] Includes a constructor with an object as one of its parameters.
-- [x] Includes a class with instance variables but no constructor.
-- [x] Includes Javadoc comments (i.e. /** */).
-- [x] Includes at least one precondition and one postcondition.
-- [x] Includes non-void methods.
-- [x] Includes at least one method that returns an object other than a String.
-- [x] Includes a toString method and prints an object.
-- [x] Includes a void method other than the main method.
-- [x] Includes a static method other than the main method.
-- [x] Includes a method that alters a static variable in a different class.
-- [x] Uses the this keyword.
-- [x] Is reliable.
-- [x] Creates no legal issues nor intellectual property concerns.
-- [x] Benefits at least one society, economy, or culture. (gaming culture lmao)
+- [x] Uses 2D arrays of object references.
+- [x] Uses an initializer list to create a 2D array.
+- [ ] Uses both row-major order and column-major order to traverse 2D arrays.
+- [x] Uses nested iteration to traverse 2D arrays.
+- [ ] Uses enhanced for loops to traverse 2D arrays.
 
-## Unit 6: Arrays
+## Unit 9: Inheritance
 
-- [x] Uses an array of primitive data.
-- [x] Uses an array of object references.
-- [x] Uses an initializer list to create an array.
-- [x] Uses iteration to traverse an array.
-- [x] Uses an enhanced for loop.
-- [x] Uses at least one of the following algorithms:
-  - [ ] Determines the minimum and maximum values in an array.
-  - [ ] Computes the sum, average, and mode of an array.
-  - [ ] Determines if at least one element of an array has a particular property.
-  - [ ] Determines if all elements of an array have a particular property.
-  - [ ] Accesses all consecutive pairs of elements in an array.
-  - [ ] Determines the presence or absence of duplicate elements.
-  - [ ] Determines the number of elements meeting specific criteria.
-  - [x] Shifts elements of an array left or right.
-  - [ ] Reverses the order of the elements of an array.
+- [ ] Uses a subclass that extends a superclass.
+- [ ] Calls a superclass constructor with the super keyword and passes actual parameters.
+- [ ] Calls a superclass’s no-argument constructor.
+- [ ] Calls the Object constructor.
+- [ ] Overrides methods in a superclass.
+- [ ] Includes subclasses with instance variables.
+- [ ] Calls an inherited method.
+- [ ] Calls a superclass method with the super keyword and passes actual parameters.
+- [ ] Facilitates polymorphism, i.e. assigns an object of a subclass to a reference of a superclass.
+- [ ] Uses a method that takes an object of a superclass as a parameter but passes an object of a subclass.
+- [ ] Uses an array of superclass object references but populates it with subclass object references.
+- [ ] Uses an ArrayList of superclass object references but populates it with subclass object references.
+- [ ] Overrides the toString and equals methods for all subclasses.
