@@ -29,7 +29,7 @@ public class WinMenu {
 
             Weapon weapon = Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity))[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity)).length)];
 
-            Lanterna.printf(1, 2, "%s dropped %s. Will you take it? (^gQ^G to confirm, ^RE^G to cancel)");
+            Lanterna.printf(1, 2, "%s dropped %s. Will you take it? (^gQ^G to confirm, ^RE^G to cancel)", CombatMenu2.getEnemy().getNAME(), weapon.getNAME());
             
             boolean running = true;
             while (running) {
