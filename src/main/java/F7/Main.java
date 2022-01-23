@@ -2,7 +2,10 @@ package F7;
 
 import F7.entities.construction.*;
 import F7.ui.*;
+
+import java.io.*;
 import java.net.*;
+import java.util.*;
 
 /*
 Credits:
@@ -35,6 +38,12 @@ TODO (Ordered by importance):
     - You can finally have records again
 */
 
+/*
+Sources because im gonna kashoot myself
+https://stackoverflow.com/questions/29545597/multiplayer-game-in-java-connect-client-player-to-game-that-was-created-by-ot
+https://stackoverflow.com/questions/29325034/how-would-an-mmo-deal-with-calculating-and-sending-packets-for-thousands-of-play/30826823#30826823
+ */
+
 public class Main {
     public static void main(String[] args) throws Exception {
         Enemies.setEnemyHashMap();
@@ -44,8 +53,41 @@ public class Main {
         Consumables.setConsumableHashMap();
         WinMenu.setRarityMultipliers();
 
-        Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
+        //Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
-        MainMenu.menu();
+        //MainMenu.menu();
+        Network.startServer(8001); // BindException exists
+
+        System.out.println(Network.retrieveServers());
+
+        //Network.joinServer("", 8001);
+
+//        String ip;
+//        try {
+//            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+//            while (interfaces.hasMoreElements()) {
+//                NetworkInterface iface = interfaces.nextElement();
+//                // filters out 127.0.0.1 and inactive interfaces
+//
+//                Enumeration<InetAddress> addresses = iface.getInetAddresses();
+//                while(addresses.hasMoreElements()) {
+//                    InetAddress addr = addresses.nextElement();
+//
+//                    // *EDIT*
+//                    //if (addr instanceof Inet6Address) continue;
+//
+//                    ip = addr.getHostAddress();
+//                    System.out.println(iface.getDisplayName() + " " + ip);
+//                }
+//            }
+//        } catch (SocketException e) {
+//            throw new RuntimeException(e);
+//        }
+
+        System.out.println(InetAddress.getLocalHost().getHostAddress());
+
+        while (true) {
+
+        }
     }
 }
