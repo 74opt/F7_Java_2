@@ -30,7 +30,7 @@ TODO (Ordered by importance):
                 - Good chance to use arraylist methods
         - Option to join or host
             - When hosting, check all available servers first to make sure port is not already taken
-        - Need a set tickrate (ScheduledExecutorService?)
+        - Need a set tickrate for combat menu? (ScheduledExecutorService?)
     - Inheritance (check dumb notes)
     - You can finally have records again
 */
