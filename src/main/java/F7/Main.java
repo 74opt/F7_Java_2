@@ -22,6 +22,7 @@ TODO (Ordered by importance):
         - You deadass forgot to implement the player actually dying
         - Probably should have them in the same class as CombatMenu2
             - Rename to just CombatMenu?
+        - Also refactor some variable names to reflect the new combat
     - Networking 
         - Good resource even though it's for unity: https://docs-multiplayer.unity3d.com/docs/learn/introduction
         - Set options for multiplayer and singleplayer
@@ -42,6 +43,7 @@ TODO (Ordered by importance):
 Sources because im gonna kashoot myself
 https://stackoverflow.com/questions/29545597/multiplayer-game-in-java-connect-client-player-to-game-that-was-created-by-ot
 https://stackoverflow.com/questions/29325034/how-would-an-mmo-deal-with-calculating-and-sending-packets-for-thousands-of-play/30826823#30826823
+https://stackoverflow.com/questions/52565970/can-i-connect-2-computers-using-sockets-in-java
  */
 
 public class Main {
@@ -56,11 +58,13 @@ public class Main {
         //Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
         //MainMenu.menu();
-        Network.startServer(8001); // BindException exists
+        Network.startServer(14001); // BindException exists
+        Network.startServer(14001);
 
         System.out.println(Network.retrieveServers());
 
-        //Network.joinServer("", 8001);
+        Network.joinServer("127.0.0.1", 14001);
+        Network.joinServer("127.0.0.1", 11000);
 
 //        String ip;
 //        try {
@@ -83,11 +87,5 @@ public class Main {
 //        } catch (SocketException e) {
 //            throw new RuntimeException(e);
 //        }
-
-        System.out.println(InetAddress.getLocalHost().getHostAddress());
-
-        while (true) {
-
-        }
     }
 }
