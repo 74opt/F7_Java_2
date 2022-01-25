@@ -14,7 +14,11 @@ public class Network {
     // make following void or boolean?
     public static void startServer(int port) throws IOException {
         try {
-            serverSocket = new ServerSocket(port);
+            if (portRange[0] <= port && port <= portRange[1]) {
+                serverSocket = new ServerSocket(port);
+            } else {
+                System.out.println("Invalid port " + port);
+            }
         } catch (BindException e) {
             System.out.println("Server with port " + port + " already exists");
         }

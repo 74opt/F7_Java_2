@@ -48,44 +48,35 @@ https://stackoverflow.com/questions/52565970/can-i-connect-2-computers-using-soc
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Enemies.setEnemyHashMap();
-        Weapons.setWeaponHashMap();
-        Shields.setShieldHashMap();
-        Rarities.setRaritiesArrayList();
-        Consumables.setConsumableHashMap();
-        WinMenu.setRarityMultipliers();
+//        Enemies.setEnemyHashMap();
+//        Weapons.setWeaponHashMap();
+//        Shields.setShieldHashMap();
+//        Rarities.setRaritiesArrayList();
+//        Consumables.setConsumableHashMap();
+//        WinMenu.setRarityMultipliers();
 
         //Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
         //MainMenu.menu();
-        Network.startServer(14001); // BindException exists
-        Network.startServer(14001);
 
-        System.out.println(Network.retrieveServers());
+        // For system IP
+        InetAddress inetAddress = InetAddress.getLocalHost();
+        System.out.println("System IP Address: " + inetAddress.getHostAddress());
 
-        Network.joinServer("127.0.0.1", 14001);
-        Network.joinServer("127.0.0.1", 11000);
+        // For public IP (will i need?)
+        String systemIP = "";
 
-//        String ip;
-//        try {
-//            Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-//            while (interfaces.hasMoreElements()) {
-//                NetworkInterface iface = interfaces.nextElement();
-//                // filters out 127.0.0.1 and inactive interfaces
-//
-//                Enumeration<InetAddress> addresses = iface.getInetAddresses();
-//                while(addresses.hasMoreElements()) {
-//                    InetAddress addr = addresses.nextElement();
-//
-//                    // *EDIT*
-//                    //if (addr instanceof Inet6Address) continue;
-//
-//                    ip = addr.getHostAddress();
-//                    System.out.println(iface.getDisplayName() + " " + ip);
-//                }
-//            }
-//        } catch (SocketException e) {
-//            throw new RuntimeException(e);
-//        }
+        try {
+            URL aws = new URL("http://checkip.amazonaws.com/");
+
+            BufferedReader sc = new BufferedReader(new InputStreamReader(aws.openStream()));
+
+            // reads system IPAddress
+            systemIP = sc.readLine().trim();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Public IP Address: " + systemIP);
     }
 }
