@@ -18,6 +18,7 @@ Gayan Weerakutti: Some dude from stack overflow
 
 /*
 TODO (Ordered by importance):
+    - Holmer said you can make variables public if they are final
     - Make the DeathMenu and WinMenu much better please (make sure to unshit code)
         - You deadass forgot to implement the player actually dying
         - Probably should have them in the same class as CombatMenu2
@@ -64,7 +65,7 @@ public class Main {
         System.out.println("System IP Address: " + inetAddress.getHostAddress());
 
         // For public IP (will i need?)
-        String systemIP = "";
+        String publicIP = "";
 
         try {
             URL aws = new URL("http://checkip.amazonaws.com/");
@@ -72,11 +73,43 @@ public class Main {
             BufferedReader sc = new BufferedReader(new InputStreamReader(aws.openStream()));
 
             // reads system IPAddress
-            systemIP = sc.readLine().trim();
+            publicIP = sc.readLine().trim();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("Public IP Address: " + systemIP);
+        System.out.println("Public IP Address: " + publicIP);
+
+        Network.startServer(14000);
+
+        //while (true) {}
+
+        final byte[] ip;
+        try {
+            ip = InetAddress.getLocalHost().getAddress();
+        } catch (Exception e) {
+            return;     // exit method, otherwise "ip might not have been initialized"
+        }
+
+        for (int i = 1; i < 255; i++) {
+            final int j = i;  // i as non-final variable cannot be referenced from inner class
+            new Thread(() -> {
+                try {
+                    ip[3] = (byte)j;
+                    InetAddress address = InetAddress.getByAddress(ip);
+                    String output = address.toString().substring(1);
+                    if (address.isReachable(5000)) {
+                        System.out.println(output + " is on the network");
+                    } else {
+                        System.out.println("Not Reachable: "+output);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+
+        // Works for school computers (use on different computer)
+        // Socket socket = new Socket(inetAddress.getHostAddress(), 14000);
     }
 }
