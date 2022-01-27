@@ -84,29 +84,8 @@ public class Main {
 
         //while (true) {}
 
-        final byte[] ip;
-        try {
-            ip = InetAddress.getLocalHost().getAddress();
-        } catch (Exception e) {
-            return;     // exit method, otherwise "ip might not have been initialized"
-        }
-
-        for (int i = 1; i < 255; i++) {
-            final int j = i;  // i as non-final variable cannot be referenced from inner class
-            new Thread(() -> {
-                try {
-                    ip[3] = (byte)j;
-                    InetAddress address = InetAddress.getByAddress(ip);
-                    String output = address.toString().substring(1);
-                    if (address.isReachable(5000)) {
-                        System.out.println(output + " is on the network");
-                    } else {
-                        System.out.println("Not Reachable: "+output);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
+        for (InetAddress i : Objects.requireNonNull(Network.retrieveServers())) {
+            System.out.println(i.getHostAddress());
         }
 
         // Works for school computers (use on different computer)
