@@ -3,6 +3,7 @@ package F7;
 import F7.entities.construction.*;
 import F7.ui.*;
 
+import javax.xml.crypto.Data;
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -64,39 +65,82 @@ public class Main {
         InetAddress inetAddress = InetAddress.getLocalHost();
         System.out.println("System IP Address: " + inetAddress.getHostAddress());
 
-        // For public IP (will i need?)
-        String publicIP = "";
+        //Network.joinServer("10.8.37.125", 14000);
 
-        try {
-            URL aws = new URL("http://checkip.amazonaws.com/");
+            // For public IP (will i need?)
+//        String publicIP = "";
+//
+//        try {
+//            URL aws = new URL("http://checkip.amazonaws.com/");
+//
+//            BufferedReader sc = new BufferedReader(new InputStreamReader(aws.openStream()));
+//
+//            // reads system IPAddress
+//            publicIP = sc.readLine().trim();
+//        } catch (Exception e) {
+//            //e.printStackTrace();
+//        }
 
-            BufferedReader sc = new BufferedReader(new InputStreamReader(aws.openStream()));
+//        System.out.println("Public IP Address: " + publicIP);
 
-            // reads system IPAddress
-            publicIP = sc.readLine().trim();
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
-
-        System.out.println("Public IP Address: " + publicIP);
-
-        //while (true) {}
+            //while (true) {}
 
 //        for (InetAddress i : Objects.requireNonNull(Network.retrieveServers())) {
 //            System.out.println(i.getHostAddress());
 //        }
 
-        DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(Network.startServer(14000).accept().getInputStream()));
-
-        String line = "";
-
-        while (true) {
-            line = dataInputStream.readUTF();
-
-            System.out.println(line);
-        }
-
         // Works for school computers (use on different computer)
         // Socket socket = new Socket(inetAddress.getHostAddress(), 14000);
+
+        ServerSocket server = null;
+        Socket socket = null;
+        DataInputStream in = null;
+
+        try {
+            server = new ServerSocket(14000);
+
+            System.out.println("Server started");
+
+            System.out.println("Waiting for a client ...");
+
+            socket = server.accept();
+
+            System.out.println("Client accepted");
+
+            // takes input from the client socket
+            in = new DataInputStream(
+                    new BufferedInputStream(
+                            socket.getInputStream()));
+
+            String line = "";
+
+            // reads message from client until "End" is sent
+            while (!line.equals("End")) {
+
+                try {
+
+                    line = in.readUTF();
+
+                    System.out.println(line);
+                }
+
+                catch (IOException i) {
+
+                    System.out.println(i);
+                }
+            }
+
+            System.out.println("Closing connection");
+
+            // close connection
+            socket.close();
+
+            in.close();
+        }
+
+        catch (IOException i) {
+
+            System.out.println(i);
+        }
     }
 }
