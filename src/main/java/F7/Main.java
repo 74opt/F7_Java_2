@@ -75,17 +75,25 @@ public class Main {
             // reads system IPAddress
             publicIP = sc.readLine().trim();
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         System.out.println("Public IP Address: " + publicIP);
 
-        Network.startServer(14000);
-
         //while (true) {}
 
-        for (InetAddress i : Objects.requireNonNull(Network.retrieveServers())) {
-            System.out.println(i.getHostAddress());
+//        for (InetAddress i : Objects.requireNonNull(Network.retrieveServers())) {
+//            System.out.println(i.getHostAddress());
+//        }
+
+        DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(Network.startServer(14000).accept().getInputStream()));
+
+        String line = "";
+
+        while (true) {
+            line = dataInputStream.readUTF();
+
+            System.out.println(line);
         }
 
         // Works for school computers (use on different computer)
