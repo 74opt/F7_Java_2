@@ -6,36 +6,44 @@ import java.util.ArrayList;
 
 // TODO: make constructor + instance vars for OOP with user-hosted servers
 public class Network {
-    // Static vars
     private static Socket socket;
     private static ServerSocket serverSocket;
-    private static DataInputStream inputStream;
-    private static DataOutputStream outputStream;
+
+    // To send data to the client
+    private static PrintStream printStream;
+
+    // To read data coming from the client
+    private static BufferedReader bufferedReader;
+
+    // To send data to the server
+    private static DataOutputStream dataOutputStream;
+
+    // Server details
     private static final int mainPort = 14000;
-    @Deprecated
-    private static final int[] portRange = {14000, 15000};
+    private static final int maxPlayers = 2;
+    private static String name;
+    private static String address;
 
-    // Non static vars
-    private String name;
-    private String address;
-    private int ping;
-    private int playerCount;
+    public static String getName() {return name;}
 
-    public Network(String name, String address, int ping /*ping pong*/, int playerCount) throws UnknownHostException {
-        this.name = name;
-        this.address = InetAddress.getLocalHost().getHostAddress();
-    }
+    public static String getAddress() {return address;}
+
+    // need?
+    public static ServerSocket getServerSocket() {return serverSocket;}
+
+    //TODO: do i want the non-static stuff? do i want the static stuff?
+    // Possibly make static because only 1 computer will be hosting 1 server
 
     // make following void or boolean?
-    public static ServerSocket startServer(int port) throws IOException {
+    public static void startServer(int port) throws IOException {
         try {
             serverSocket = new ServerSocket(port);
-
-            return serverSocket;
+            address = InetAddress.getLocalHost().getHostAddress();
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            printStream = new PrintStream(socket.getOutputStream());
         } catch (BindException e) {
-            System.out.println("Server with port " + port + " already exists");
-
-            return null;
+            System.out.println("Server already exists");
         }
     }
 
@@ -47,6 +55,10 @@ public class Network {
             //System.out.println("Server with port " + port + " not found");
             return false;
         }
+    }
+
+    public static void sendData(Object data) {
+        printStream.print(data);
     }
 
     public static ArrayList<InetAddress> retrieveServers() {
@@ -77,5 +89,13 @@ public class Network {
         }
 
         return servers;
+    }
+
+    public static int getPing() {
+        return 0;
+    }
+
+    public static int getPlayers() {
+        return 0;
     }
 }

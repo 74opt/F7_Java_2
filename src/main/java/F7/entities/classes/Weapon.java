@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 // TODO: Crits
+//  Abstract keyword may come nicely
 public class Weapon {
     private final String NAME;
     private int damage, accuracy, level, rof, critChance, reloadTime; // critChance is out of 100
@@ -96,9 +97,8 @@ public class Weapon {
         }
     }
 
-    //? should be void?
     // to be overrided
     public void special() {
-        // something.
+
     }
 }

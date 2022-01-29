@@ -131,19 +131,7 @@ public class Lanterna {
         screen.refresh();
     }
 
-    @Deprecated
-    public static void printf(String text, Object... args) throws Exception {
-        print(String.format(text, args));
-    }
-
     public static void printf(int column, int row, String text, Object... args) throws Exception {
         print(column, row, String.format(text, args));
-    }
-
-    @Deprecated
-    public static void println(String text) throws Exception {
-        print(text);
-        //row++;
-        // = 1;
     }
 }
