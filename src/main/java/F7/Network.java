@@ -39,7 +39,10 @@ public class Network {
         try {
             serverSocket = new ServerSocket(port);
             address = InetAddress.getLocalHost().getHostAddress();
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+
+            // This line waits for a connection
+            socket = serverSocket.accept();
+
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream = new PrintStream(socket.getOutputStream());
         } catch (BindException e) {
@@ -47,18 +50,61 @@ public class Network {
         }
     }
 
-    public static boolean joinServer(String address, int port) throws IOException {
+    public static void joinServer(String address, int port) throws IOException {
         try {
             socket = new Socket(address, port);
-            return true;
+            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (ConnectException e) {
-            //System.out.println("Server with port " + port + " not found");
+            System.out.println("Server with port " + port + " not found");
+        }
+    }
+
+    private static boolean testServerConnection(String address, int port) throws IOException {
+        try {
+            socket = new Socket(address, port);
+
+            return true;
+        } catch (ConnectException ignored) {
             return false;
         }
     }
 
+    // FIXME PrintStream.println and PrintStream.print turn all data into a string
     public static void sendData(Object data) {
-        printStream.print(data);
+        printStream.println(data);
+    }
+
+    private static Object readData() {
+        Object object;
+
+        try {
+            // will be reading strings
+            object = bufferedReader.readLine();
+
+            // object returned can only be turned into a string without any methods
+            return object;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    public static String readString() {
+        return (String) readData();
+    }
+
+    public static int readInt() {
+        return Integer.parseInt(readString());
+    }
+
+    public static double readDouble() {
+        return Double.parseDouble(readString());
+    }
+
+    public static boolean readBoolean() {
+        return Boolean.parseBoolean(readString());
     }
 
     public static ArrayList<InetAddress> retrieveServers() {
@@ -78,7 +124,7 @@ public class Network {
                     ip[3] = (byte) j;
                     InetAddress address = InetAddress.getByAddress(ip);
                     String output = address.toString().substring(1);
-                    if (address.isReachable(5000) && Network.joinServer(output, 14000)) {
+                    if (address.isReachable(5000) && testServerConnection(output, 14000)) {
                         servers.add(address);
                         //System.out.println(output + " is on the network");
                     }

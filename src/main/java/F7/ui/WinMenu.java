@@ -8,7 +8,6 @@ import F7.entities.construction.Players;
 import F7.entities.construction.Rarities;
 import F7.entities.construction.Weapons;
 import com.googlecode.lanterna.input.KeyStroke;
-
 import java.util.Arrays;
 import java.util.HashMap;
 

@@ -25,7 +25,7 @@ TODO (Ordered by importance):
         - Probably should have them in the same class as CombatMenu2
             - Rename to just CombatMenu?
         - Also refactor some variable names to reflect the new combat
-    - Networking 
+    - Networking
         - Good resource even though it's for unity: https://docs-multiplayer.unity3d.com/docs/learn/introduction
         - Set options for multiplayer and singleplayer
         - Networking works with a listen server, a player is host and others join
@@ -64,6 +64,11 @@ public class Main {
 
         //MainMenu.menu();
 
+        Network.startServer(14000);
 
+        // Network.readData and Network.sendData need to be aligned to get the right data
+        Network.sendData("hello");
+        Network.sendData(2);
+        Network.sendData(true);
     }
 }
