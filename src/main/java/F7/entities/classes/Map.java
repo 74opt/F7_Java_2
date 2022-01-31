@@ -52,7 +52,7 @@ public class Map {
         dir.put("right", new Integer[] {1, 0});
 
         for (int i = 0; i < tiles; i++) {
-            if (!(MAP[Players.getPlayer().getY() + dir.get(direction)[1]][Players.getPlayer().getX() + dir.get(direction)[0]].getCOLLISION_ENABLED())) {
+            if (!(MAP[Players.getPlayer().getY() + dir.get(direction)[1]][Players.getPlayer().getX() + dir.get(direction)[0]].COLLISION_ENABLED())) {
                 int oldX = Players.getPlayer().getX();
                 int oldY = Players.getPlayer().getY();
 
@@ -74,7 +74,7 @@ public class Map {
 
         for (int i = 0; i < MAP.length; i++) {
             for (int j = 0; j < MAP[0].length; j++) {
-                string += MAP[i][j].getTILE();
+                string += MAP[i][j].TILE();
             }
             string += "\n";
         }

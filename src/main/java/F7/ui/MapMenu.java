@@ -80,7 +80,7 @@ public class MapMenu {
     }
 
     private static void fight() throws Exception {
-        CombatMenu2.start();
+        CombatMenu.start();
     }
 
     private static void inventory() throws Exception {

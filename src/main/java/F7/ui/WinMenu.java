@@ -17,18 +17,18 @@ public class WinMenu {
     public static void menu() throws Exception {
         Lanterna.clear();
 
-        int exp = (int) (((200 + 300 * Math.pow(CombatMenu2.getEnemy().getLevel(), 1.6)) * (Utils.randomRange(73, 97) / 100.0)) * rarityMultipliers.get(CombatMenu2.getEnemy().getRARITY())); //? should i change 1.6 to less?
+        int exp = (int) (((200 + 300 * Math.pow(CombatMenu.getEnemy().getLevel(), 1.6)) * (Utils.randomRange(73, 97) / 100.0)) * rarityMultipliers.get(CombatMenu.getEnemy().getRARITY())); //? should i change 1.6 to less?
         Players.getPlayer().setExp(Players.getPlayer().getExp() + exp);
 
-        Lanterna.printf(1, 1, "^GYou defeated %s^G! %s ^Gexp awarded.", CombatMenu2.getEnemy().getNAME(), exp);
+        Lanterna.printf(1, 1, "^GYou defeated %s^G! %s ^Gexp awarded.", CombatMenu.getEnemy().getNAME(), exp);
         Thread.sleep(Utils.getSTANDARD());
 
         if (Utils.chance(34)) {
-            int weaponRarity = Utils.randomRange(0, 101 - CombatMenu2.getEnemy().getRARITY().getCHANCE());
+            int weaponRarity = Utils.randomRange(0, 101 - CombatMenu.getEnemy().getRARITY().CHANCE());
 
             Weapon weapon = Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity))[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity)).length)];
 
-            Lanterna.printf(1, 2, "%s dropped %s. Will you take it? (^gQ^G to confirm, ^RE^G to cancel)", CombatMenu2.getEnemy().getNAME(), weapon.getNAME());
+            Lanterna.printf(1, 2, "%s dropped %s. Will you take it? (^gQ^G to confirm, ^RE^G to cancel)", CombatMenu.getEnemy().getNAME(), weapon.getNAME());
             
             boolean running = true;
             while (running) {

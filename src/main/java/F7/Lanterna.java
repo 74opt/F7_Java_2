@@ -103,7 +103,6 @@ public class Lanterna {
                         case '5' -> color = 94; // Brown
                         case '6' -> color = 95; // Brown
                         case '7' -> color = 33; // Blue
-                        // I just found these ones in tiles below
                         case '8' -> color = 241; // Grey
                         case '9' -> color = 70; // Green
                         case '0' -> color = 65; // Green

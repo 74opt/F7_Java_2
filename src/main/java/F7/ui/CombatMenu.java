@@ -14,7 +14,7 @@ import com.googlecode.lanterna.input.KeyStroke;
 
 // TODO:
 //  - ENEMY DEATH
-public class CombatMenu2 {
+public class CombatMenu {
     private static Enemy enemy;
     private static boolean running;
     private static long timeElapsed;
@@ -355,10 +355,7 @@ public class CombatMenu2 {
     private static void initialDraw() throws Exception {
         Lanterna.clear();
 
-        //! DO NOT USE ANY AUTO PRINTING, GIVE SPECIFIC COORDINATES
         //* Sections for the UI
-
-        //! These parts stay constant throughout a fight
         //* Lines to separate the sections
         // Setting the color of the lines with this print statement
         Lanterna.print(0, 0, "^G");
@@ -503,16 +500,17 @@ public class CombatMenu2 {
         //* Statuses
         Lanterna.print(71, 31, "^WStatuses:");
 
-        int statusIndex = 0;
-        for (Map.Entry element : statusHashMap.entrySet()) {
-            Consumable key = (Consumable) element.getKey();
-            int value = statusHashMap.get(key);
+        // Don't think i need, since there won't be any statuses active
+        // int statusIndex = 0;
+        // for (Map.Entry element : statusHashMap.entrySet()) {
+        //     Consumable key = (Consumable) element.getKey();
+        //     int value = statusHashMap.get(key);
 
-            if (value > 0) {
-                Lanterna.print(71, 31 + statusIndex, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
-                statusIndex++;
-            }
-        }
+        //     if (value > 0) {
+        //         Lanterna.print(71, 31 + statusIndex, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
+        //         statusIndex++;
+        //     }
+        // }
 
         //* Controls/Keybindings
         Lanterna.print(1, 51,
@@ -652,6 +650,7 @@ public class CombatMenu2 {
         }
     }
 
+    // These should happen in the combat menu
     private static void enemyDead() throws Exception {
         running = false;
         WinMenu.menu();
@@ -704,7 +703,7 @@ public class CombatMenu2 {
     private static void useConsumable(Consumable consumable) throws Exception {
         if (Players.getPlayer().hasConsumable(consumable)) {
             Players.getPlayer().removeConsumable(consumable);
-            statusHashMap.put(consumable, statusHashMap.get(consumable) + consumable.getTURNS());
+            statusHashMap.put(consumable, statusHashMap.get(consumable) + consumable.TURNS());
             addInfo(consumable.toString() + "^G used");
 
             for (int i = 0; i < 7; i++) {
@@ -726,6 +725,6 @@ public class CombatMenu2 {
             }
         }
 
-        return "This should not be accessible, how did you get here";
+        return null;
     }
 }

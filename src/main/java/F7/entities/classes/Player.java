@@ -149,7 +149,7 @@ public class Player {
         int flashbangs = 0;
 
         for (Consumable consumable : consumables) {
-            switch (consumable.getNAME()) {
+            switch (consumable.NAME()) {
                 case "Medkit":
                     medkits++;
                     break;

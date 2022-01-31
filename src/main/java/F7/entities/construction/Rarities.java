@@ -29,27 +29,27 @@ public class Rarities { // rarities must equal 100 when summed
     public static ArrayList<Rarity> getRarityArrayList() {return rarityArrayList;}
 
     public static void setRaritiesArrayList() throws Exception {
-        if (common.getCHANCE() + uncommon.getCHANCE() + rare.getCHANCE() + exceptional.getCHANCE() + godly.getCHANCE() != 100) {
+        if (common.CHANCE() + uncommon.CHANCE() + rare.CHANCE() + exceptional.CHANCE() + godly.CHANCE() != 100) {
             throw new Exception("Invalid rarity probabilities.");
         }
 
-        for (int i = 0; i < common.getCHANCE(); i++) {
+        for (int i = 0; i < common.CHANCE(); i++) {
             rarityArrayList.add(common);
         }
 
-        for (int i = 0; i < uncommon.getCHANCE(); i++) {
+        for (int i = 0; i < uncommon.CHANCE(); i++) {
             rarityArrayList.add(uncommon);
         }
 
-        for (int i = 0; i < rare.getCHANCE(); i++) {
+        for (int i = 0; i < rare.CHANCE(); i++) {
             rarityArrayList.add(rare);
         }
 
-        for (int i = 0; i < exceptional.getCHANCE(); i++) {
+        for (int i = 0; i < exceptional.CHANCE(); i++) {
             rarityArrayList.add(exceptional);
         }
 
-        for (int i = 0; i < godly.getCHANCE(); i++) {
+        for (int i = 0; i < godly.CHANCE(); i++) {
             rarityArrayList.add(godly);
         }
     }

@@ -3,11 +3,6 @@ package F7;
 import F7.entities.construction.*;
 import F7.ui.*;
 
-import javax.xml.crypto.Data;
-import java.io.*;
-import java.net.*;
-import java.util.*;
-
 /*
 Credits:
 Matthieu De Robles: Made F7
@@ -53,22 +48,15 @@ https://www.geeksforgeeks.org/establishing-the-two-way-communication-between-ser
 
 public class Main {
     public static void main(String[] args) throws Exception {
-//        Enemies.setEnemyHashMap();
-//        Weapons.setWeaponHashMap();
-//        Shields.setShieldHashMap();
-//        Rarities.setRaritiesArrayList();
-//        Consumables.setConsumableHashMap();
-//        WinMenu.setRarityMultipliers();
+        Enemies.setEnemyHashMap();
+        Weapons.setWeaponHashMap();
+        Shields.setShieldHashMap();
+        Rarities.setRaritiesArrayList();
+        Consumables.setConsumableHashMap();
+        WinMenu.setRarityMultipliers();
 
-        //Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
+        Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
-        //MainMenu.menu();
-
-        Network.startServer(14000);
-
-        // Network.readData and Network.sendData need to be aligned to get the right data
-        Network.sendData("hello");
-        Network.sendData(2);
-        Network.sendData(true);
+        MainMenu.menu();
     }
 }
