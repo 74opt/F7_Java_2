@@ -97,7 +97,6 @@ public class MapMenu {
 
         new Thread(() -> {
             try {
-
                 Lanterna.print(65, 1,
                         """
                         ^W╔═════════════╗

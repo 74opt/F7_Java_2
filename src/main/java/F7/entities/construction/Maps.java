@@ -61,5 +61,30 @@ public class Maps {
         {k,k,k,k,k,k,k,k,r,r,a,a,a,a,a,a,u,u,u,u,u,u,u,u,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,u,u,u,u,u,u,u,u,u}}
     );
 
+    private static Map forest = new Map("Harrison Forest", new Tile[][]
+        {{g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g},
+        {g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w},
+        {x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,w},
+        {s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,s,w},
+        {x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,x,w},
+        {g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,g,w},
+        {d,d,d,g,g,g,d,d,g,g,g,g,d,g,d,g,d,d,d,g,g,g,g,g,g,g,g,d,d,g,g,g,g,g,g,g,d,d,d,d,g,g,g,d,d,d,d,d,g,g,g,g,g,g,g,d,d,d,d,g},
+        {r,d,h,y,h,h,d,d,y,r,y,h,d,h,y,d,h,y,r,y,h,d,h,y,d,h,y,y,y,r,y,h,y,y,y,d,h,r,y,h,d,r,r,r,y,h,d,h,d,h,d,d,d,y,y,r,h,d,r,y},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,n,n,n,n,n},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,n,n,a,a,a,a,a},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,a,a,a,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,u,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,u,u,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,a,u,u,u,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,u,u,u,u,u,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,u,u,u,u,u,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,a,u,u,u,u,u,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,u,u,u,u,u,u,u,u,u,u,u,u,u},
+        {d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,d,n,n,a,a,u,u,u,u,u,u,u,u,u,u,u,u,u}}
+    );
+
     public static Map getPlains() {return plains;}
+
+    public static Map getForest() {return forest;}
 }

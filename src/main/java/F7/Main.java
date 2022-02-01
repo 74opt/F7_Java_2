@@ -34,6 +34,8 @@ TODO (Ordered by importance):
         - Need a set tickrate for combat menu? (ScheduledExecutorService?)
     - Inheritance (check dumb notes)
     - You can finally have records again
+        - Make the records set in construction public
+            - Maybe enum?
     - Javadoc all files in the F7 package?
 */
 

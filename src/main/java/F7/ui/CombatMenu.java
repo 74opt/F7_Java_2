@@ -12,8 +12,18 @@ import com.googlecode.lanterna.input.KeyStroke;
 
 // I'm gonna DOTADIW your mom
 
-// TODO:
-//  - ENEMY DEATH
+/*
+ TODO:
+  - Balancing Issues:
+      - Literally buff the enemies by a lot
+      - Reduce XP drop
+      - Reduce how much the player gains in terms of health and stuff
+      - I think item drops needs to be fixed/reworked
+  - Shit code
+    - Dotadiw
+  - Ending game
+    - Put DeathMenu and WinMenu stuff into the CombatMenu
+*/
 public class CombatMenu {
     private static Enemy enemy;
     private static boolean running;

@@ -36,7 +36,5 @@ MP2: Lanterna F7
 MP3: Networking F7
 MP4: Dumb Notes F7
 
-Need timeline rn:
-1. Finish Lanterna porting 
-2. Implement Combat 2.0
-3. Dumb Notes if possible
+Quests:
+Abstract class to implement

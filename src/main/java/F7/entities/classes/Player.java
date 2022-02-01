@@ -44,7 +44,6 @@ public class Player {
             level++;
             health += (int) ((health * .95) * Math.pow(level, 0.0001));
             tempHealth = health;
-            System.out.printf("\nYou leveled up to %s!\n", level);
         }
         this.exp = exp;
     }

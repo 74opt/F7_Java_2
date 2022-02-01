@@ -8,18 +8,11 @@ import java.util.ArrayList;
 public class Network {
     private static Socket socket;
     private static ServerSocket serverSocket;
-
-    // To send data to the client
     private static PrintStream printStream;
-
-    // To read data coming from the client
     private static BufferedReader bufferedReader;
 
-    // To send data to the server
-    private static DataOutputStream dataOutputStream;
-
     // Server details
-    private static final int mainPort = 14000;
+    public static final int mainPort = 14000;
     private static final int maxPlayers = 2;
     private static String name;
     private static String address;
@@ -53,7 +46,7 @@ public class Network {
     public static void joinServer(String address, int port) throws IOException {
         try {
             socket = new Socket(address, port);
-            dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            //dataOutputStream = new DataOutputStream(socket.getOutputStream());
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (ConnectException e) {
             System.out.println("Server with port " + port + " not found");
@@ -70,11 +63,11 @@ public class Network {
         }
     }
 
-    // FIXME PrintStream.println and PrintStream.print turn all data into a string
     public static void sendData(Object data) {
         printStream.println(data);
     }
 
+    //? How to handle reading data
     private static Object readData() {
         Object object;
 
