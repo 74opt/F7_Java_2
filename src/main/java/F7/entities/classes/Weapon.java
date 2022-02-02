@@ -22,7 +22,10 @@ public class Weapon {
     public void setAccuracy(int accuracy) {this.accuracy = accuracy;} // might need a setter idk
 
     public int getLevel() {return level;}
-    public void setLevel(int level) {this.level = level;}
+    public void setLevel(int level) {
+        this.level = level;
+        damage *= Math.pow(this.level, 1.6);
+    }
 
     public int getRof() {return rof;}
     public void setRof(int rof) {this.rof = rof;}

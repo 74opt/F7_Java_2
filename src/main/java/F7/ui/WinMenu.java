@@ -23,10 +23,16 @@ public class WinMenu {
         Lanterna.printf(1, 1, "^GYou defeated %s^G! %s ^Gexp awarded.", CombatMenu.getEnemy().getNAME(), exp);
         Thread.sleep(Utils.getSTANDARD());
 
-        if (Utils.chance(34)) {
-            int weaponRarity = Utils.randomRange(0, 101 - CombatMenu.getEnemy().getRARITY().CHANCE());
+        if (Utils.chance(101)) {
+            int weaponRarity = Utils.randomRange(70, 101/* - CombatMenu.getEnemy().getRARITY().CHANCE()*/);
 
-            Weapon weapon = Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity))[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity)).length)];
+            Rarity testRarity = Rarities.getRarityArrayList().get(weaponRarity);
+
+            System.out.println("weaponRarity: " + weaponRarity);
+            System.out.println("testRarity: " + testRarity);
+
+            Weapon weapon = Weapons.getWeaponHashMap().get(testRarity)[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity)).length)];
+            weapon.setLevel(CombatMenu.getEnemy().getLevel() + Utils.randomRange(-1, 1));
 
             Lanterna.printf(1, 2, "%s dropped %s. Will you take it? (^gQ^G to confirm, ^RE^G to cancel)", CombatMenu.getEnemy().getNAME(), weapon.getNAME());
             
