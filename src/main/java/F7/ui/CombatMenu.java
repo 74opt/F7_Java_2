@@ -19,10 +19,13 @@ import com.googlecode.lanterna.input.KeyStroke;
       - Reduce XP drop
       - Reduce how much the player gains in terms of health and stuff
       - I think item drops needs to be fixed/reworked
+      - Make change rarity values to get a higher chance of having rarer things
   - Shit code
     - Dotadiw
+    - Make consumable stuff better with arraylist methods
   - Ending game
     - Put DeathMenu and WinMenu stuff into the CombatMenu
+    - Have enemies drop consumables
 */
 public class CombatMenu {
     private static Enemy enemy;
