@@ -14,18 +14,18 @@ import com.googlecode.lanterna.input.KeyStroke;
 
 /*
  TODO:
+  - Ending game
+    - Put DeathMenu and WinMenu stuff into the CombatMenu
+    - Have enemies drop consumables
+  - Shit code
+    - Dotadiw
+    - Make consumable stuff better with arraylist methods
   - Balancing Issues:
       - Literally buff the enemies by a lot
       - Reduce XP drop
       - Reduce how much the player gains in terms of health and stuff
       - I think item drops needs to be fixed/reworked
       - Make change rarity values to get a higher chance of having rarer things
-  - Shit code
-    - Dotadiw
-    - Make consumable stuff better with arraylist methods
-  - Ending game
-    - Put DeathMenu and WinMenu stuff into the CombatMenu
-    - Have enemies drop consumables
 */
 public class CombatMenu {
     private static Enemy enemy;
@@ -37,6 +37,8 @@ public class CombatMenu {
     // THESE TWO VALUES SHOULD NEVER BE NEGATIVE
     private static int shieldTime;
     private static int shieldChargingTime;
+
+    private static final int enemyAttackInterval = 2;
 
     private static HashMap<Consumable, Integer> statusHashMap = new HashMap<>();
     private static HashMap<Weapon, Integer> weaponReload = new HashMap<>();
@@ -210,7 +212,7 @@ public class CombatMenu {
                     }
 
                     //* Enemy Attack
-                    if (timeElapsed % 4 == 0 && Utils.chance(70) && !checkStatus(Consumables.getFlashbang())) {
+                    if (timeElapsed % enemyAttackInterval == 0 && Utils.chance(70) && !checkStatus(Consumables.getFlashbang())) {
                         enemyAttack();
                     }
 
