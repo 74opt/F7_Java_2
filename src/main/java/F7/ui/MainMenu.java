@@ -9,6 +9,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
+/*
+TODO: Main Menu overhaul
+1) Singleplayer
+    1) New Character
+    2) Load Character
+    3) Exit
+2) Multiplayer
+    1) New Character
+        1) Host Server -> Start Game
+        2) Join Server -> Server Browser
+        3) Exit
+    2) Load Character
+        1) Host Server -> Start Game
+        2) Join Server -> Server Browser
+        3) Exit
+    3) Exit
+3) Quit
+*/
 public class MainMenu {
     private static final String LOGO =
             """
@@ -149,5 +167,13 @@ public class MainMenu {
         }
 
         MapMenu.menu();
+    }
+
+    private static void singleplayer() throws Exception {
+        
+    }
+
+    private static void multiplayer() throws Exception {
+        
     }
 }

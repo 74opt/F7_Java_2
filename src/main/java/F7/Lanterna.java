@@ -60,14 +60,6 @@ public class Lanterna {
         print(column, row, spaces);
     }
 
-    // Printing to terminal
-    @Deprecated
-    public static void print(String text) throws Exception {
-        //print(Lanterna.column, Lanterna.row, text);
-
-        screen.refresh();
-    }
-
     // uses global rows and columns
     public static void print(int column, int row, String text) throws Exception {
         final int finalColumn = column;
