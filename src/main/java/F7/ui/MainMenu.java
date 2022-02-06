@@ -51,10 +51,10 @@ public class MainMenu {
 
         Lanterna.print(1, 1,
                 LOGO + "\n" +
-                """
-                ^G1) New Game
-                2) Continue
-                3) Quit"""
+                        """
+                        ^G1) New Game
+                        2) Continue
+                        3) Quit"""
         );
 
         new Thread(() -> {

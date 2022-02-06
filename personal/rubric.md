@@ -2,7 +2,7 @@
 
 ## Unit 7: ArrayList
 
-- [x] Uses the generic type ArrayList<E>, where the generic type E specifies the type of the elements. 
+- [x] Uses the generic type ArrayList\<E>, where the generic type E specifies the type of the elements. 
 - [x] Uses the raw type ArrayList.
 - [x] Imports the java.util package.
 - [ ] Both calls and uses the return value (if non-void) of each of the following ArrayList methods:

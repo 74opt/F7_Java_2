@@ -26,6 +26,11 @@ import com.googlecode.lanterna.input.KeyStroke;
       - Reduce how much the player gains in terms of health and stuff
       - I think item drops needs to be fixed/reworked
       - Make change rarity values to get a higher chance of having rarer things
+  - Shit code
+    - Dotadiw
+  - Ending game
+    - Put DeathMenu and WinMenu stuff into the CombatMenu
+  - Bug: Game thinks that any weapons that are the same weapon share the same reference
 */
 public class CombatMenu {
     private static Enemy enemy;

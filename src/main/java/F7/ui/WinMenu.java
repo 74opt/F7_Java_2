@@ -17,7 +17,7 @@ public class WinMenu {
     public static void menu() throws Exception {
         Lanterna.clear();
 
-        int exp = (int) (((200 + 300 * Math.pow(CombatMenu.getEnemy().getLevel(), 1.6)) * (Utils.randomRange(73, 97) / 100.0)) * rarityMultipliers.get(CombatMenu.getEnemy().getRARITY())); //? should i change 1.6 to less?
+        int exp = (int) (((200 + 300 * CombatMenu.getEnemy().getLevel()) * (Utils.randomRange(73, 97) / 100.0)) * rarityMultipliers.get(CombatMenu.getEnemy().getRARITY())); //? should i change 1.6 to less?
         Players.getPlayer().setExp(Players.getPlayer().getExp() + exp);
 
         Lanterna.printf(1, 1, "^GYou defeated %s^G! %s ^Gexp awarded.", CombatMenu.getEnemy().getNAME(), exp);
