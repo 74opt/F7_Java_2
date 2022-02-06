@@ -6,6 +6,7 @@ import F7.entities.construction.*;
 import com.googlecode.lanterna.input.KeyStroke;
 import java.io.IOException;
 
+// I find your lack of DOTADIW disturbing
 public class PlayerMenu {
     public static void menu() throws Exception {
         Lanterna.clear();

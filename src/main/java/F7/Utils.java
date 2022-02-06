@@ -17,9 +17,9 @@ public class Utils {
 
     // TODO: use the getters please and make private
     /** .042 seconds, used for the screen's refresh rate */
-    private static final int TWENTY_FOUR_FRAMES = 42;
+    public static final int TWENTY_FOUR_FRAMES = 42;
     /** 2 seconds, used as a standard waiting time for Thread.sleep() */
-    private static final int STANDARD = 2000;
+    public static final int STANDARD = 2000;
 
     // TODO: these stay public until i deal with DeathMenu
     /** 1.5 seconds, used as a standard waiting time for Thread.sleep() */
@@ -32,7 +32,7 @@ public class Utils {
     private static final String MAP_SAVE_PATH = "src\\main\\java\\F7\\save\\map.json";
 
     /** Standard decimal format used in the game */
-    private static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");
+    public static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");
 
     // Random
     private static Random random = new Random();
@@ -147,7 +147,7 @@ public class Utils {
      *         generated.
      */
     public static boolean chance(int percent) {
-        return random.nextInt(101) <= percent;
+        return randomRange(0, 101) <= percent;
     }
 
     /**

@@ -665,6 +665,10 @@ public class CombatMenu {
                 Utils.outOf("Health:", Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R"),
                 Utils.percentBar(80, Players.getPlayer().getHealth(), Players.getPlayer().getTempHealth(), "^R")
             );
+
+            if (Players.getPlayer().getTempHealth() <= 0) {
+                playerDead();
+            }
         } else {
             addInfo(String.format("%s %s", enemy.getNAME(), missText[Utils.randomRange(0, missText.length)]));
         }

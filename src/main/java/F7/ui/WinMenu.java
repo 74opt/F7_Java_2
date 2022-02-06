@@ -17,21 +17,37 @@ public class WinMenu {
     public static void menu() throws Exception {
         Lanterna.clear();
 
-        int exp = (int) (((200 + 300 * CombatMenu.getEnemy().getLevel()) * (Utils.randomRange(73, 97) / 100.0)) * rarityMultipliers.get(CombatMenu.getEnemy().getRARITY())); //? should i change 1.6 to less?
+        int exp = (int) (((200 + 30 * CombatMenu.getEnemy().getLevel()) * (Utils.randomRange(73, 97) / 100.0)) * rarityMultipliers.get(CombatMenu.getEnemy().getRARITY())); //? should i change 1.6 to less?
         Players.getPlayer().setExp(Players.getPlayer().getExp() + exp);
 
         Lanterna.printf(1, 1, "^GYou defeated %s^G! %s ^Gexp awarded.", CombatMenu.getEnemy().getNAME(), exp);
         Thread.sleep(Utils.getSTANDARD());
 
         if (Utils.chance(101)) {
-            int weaponRarity = Utils.randomRange(70, 101/* - CombatMenu.getEnemy().getRARITY().CHANCE()*/);
+            Rarity[] rarities = {Rarities.common, Rarities.uncommon, Rarities.rare, Rarities.exceptional, Rarities.godly, Rarities.godly, Rarities.godly};
+            int weaponChance = Utils.randomRange(0, 101);
+            int rarityIndex = 0;
+            Rarity weaponRarity;
 
-            Rarity testRarity = Rarities.getRarityArrayList().get(weaponRarity);
+            for (int i = 0; i < rarities.length; i++) {
+                if (CombatMenu.getEnemy().getRARITY().equals(rarities[i])) {
+                    rarityIndex = i;
+                    break;
+                }
+            }
 
-            System.out.println("weaponRarity: " + weaponRarity);
-            System.out.println("testRarity: " + testRarity);
+            if (weaponChance > 90 && weaponChance <= 99) {
+                rarityIndex++;
+            } else {
+                rarityIndex += 2;
+            }
 
-            Weapon weapon = Weapons.getWeaponHashMap().get(testRarity)[Utils.randomRange(0, Weapons.getWeaponHashMap().get(Rarities.getRarityArrayList().get(weaponRarity)).length)];
+            weaponRarity = rarities[rarityIndex];
+
+            // System.out.println("weaponRarity: " + weaponRarity);
+            // System.out.println("testRarity: " + testRarity);
+
+            Weapon weapon = new Weapon(Weapons.getWeaponHashMap().get(weaponRarity)[Utils.randomRange(0, Weapons.getWeaponHashMap().get(weaponRarity).length)]);
             weapon.setLevel(CombatMenu.getEnemy().getLevel() + Utils.randomRange(-1, 1));
 
             Lanterna.printf(1, 2, "%s dropped %s. Will you take it? (^gQ^G to confirm, ^RE^G to cancel)", CombatMenu.getEnemy().getNAME(), weapon.getNAME());
@@ -47,6 +63,33 @@ public class WinMenu {
 
                     if (search != -1) {
                         Players.getPlayer().setWeapon(weapon, search);
+                    } else {
+                        Lanterna.print(1, 4, "^GYou have no room for this weapon, select a weapon to drop or cancel.");
+                        
+                        for (int i = 0; i < 4; i++) {
+                            Lanterna.printf(1, 5 + i, i + 1 + ") ^G%s^G", Players.getPlayer().getWeapons()[i].toString(true));
+                        }
+
+                        Lanterna.print(1, 9, "5) Cancel");
+                        
+                        boolean dropping = true;
+
+                        while (dropping) {
+                            KeyStroke dropChoice = Lanterna.getScreen().readInput();
+
+                            try {
+                                if (Integer.parseInt(dropChoice.getCharacter() + "") == 5) {
+                                    dropping = false;
+                                }
+
+                                if (!Players.getPlayer().getWeapons()[Integer.parseInt(dropChoice.getCharacter() + "")].equals(Weapons.getFists())) {
+                                    Players.getPlayer().setWeapon(weapon, Integer.parseInt(dropChoice.getCharacter() + "") - 1);
+                                    dropping = false;
+                                }
+                            } catch (Exception e) {
+                                Lanterna.print(1, 10, e.getClass().getName());
+                            }
+                        }
                     }
                 } else if (choice.getCharacter() == 'e') {
                     running = false;

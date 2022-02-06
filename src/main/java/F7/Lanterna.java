@@ -19,6 +19,8 @@ public class Lanterna {
     private static final int STANDARD_COLUMNS = 211;
     private static final int STANDARD_ROWS = 61;
 
+    public static final int SCROLL_TIME = 45;
+
     public static Screen getScreen() {return screen;}
 
     public static int getSTANDARD_COLUMNS() {return STANDARD_COLUMNS;}

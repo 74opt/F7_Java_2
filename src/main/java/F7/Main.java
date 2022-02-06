@@ -50,16 +50,20 @@ https://www.geeksforgeeks.org/establishing-the-two-way-communication-between-ser
  */
 
 public class Main {
-    public static void main(String[] args) throws Exception {
-        Enemies.setEnemyHashMap();
-        Weapons.setWeaponHashMap();
-        Shields.setShieldHashMap();
-        Rarities.setRaritiesArrayList();
-        Consumables.setConsumableHashMap();
-        WinMenu.setRarityMultipliers();
+    public static void main(String[] args) {
+        try {
+            Enemies.setEnemyHashMap();
+            Weapons.setWeaponHashMap();
+            Shields.setShieldHashMap();
+            Rarities.setRaritiesArrayList();
+            Consumables.setConsumableHashMap();
+            WinMenu.setRarityMultipliers();
 
-        Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
+            Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
-        MainMenu.menu();
+            MainMenu.menu();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

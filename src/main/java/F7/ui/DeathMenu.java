@@ -4,7 +4,12 @@ import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
 
+// TODO: create scroll text method in Lanterna class
 public class DeathMenu {
+    private static final String installedMessage = "^CRRS Prototype 67TLB Revival System^G is installed in your system.";
+    private static final String reviveMessage = "^GReviving you.";
+    private static final String thankMessage = "Thank you for using ^CRRS' Revival System.";
+
     public static void menu() throws Exception {
 //        Utils.clear();
 //
@@ -27,16 +32,19 @@ public class DeathMenu {
 //        MapMenu.menu();
         Lanterna.clear();
 
-        Thread.sleep(Utils.getQUICK_STANDARD());
-        Lanterna.print(1, 1, "^CRRS Prototype 67TLB Revival System^G is installed in your system.");
-        Thread.sleep(Utils.getSTANDARD());
+        Thread.sleep(Utils.STANDARD);
+        for (int i = 0; i < installedMessage.length(); i++) {
+            Lanterna.print(1, 1 + i, installedMessage.substring(i, i + 1));
+            Thread.sleep(Lanterna.SCROLL_TIME);
+        }
+        Thread.sleep(Utils.STANDARD);
         Lanterna.print(1, 2, "Reviving you.");
 
         Players.getPlayer().setTempHealth(Players.getPlayer().getHealth());
 
-        Thread.sleep(Utils.getQUICK_STANDARD());
+        Thread.sleep(Utils.QUICK_STANDARD);
         Lanterna.print(1, 3, "Thank you for using ^CRRS' Revival System.");
-        Thread.sleep(Utils.getQUICK_STANDARD());
+        Thread.sleep(Utils.QUICK_STANDARD);
         MapMenu.menu();
     }
 }
