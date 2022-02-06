@@ -5,6 +5,7 @@ import F7.Utils;
 import F7.entities.construction.*;
 
 // TODO: create scroll text method in Lanterna class
+// TODO: have a penalty
 public class DeathMenu {
     private static final String installedMessage = "^CRRS Prototype 67TLB Revival System^G is installed in your system.";
     private static final String reviveMessage = "^GReviving you.";
