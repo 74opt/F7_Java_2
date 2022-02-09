@@ -12,10 +12,12 @@ public class Network {
     private static BufferedReader bufferedReader;
 
     // Server details
-    public static final int mainPort = 14000;
-    private static final int maxPlayers = 2;
+    public static final int MAIN_PORT = 14000;
+    private static final int MAX_PLAYERS = 2;
     private static String name;
     private static String address;
+
+    public static final String VERIFICATION = "F7 server here";
 
     public static String getName() {return name;}
 
@@ -28,25 +30,26 @@ public class Network {
     // Possibly make static because only 1 computer will be hosting 1 server
 
     // make following void or boolean?
-    public static void startServer(int port) throws IOException {
-        try {
-            serverSocket = new ServerSocket(port);
-            address = InetAddress.getLocalHost().getHostAddress();
-
-            // This line waits for a connection
-            socket = serverSocket.accept();
-
-            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            printStream = new PrintStream(socket.getOutputStream());
-        } catch (BindException e) {
-            System.out.println("Server already exists");
-        }
+    public static void startServer(int port) {
+        new Thread(() -> {
+            try {
+                serverSocket = new ServerSocket(port);
+                address = InetAddress.getLocalHost().getHostAddress();
+    
+                // This line waits for a connection
+                socket = serverSocket.accept();
+    
+                bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                printStream = new PrintStream(socket.getOutputStream());
+            } catch (IOException e) {
+                System.out.println("Server already exists");
+            }
+        }).start();
     }
 
     public static void joinServer(String address, int port) throws IOException {
         try {
             socket = new Socket(address, port);
-            //dataOutputStream = new DataOutputStream(socket.getOutputStream());
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (ConnectException e) {
             System.out.println("Server with port " + port + " not found");
