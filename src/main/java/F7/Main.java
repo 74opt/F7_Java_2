@@ -2,6 +2,7 @@ package F7;
 
 import F7.entities.construction.*;
 import F7.ui.*;
+import java.net.*;
 
 /*
 Credits:
@@ -49,19 +50,36 @@ https://www.geeksforgeeks.org/java-networking/
 https://www.geeksforgeeks.org/establishing-the-two-way-communication-between-server-and-client-in-java/
  */
 
+/*
+Server Notes:
+    - Upon entering multiplayer, server is made, regardless of being a host or not
+*/
 public class Main {
     public static void main(String[] args) {
         try {
-            Enemies.setEnemyHashMap();
-            Weapons.setWeaponHashMap();
-            Shields.setShieldHashMap();
-            Rarities.setRaritiesArrayList();
-            Consumables.setConsumableHashMap();
-            WinMenu.setRarityMultipliers();
+            // Enemies.setEnemyHashMap();
+            // Weapons.setWeaponHashMap();
+            // Shields.setShieldHashMap();
+            // Rarities.setRaritiesArrayList();
+            // Consumables.setConsumableHashMap();
+            // WinMenu.setRarityMultipliers();
 
-            Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
+            // Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
-            MainMenu.menu();
+            // MainMenu.menu();
+            // Network.startServer(Network.MAIN_PORT);
+            // Network.joinServer("localhost", Network.MAIN_PORT);
+            // Network.retrieveServers();
+            
+            // usually, servers will have the same port, different addresses.
+            Network2 server = new Network2(Network2.MAIN_PORT, "test server");
+            Network2 server2 = new Network2(Network2.MAIN_PORT + 1, "test server 2");
+            Network2 server3 = new Network2(Network.MAIN_PORT + 2, "test server 3");
+            Network2 server4 = new Network2(Network.MAIN_PORT + 3, "test server 4");
+            server2.joinServer("localhost", Network2.MAIN_PORT);
+            server3.joinServer("localhost", Network2.MAIN_PORT);
+            server4.joinServer("localhost", Network2.MAIN_PORT);
+            Network2.retrieveServers();
         } catch (Exception e) {
             e.printStackTrace();
         }

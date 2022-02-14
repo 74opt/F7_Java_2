@@ -17,7 +17,7 @@ public class Network {
     private static String name;
     private static String address;
 
-    public static final String VERIFICATION = "F7 server here";
+    public static final String VERIFICATION = "F7 server here!";
 
     public static String getName() {return name;}
 
@@ -59,6 +59,7 @@ public class Network {
     private static boolean testServerConnection(String address, int port) throws IOException {
         try {
             socket = new Socket(address, port);
+            sendData("test");
 
             return true;
         } catch (ConnectException ignored) {
@@ -71,6 +72,8 @@ public class Network {
     }
 
     //? How to handle reading data
+    // Once data is read, it is deleted from the buffer
+    // We can work with this.
     private static Object readData() {
         Object object;
 
@@ -105,7 +108,7 @@ public class Network {
 
     public static ArrayList<InetAddress> retrieveServers() {
         ArrayList<InetAddress> servers = new ArrayList<>();
-        final byte[] ip;
+        byte[] ip;
 
         try {
             ip = InetAddress.getLocalHost().getAddress();
@@ -122,6 +125,7 @@ public class Network {
                     String output = address.toString().substring(1);
                     if (address.isReachable(5000) && testServerConnection(output, 14000)) {
                         servers.add(address);
+                        System.out.println(readString());
                         //System.out.println(output + " is on the network");
                     }
                 } catch (Exception e) {
