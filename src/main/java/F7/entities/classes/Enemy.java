@@ -10,7 +10,7 @@ public class Enemy {
     // Setters and Getters
     public String getNAME() {return NAME;}
 
-    public String getSPRITE() {return DESCRIPTION;}
+    public String getDESCRIPTION() {return DESCRIPTION;}
 
     public int getHealth() {return health;}
     public void setHealth(int health) {this.health = health;}
@@ -40,12 +40,10 @@ public class Enemy {
 
     public Rarity getRARITY() {return RARITY;}
 
-    public String getDESCRIPTION() {return DESCRIPTION;}
-
     // Constructor
-    public Enemy(String NAME, String SPRITE, int health, int damage, int level, int accuracy, Rarity RARITY) {
+    public Enemy(String NAME, String DESCRIPTION, int health, int damage, int level, int accuracy, Rarity RARITY) {
         this.NAME = NAME;
-        this.DESCRIPTION = SPRITE;
+        this.DESCRIPTION = DESCRIPTION;
         this.health = health;
         this.tempHealth = health;
         this.damage = damage;
@@ -56,7 +54,7 @@ public class Enemy {
 
     public Enemy(Enemy enemy) {
         this.NAME = enemy.getNAME();
-        this.DESCRIPTION = enemy.getSPRITE();
+        this.DESCRIPTION = enemy.getDESCRIPTION();
         this.health = enemy.getHealth();
         this.tempHealth = enemy.getHealth();
         this.damage = enemy.getDamage();
