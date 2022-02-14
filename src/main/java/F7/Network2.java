@@ -20,7 +20,7 @@ public class Network2 {
 
     public String getAddress() {return address;}
 
-    // Need
+    // Need?
     public ServerSocket getServerSocket() {return serverSocket;}
 
     public Network2(int port, String name) {
@@ -127,6 +127,4 @@ public class Network2 {
     public boolean readBoolean() {
         return Boolean.parseBoolean(readString());
     }
-
-
 }

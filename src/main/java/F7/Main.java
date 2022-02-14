@@ -76,10 +76,21 @@ public class Main {
             Network2 server2 = new Network2(Network2.MAIN_PORT + 1, "test server 2");
             Network2 server3 = new Network2(Network.MAIN_PORT + 2, "test server 3");
             Network2 server4 = new Network2(Network.MAIN_PORT + 3, "test server 4");
-            server2.joinServer("localhost", Network2.MAIN_PORT);
-            server3.joinServer("localhost", Network2.MAIN_PORT);
-            server4.joinServer("localhost", Network2.MAIN_PORT);
-            Network2.retrieveServers();
+            
+            server.openServer();
+            server2.joinServer(server.getAddress(), Network2.MAIN_PORT);
+            server2.sendData("test 1");
+            System.out.println(server.readString());
+
+            // server.openServer();
+            // server3.joinServer(server.getAddress(), Network2.MAIN_PORT);
+            // server3.sendData("test 2");
+            // System.out.println(server.readString());
+
+            // server.openServer();
+            // server4.joinServer(server.getAddress(), Network2.MAIN_PORT);
+            // server4.sendData("test 3");
+            // System.out.println(server.readString());
         } catch (Exception e) {
             e.printStackTrace();
         }
