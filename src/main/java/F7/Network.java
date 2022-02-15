@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 // TODO: make constructor + instance vars for OOP with user-hosted servers
+@Deprecated
 public class Network {
     private static Socket socket;
     private static ServerSocket serverSocket;

@@ -73,24 +73,8 @@ public class Main {
             
             // usually, servers will have the same port, different addresses.
             Network2 server = new Network2(Network2.MAIN_PORT, "test server");
-            Network2 server2 = new Network2(Network2.MAIN_PORT + 1, "test server 2");
-            Network2 server3 = new Network2(Network.MAIN_PORT + 2, "test server 3");
-            Network2 server4 = new Network2(Network.MAIN_PORT + 3, "test server 4");
-            
-            server.openServer();
-            server2.joinServer(server.getAddress(), Network2.MAIN_PORT);
-            server2.sendData("test 1");
-            System.out.println(server.readString());
-
-            // server.openServer();
-            // server3.joinServer(server.getAddress(), Network2.MAIN_PORT);
-            // server3.sendData("test 2");
-            // System.out.println(server.readString());
-
-            // server.openServer();
-            // server4.joinServer(server.getAddress(), Network2.MAIN_PORT);
-            // server4.sendData("test 3");
-            // System.out.println(server.readString());
+        
+            //server.sendData("test");
         } catch (Exception e) {
             e.printStackTrace();
         }

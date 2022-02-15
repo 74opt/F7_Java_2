@@ -11,6 +11,7 @@ public class Network2 {
     private BufferedReader bufferedReader;
     private String name;
     private String address;
+    private boolean connected = false;
 
     public static final int MAIN_PORT = 14000;
     private static final int MAX_PLAYERS = 2;
@@ -23,11 +24,23 @@ public class Network2 {
     // Need?
     public ServerSocket getServerSocket() {return serverSocket;}
 
+    // how to split into constructor and server opener?
+    // establish all networking code within the same thread
+    // verify different connections with different strings
+    //     yes, not secure at all, who cares
     public Network2(int port, String name) {
         new Thread(() -> {
             try {
                 serverSocket = new ServerSocket(port);
                 address = InetAddress.getLocalHost().getHostAddress();
+
+                socket = serverSocket.accept();
+                connected = true;
+
+                bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                printStream = new PrintStream(socket.getOutputStream());
+                
+                sendData("test");
             } catch (IOException e) {
                 // replace this with something else soon
                 System.out.println("Server already exists");
@@ -35,17 +48,17 @@ public class Network2 {
         }).start();
     }
 
-    public void openServer() {
-        new Thread(() -> {
-            try {
+    public void openServer() throws IOException {
+        //new Thread(() -> {
+        //    try {
                 socket = serverSocket.accept();
 
                 bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 printStream = new PrintStream(socket.getOutputStream());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }).start();
+        //    } catch (Exception e) {
+        //        e.printStackTrace();
+        //    }
+        //}).start();
     }
 
     public void joinServer(String address, int port) throws IOException {
