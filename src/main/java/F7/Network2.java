@@ -15,7 +15,8 @@ public class Network2 {
 
     public static final int MAIN_PORT = 14000;
     private static final int MAX_PLAYERS = 2;
-    public final String VERIFICATION = "F7 server here!";
+    public final String MAIN_VERIFICATION = "F7 server here!";
+    public final String BROWSER_VERIFICATION = "F7 browser here!";
 
     public String getName() {return name;}
 
