@@ -88,8 +88,8 @@ public class MapMenu {
     }
 
     private static void save() throws Exception {
-        File playerSave = new File(Utils.getPLAYER_SAVE_PATH());
-        File mapSave = new File(Utils.getMAP_SAVE_PATH());
+        File playerSave = new File(Utils.PLAYER_SAVE_PATH);
+        File mapSave = new File(Utils.MAP_SAVE_PATH);
         ObjectMapper objectMapper = new ObjectMapper();
 
         objectMapper.writeValue(playerSave, Players.getPlayer());
@@ -102,7 +102,7 @@ public class MapMenu {
                         ^W╔═════════════╗
                         ║ ^GSaved Game.^W ║
                         ╚═════════════╝""");
-                Thread.sleep(Utils.getSTANDARD());
+                Thread.sleep(Utils.STANDARD);
 
                 for (int i = 1; i < 4; i++) {
                     Lanterna.print(65, i, "               ");

@@ -158,8 +158,8 @@ public class MainMenu {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
-            Players.setPlayer(objectMapper.readValue(new File(Utils.getPLAYER_SAVE_PATH()), Player.class));
-            MapMenu.setCurrentMap(objectMapper.readValue(new File(Utils.getMAP_SAVE_PATH()), Map.class));
+            Players.setPlayer(objectMapper.readValue(new File(Utils.PLAYER_SAVE_PATH), Player.class));
+            MapMenu.setCurrentMap(objectMapper.readValue(new File(Utils.MAP_SAVE_PATH), Map.class));
 
             MapMenu.getCurrentMap().spawnPlayer(Players.getPlayer().getX(), Players.getPlayer().getY());
         } catch (Exception e) {

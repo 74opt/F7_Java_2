@@ -21,7 +21,7 @@ public class WinMenu {
         Players.getPlayer().setExp(Players.getPlayer().getExp() + exp);
 
         Lanterna.printf(1, 1, "^GYou defeated %s^G! %s ^Gexp awarded.", CombatMenu.getEnemy().getNAME(), exp);
-        Thread.sleep(Utils.getSTANDARD());
+        Thread.sleep(Utils.STANDARD);
 
         if (Utils.chance(101)) {
             Rarity[] rarities = {Rarities.common, Rarities.uncommon, Rarities.rare, Rarities.exceptional, Rarities.godly, Rarities.godly, Rarities.godly};

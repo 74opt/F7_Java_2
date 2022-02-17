@@ -9,11 +9,6 @@ import java.util.*;
  * Utils contains static variables and methods to aid in several features in the rest of F7.
  */
 public class Utils {
-    /* Time values in milliseconds,
-       used as a standard instead of
-       having to remember every
-       number to use in certain cases
-     */
 
     // TODO: use the getters please and make private
     /** .042 seconds, used for the screen's refresh rate */
@@ -28,49 +23,14 @@ public class Utils {
     public static final int SCROLL = 45;
 
     /** Paths to save the game */
-    private static final String PLAYER_SAVE_PATH = "src\\main\\java\\F7\\save\\player.json";
-    private static final String MAP_SAVE_PATH = "src\\main\\java\\F7\\save\\map.json";
+    public static final String PLAYER_SAVE_PATH = "src\\main\\java\\F7\\save\\player.json";
+    public static final String MAP_SAVE_PATH = "src\\main\\java\\F7\\save\\map.json";
 
     /** Standard decimal format used in the game */
     public static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");
 
     // Random
     private static Random random = new Random();
-
-    /**
-     * @return Time for 24 frame refresh rate
-     */
-    public static int getTWENTY_FOUR() {return TWENTY_FOUR_FRAMES;}
-
-    /**
-     * @return Time for standard wait time
-     */
-    public static int getSTANDARD() {return STANDARD;}
-
-    /**
-     * @return Time for quicker standard wait time
-     */
-    public static int getQUICK_STANDARD() {return QUICK_STANDARD;}
-
-    /**
-     * @return Time for best scrolling text time
-     */
-    public static int getSCROLL() {return SCROLL;}
-
-    /**
-     * @return File path for where F7 saves the player
-     */
-    public static String getPLAYER_SAVE_PATH() {return PLAYER_SAVE_PATH;}
-
-    /**
-     * @return File path for where F7 saves the map
-     */
-    public static String getMAP_SAVE_PATH() {return MAP_SAVE_PATH;}
-
-    /**
-     * @return Standard DecimalFormat for presenting doubles with 2 decimal places
-     */
-    public static DecimalFormat getDOUBLE_DECIMAL() {return DOUBLE_DECIMAL;}
 
     /**
      * Returns a string that contains a percentage of how much of an item left out 

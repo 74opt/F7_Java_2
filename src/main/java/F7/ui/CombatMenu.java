@@ -49,11 +49,11 @@ public class CombatMenu {
     public static Enemy getEnemy() {return enemy;}
 
     private static void setCombatHashMaps() {
-        statusHashMap.put(Consumables.getSmoke(), 0);
-        statusHashMap.put(Consumables.getCorrosive(), 0);
-        statusHashMap.put(Consumables.getTarget(), 0);
-        statusHashMap.put(Consumables.getAmplifier(), 0);
-        statusHashMap.put(Consumables.getFlashbang(), 0);
+        statusHashMap.put(Consumables.smoke, 0);
+        statusHashMap.put(Consumables.corrosive, 0);
+        statusHashMap.put(Consumables.target, 0);
+        statusHashMap.put(Consumables.amplifier, 0);
+        statusHashMap.put(Consumables.flashbang, 0);
 
         for (Weapon w : Players.getPlayer().getWeapons()) {
             weaponReload.put((w == null ? Weapons.getFists() : w), 0);
@@ -81,7 +81,7 @@ public class CombatMenu {
         }
 
         Lanterna.printf(1, 1, "%s ^Ghas come to fight!", enemy.toString(true));
-        Thread.sleep(Utils.getSTANDARD());
+        Thread.sleep(Utils.STANDARD);
         menu();
     }
 
@@ -119,12 +119,12 @@ public class CombatMenu {
                     });
 
                     /// Corrosion Code
-                    if (checkStatus(Consumables.getCorrosive())) {
+                    if (checkStatus(Consumables.corrosive)) {
                         int corrosiveDamage = (int) (enemy.getHealth() * (Utils.randomRange(17, 28) / 1000.0));
 
                         enemy.setTempHealth(enemy.getTempHealth() - corrosiveDamage);
 
-                        addInfo(Consumables.getCorrosive().toString() + " ^Gdealt " + corrosiveDamage + " damage to " + enemy.getNAME());
+                        addInfo(Consumables.corrosive.toString() + " ^Gdealt " + corrosiveDamage + " damage to " + enemy.getNAME());
 
                         for (int i = 0; i < 2; i++) {
                             Lanterna.clear(5, 106 + i, 105);
@@ -214,7 +214,7 @@ public class CombatMenu {
                     }
 
                     //* Enemy Attack
-                    if (timeElapsed % enemyAttackInterval == 0 && Utils.chance(70) && !checkStatus(Consumables.getFlashbang())) {
+                    if (timeElapsed % enemyAttackInterval == 0 && Utils.chance(70) && !checkStatus(Consumables.flashbang)) {
                         enemyAttack();
                     }
 
@@ -302,9 +302,9 @@ public class CombatMenu {
                                 //* Consumable cases
                                 // Medkit
                                 case 'm' -> {
-                                    if (Players.getPlayer().hasConsumable(Consumables.getMedkit())) {
-                                        Players.getPlayer().removeConsumable(Consumables.getMedkit());
-                                        addInfo(Consumables.getMedkit().toString() + " used");
+                                    if (Players.getPlayer().hasConsumable(Consumables.medkit)) {
+                                        Players.getPlayer().removeConsumable(Consumables.medkit);
+                                        addInfo(Consumables.medkit.toString() + " used");
 
                                         for (int i = 0; i < 7; i++) {
                                             Lanterna.clear(34 + i, 1, 69);
@@ -316,7 +316,7 @@ public class CombatMenu {
                                         restoration *= Players.getPlayer().getHealth();
                                         double overheal;
 
-                                        Players.getPlayer().getConsumables().remove(Consumables.getMedkit());
+                                        Players.getPlayer().getConsumables().remove(Consumables.medkit);
                                         Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() + restoration);
 
                                         if (Players.getPlayer().getTempHealth() > Players.getPlayer().getHealth()) {
@@ -608,7 +608,7 @@ public class CombatMenu {
         new Thread(() -> {
             try {
                 addInfo("Attempting to run away...");
-                Thread.sleep(Utils.getSTANDARD());
+                Thread.sleep(Utils.STANDARD);
 
                 if (Utils.chance(67)) {
                     double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
