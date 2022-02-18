@@ -148,7 +148,7 @@ public class CombatMenu {
                     }
 
                     int statusIndexReplacement = 0;
-                    for (Map.Entry element : statusHashMap.entrySet()) {
+                    for (Map.Entry<Consumable, Integer> element : statusHashMap.entrySet()) {
                         Consumable key = (Consumable) element.getKey();
                         int value = statusHashMap.get(key);
 
@@ -344,19 +344,19 @@ public class CombatMenu {
                                 }
 
                                 // Smoke Grenade
-                                case 'o' -> useConsumable(Consumables.getSmoke());
+                                case 'o' -> useConsumable(Consumables.smoke);
 
                                 // Corrosion
-                                case 'c' -> useConsumable(Consumables.getCorrosive());
+                                case 'c' -> useConsumable(Consumables.corrosive);
 
-                                // Targeting
-                                case 't' -> useConsumable(Consumables.getTarget());
+                                // Taring
+                                case 't' -> useConsumable(Consumables.target);
 
                                 // Damage -> {
-                                case 'd' -> useConsumable(Consumables.getAmplifier());
+                                case 'd' -> useConsumable(Consumables.amplifier);
 
                                 // Flashbang
-                                case 'l' -> useConsumable(Consumables.getFlashbang());
+                                case 'l' -> useConsumable(Consumables.flashbang);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -548,8 +548,8 @@ public class CombatMenu {
 
             int damage = 0;
 
-            if (checkStatus(Consumables.getTarget()) || Utils.chance(Players.getPlayer().weaponEquipped().getAccuracy())) {
-                if (checkStatus(Consumables.getAmplifier())) {
+            if (checkStatus(Consumables.target) || Utils.chance(Players.getPlayer().weaponEquipped().getAccuracy())) {
+                if (checkStatus(Consumables.amplifier)) {
                     damage += (int) (Players.getPlayer().weaponEquipped().getDamage() * (Utils.randomRange(109, 135) / 100.0));
                 } else {
                     damage += (int) (Players.getPlayer().weaponEquipped().getDamage() * (Utils.randomRange(93, 108) / 100.0));
@@ -643,7 +643,7 @@ public class CombatMenu {
             "doesn't hit!", "misses!", "attacks, and you successfully dodge!", "gets frustrated and misses!", "gets frustrated from your dodge!", "was about to hit you, but you dodge!"
         };
 
-        if (checkStatus(Consumables.getSmoke()) ? Utils.chance(enemy.getAccuracy() - Utils.randomRange(30, 90)) : Utils.chance(enemy.getAccuracy())) {
+        if (checkStatus(Consumables.smoke) ? Utils.chance(enemy.getAccuracy() - Utils.randomRange(30, 90)) : Utils.chance(enemy.getAccuracy())) {
             double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
 
             if (shieldStatus().equals("Up")) {

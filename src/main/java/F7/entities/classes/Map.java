@@ -72,9 +72,9 @@ public class Map {
     public String toString() {
         String string = "^GLocation: ^W" + NAME + "\n";
 
-        for (int i = 0; i < MAP.length; i++) {
-            for (int j = 0; j < MAP[0].length; j++) {
-                string += MAP[i][j].TILE();
+        for (Tile[] t : MAP) {
+            for (Tile u : t) {
+                string += u.TILE();
             }
             string += "\n";
         }

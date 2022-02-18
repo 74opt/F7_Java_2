@@ -24,7 +24,7 @@ public class WinMenu {
         Thread.sleep(Utils.STANDARD);
 
         if (Utils.chance(101)) {
-            Rarity[] rarities = {Rarities.common, Rarities.uncommon, Rarities.rare, Rarities.exceptional, Rarities.godly, Rarities.godly, Rarities.godly};
+            Rarity[] rarities = {Rarities.COMMON, Rarities.UNCOMMON, Rarities.RARE, Rarities.EXCEPTIONAL, Rarities.GODLY, Rarities.GODLY, Rarities.GODLY};
             int weaponChance = Utils.randomRange(0, 101);
             int rarityIndex = 0;
             Rarity weaponRarity;
@@ -102,10 +102,10 @@ public class WinMenu {
     }
 
     public static void setRarityMultipliers() {
-        rarityMultipliers.put(Rarities.getCommon(), 1.0);
-        rarityMultipliers.put(Rarities.getUncommon(), 1.5);
-        rarityMultipliers.put(Rarities.getRare(), 2.0);
-        rarityMultipliers.put(Rarities.getExceptional(), 2.5);
-        rarityMultipliers.put(Rarities.getGodly(), 3.0);
+        rarityMultipliers.put(Rarities.COMMON, 1.0);
+        rarityMultipliers.put(Rarities.UNCOMMON, 1.5);
+        rarityMultipliers.put(Rarities.RARE, 2.0);
+        rarityMultipliers.put(Rarities.EXCEPTIONAL, 2.5);
+        rarityMultipliers.put(Rarities.GODLY, 3.0);
     }
 }

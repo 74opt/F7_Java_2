@@ -29,7 +29,7 @@
 - [x] Uses an initializer list to create a 2D array.
 - [ ] Uses both row-major order and column-major order to traverse 2D arrays.
 - [x] Uses nested iteration to traverse 2D arrays.
-- [ ] Uses enhanced for loops to traverse 2D arrays.
+- [x] Uses enhanced for loops to traverse 2D arrays.
 
 ## Unit 9: Inheritance
 

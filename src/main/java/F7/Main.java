@@ -54,6 +54,7 @@ https://www.geeksforgeeks.org/establishing-the-two-way-communication-between-ser
 Server Notes:
     - Upon entering multiplayer, server is made, regardless of being a host or not
 */
+// TODO: can we make everything in construction final (except Players) since we just clone?
 public class Main {
     public static void main(String[] args) {
         try {
