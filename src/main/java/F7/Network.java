@@ -18,7 +18,8 @@ public class Network {
     private static String name;
     private static String address;
 
-    public static final String VERIFICATION = "F7 server here!";
+    public static final String SERVER_VERIFICATION = "F7 server here!";
+    public static final String BROWSER_VERIFICATION = "F7 browser here!";
 
     public static String getName() {return name;}
 
@@ -52,8 +53,34 @@ public class Network {
         try {
             socket = new Socket(address, port);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            printStream = new PrintStream(socket.getOutputStream());
+
+            printStream.println(SERVER_VERIFICATION);
         } catch (ConnectException e) {
             System.out.println("Server with port " + port + " not found");
+        }
+    }
+
+    // For the hosting server
+    public static void checkConnection() {
+        String verification = readString();
+
+        try {
+            if (verification.equals(SERVER_VERIFICATION)) {
+                // keep the connection
+            } else if (verification.equals(BROWSER_VERIFICATION)) {
+                // send the data then disconnect
+                printStream.println(name);
+                printStream.println(address);
+                printStream.println(getPing());
+                printStream.println(getPlayers());
+                socket.close();
+            } else {
+                // disconnect
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

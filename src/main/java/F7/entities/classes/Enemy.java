@@ -87,6 +87,10 @@ public class Enemy {
         return 0;
     }
 
+    public int calculateCriticalDamage() {
+        return 0;
+    }
+
     public int calculateSpecialDamage() {
         return 0;
     }

@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+// https://stackoverflow.com/questions/8816870/i-want-to-get-the-ping-execution-time-and-result-in-string-after-ping-host
 public class Network2 {
     private Socket socket;
     private ServerSocket serverSocket;
@@ -66,10 +67,37 @@ public class Network2 {
         try {
             socket = new Socket(address, port);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            printStream = new PrintStream(socket.getOutputStream());
+            
+            sendData(MAIN_VERIFICATION);
         } catch (ConnectException e) {
             System.out.println("Server with port " + port + " not found");
         }
     }
+
+    // For the hosting server
+    public void checkConnection() {
+        String verification = readString();
+
+        try {
+            if (verification.equals(MAIN_VERIFICATION)) {
+                // keep the connection
+            } else if (verification.equals(BROWSER_VERIFICATION)) {
+                // send the data then disconnect
+                printStream.println(name);
+                printStream.println(address);
+                printStream.println(getPing());
+                printStream.println(getPlayers());
+                socket.close();
+            } else {
+                // disconnect
+                socket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private static boolean testServerConnection(String address, int port) throws IOException {
         try {
@@ -140,5 +168,13 @@ public class Network2 {
 
     public boolean readBoolean() {
         return Boolean.parseBoolean(readString());
+    }
+
+    public static int getPing() {
+        return 0;
+    }
+
+    public static int getPlayers() {
+        return 0;
     }
 }
