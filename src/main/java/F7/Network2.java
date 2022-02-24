@@ -16,8 +16,8 @@ public class Network2 {
 
     public static final int MAIN_PORT = 14000;
     private static final int MAX_PLAYERS = 2;
-    public final String MAIN_VERIFICATION = "F7 server here!";
-    public final String BROWSER_VERIFICATION = "F7 browser here!";
+    public static final String MAIN_VERIFICATION = "F7 server here!";
+    public static final String BROWSER_VERIFICATION = "F7 browser here!";
 
     public String getName() {return name;}
 
@@ -98,10 +98,13 @@ public class Network2 {
         }
     }
 
-
+    // TODO: use the verification strings 
+    // TODO: keep static?
     private static boolean testServerConnection(String address, int port) throws IOException {
         try {
             Socket socket = new Socket(address, port);
+            PrintStream printStream = new PrintStream(socket.getOutputStream());
+            printStream.println(BROWSER_VERIFICATION);
             socket.close();
             return true;
         } catch (ConnectException e) {
@@ -109,7 +112,7 @@ public class Network2 {
         }
     }
 
-    public static ArrayList<InetAddress> retrieveServers() {
+    public ArrayList<InetAddress> retrieveServers() {
         ArrayList<InetAddress> servers = new ArrayList<>();
         byte[] ip;
 
@@ -126,10 +129,15 @@ public class Network2 {
                     ip[3] = (byte) j;
                     InetAddress address = InetAddress.getByAddress(ip);
                     String output = address.toString().substring(1);
-                    if (address.isReachable(5000) && testServerConnection(output, 14000)) {
+                    long initialTime = System.currentTimeMillis();
+                    // checks if you can connect to the server, it's an F7 server, and it's not the localhost
+                    if (address.isReachable(5000) && testServerConnection(output, MAIN_PORT) && !output.equals(InetAddress.getLocalHost().getHostAddress())) {
+                        long ping = System.currentTimeMillis() - initialTime;
                         servers.add(address);
                         System.out.println(output + " is on the network");
+                        System.out.println("ping: " + ping + "ms");
                     }
+                } catch (SocketException ignored) {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -170,6 +178,7 @@ public class Network2 {
         return Boolean.parseBoolean(readString());
     }
 
+    // do i need?
     public static int getPing() {
         return 0;
     }

@@ -151,9 +151,12 @@ public class Network {
                     ip[3] = (byte) j;
                     InetAddress address = InetAddress.getByAddress(ip);
                     String output = address.toString().substring(1);
+                    long initialTime = System.currentTimeMillis();
                     if (address.isReachable(5000) && testServerConnection(output, 14000)) {
+                        long ping = System.currentTimeMillis() - initialTime;
                         servers.add(address);
                         System.out.println(readString());
+                        System.out.println("ping: " + ping + "ms");
                         //System.out.println(output + " is on the network");
                     }
                 } catch (Exception e) {
@@ -165,6 +168,7 @@ public class Network {
         return servers;
     }
 
+    // do i need?
     public static int getPing() {
         return 0;
     }

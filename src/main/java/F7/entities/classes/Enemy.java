@@ -83,6 +83,7 @@ public class Enemy {
         }
     }
 
+    // make protected?
     public int calculateNormalDamage() {
         return 0;
     }

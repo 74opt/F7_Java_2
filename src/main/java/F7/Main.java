@@ -74,7 +74,16 @@ public class Main {
             
             // usually, servers will have the same port, different addresses.
             Network2 server = new Network2(Network2.MAIN_PORT, "test server");
-        
+            Network2 server2 = new Network2(Network2.MAIN_PORT + 1, "test server2");
+
+            /// Upon a connection made, read verification
+            //? how to keep reading verifications, while loop?
+            server2.joinServer("localhost", Network2.MAIN_PORT);
+            System.out.println(server.readString());
+            //server.retrieveServers();
+            
+            //server2.joinServer("localhost", Network2.MAIN_PORT);
+            //server.openServer();
             //server.sendData("test");
         } catch (Exception e) {
             e.printStackTrace();
