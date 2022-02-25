@@ -12,7 +12,7 @@ public class Network2 {
     private BufferedReader bufferedReader;
     private String name;
     private String address;
-    private boolean connected = false;
+    private boolean connected = false; //! DO I NEED?
 
     public static final int MAIN_PORT = 14000;
     private static final int MAX_PLAYERS = 2;
@@ -36,13 +36,18 @@ public class Network2 {
                 serverSocket = new ServerSocket(port);
                 address = InetAddress.getLocalHost().getHostAddress();
 
-                socket = serverSocket.accept();
-                connected = true;
+                //! waits for a connection to be made
+                // socket = serverSocket.accept();
+                // connected = true; //! do i need?
 
-                bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                printStream = new PrintStream(socket.getOutputStream());
                 
-                sendData("test");
+                // bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                // printStream = new PrintStream(socket.getOutputStream());
+                
+                // checkConnection();
+                //sendData("test");
+
+                open();
             } catch (IOException e) {
                 // replace this with something else soon
                 System.out.println("Server already exists");
@@ -50,57 +55,98 @@ public class Network2 {
         }).start();
     }
 
-    public void openServer() throws IOException {
+    private void open() throws IOException {
         //new Thread(() -> {
         //    try {
                 socket = serverSocket.accept();
+                connected = true; //! do i need?
 
                 bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 printStream = new PrintStream(socket.getOutputStream());
+
+                checkConnection();
         //    } catch (Exception e) {
         //        e.printStackTrace();
         //    }
         //}).start();
     }
 
-    public void joinServer(String address, int port) throws IOException {
+    public void join(String address, int port) throws IOException {
         try {
             socket = new Socket(address, port);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream = new PrintStream(socket.getOutputStream());
             
-            sendData(MAIN_VERIFICATION);
+            sendData(BROWSER_VERIFICATION + " ");
         } catch (ConnectException e) {
             System.out.println("Server with port " + port + " not found");
         }
     }
 
     // For the hosting server
-    public void checkConnection() {
-        String verification = readString();
+    private void checkConnection() {
+        new Thread(() -> {
+            while (true) {
+                String verification = readString(); 
 
-        try {
-            if (verification.equals(MAIN_VERIFICATION)) {
-                // keep the connection
-            } else if (verification.equals(BROWSER_VERIFICATION)) {
-                // send the data then disconnect
-                printStream.println(name);
-                printStream.println(address);
-                printStream.println(getPing());
-                printStream.println(getPlayers());
-                socket.close();
-            } else {
-                // disconnect
-                socket.close();
+                try {
+                    if (verification.equals(MAIN_VERIFICATION)) {
+                        // keep the connection
+                        System.out.println("is server");
+                        break;
+                    } else if (verification.equals(BROWSER_VERIFICATION)) { 
+                        // send the data then disconnect
+                        printStream.println(name);
+                        printStream.println(address);
+                        printStream.println(getPing());
+                        printStream.println(getPlayers());
+                        socket.close();
+                        System.out.println("is browser");
+                        open();
+                        break;
+                    } else { //! probably shouldnt have this?
+                        // disconnect
+                        socket.close();
+                        System.out.println("is disconnect");
+                        open();
+                        break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
+
+    // For the hosting server
+    // public void checkConnection() {
+    //     new Thread(() -> {
+    //         String verification = readString();
+
+    //         System.out.println("Verification: " + verification);
+    //         try {
+    //             if (verification.equals(MAIN_VERIFICATION)) {
+    //                 // keep the connection
+    //             } else if (verification.equals(BROWSER_VERIFICATION)) {
+    //                 // send the data then disconnect
+    //                 printStream.println(name);
+    //                 printStream.println(address);
+    //                 printStream.println(getPing());
+    //                 printStream.println(getPlayers());
+    //                 socket.close();
+    //             } else {
+    //                 // disconnect
+    //                 socket.close();
+    //             }
+    //         } catch (IOException e) {
+    //             e.printStackTrace();
+    //         } catch (NullPointerException ignored) {}
+    //     }).start();
+    // }
 
     // TODO: use the verification strings 
     // TODO: keep static?
-    private static boolean testServerConnection(String address, int port) throws IOException {
+    private static boolean testConnection(String address, int port) throws IOException {
         try {
             Socket socket = new Socket(address, port);
             PrintStream printStream = new PrintStream(socket.getOutputStream());
@@ -131,7 +177,7 @@ public class Network2 {
                     String output = address.toString().substring(1);
                     long initialTime = System.currentTimeMillis();
                     // checks if you can connect to the server, it's an F7 server, and it's not the localhost
-                    if (address.isReachable(5000) && testServerConnection(output, MAIN_PORT) && !output.equals(InetAddress.getLocalHost().getHostAddress())) {
+                    if (address.isReachable(5000) && testConnection(output, MAIN_PORT) && !output.equals(InetAddress.getLocalHost().getHostAddress())) {
                         long ping = System.currentTimeMillis() - initialTime;
                         servers.add(address);
                         System.out.println(output + " is on the network");

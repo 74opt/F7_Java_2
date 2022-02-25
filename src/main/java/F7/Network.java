@@ -63,25 +63,35 @@ public class Network {
 
     // For the hosting server
     public static void checkConnection() {
-        String verification = readString();
+        
+       
+        new Thread(() -> {
+            while (true) {
+                String verification = readString(); 
 
-        try {
-            if (verification.equals(SERVER_VERIFICATION)) {
-                // keep the connection
-            } else if (verification.equals(BROWSER_VERIFICATION)) {
-                // send the data then disconnect
-                printStream.println(name);
-                printStream.println(address);
-                printStream.println(getPing());
-                printStream.println(getPlayers());
-                socket.close();
-            } else {
-                // disconnect
-                socket.close();
+                try {
+                    if (verification.equals(SERVER_VERIFICATION)) {
+                        // keep the connection
+                        System.out.println("is server");
+                        break;
+                    } else if (verification.equals(BROWSER_VERIFICATION)) {
+                        // send the data then disconnect
+                        printStream.println(name);
+                        printStream.println(address);
+                        printStream.println(getPing());
+                        printStream.println(getPlayers());
+                        socket.close();
+                        System.out.println("is browser");
+                    } else {
+                        // disconnect
+                        socket.close();
+                        System.out.println("is disconnect");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        }).start();
     }
 
     private static boolean testServerConnection(String address, int port) throws IOException {

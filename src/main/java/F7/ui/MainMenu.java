@@ -69,11 +69,12 @@ public class MainMenu {
         Lanterna.clear();
 
         Lanterna.print(1, 1,
-                LOGO + "\n" +
-                        """
-                        ^G1) New Game
-                        2) Continue
-                        3) Quit"""
+                LOGO + 
+                """
+                        
+                ^G1) New Game
+                2) Continue
+                3) Quit"""
         );
 
         new Thread(() -> {

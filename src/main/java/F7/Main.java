@@ -48,7 +48,7 @@ https://stackoverflow.com/questions/29325034/how-would-an-mmo-deal-with-calculat
 https://stackoverflow.com/questions/52565970/can-i-connect-2-computers-using-sockets-in-java
 https://www.geeksforgeeks.org/java-networking/
 https://www.geeksforgeeks.org/establishing-the-two-way-communication-between-server-and-client-in-java/
- */
+*/
 
 /*
 Server Notes:
@@ -78,10 +78,13 @@ public class Main {
 
             /// Upon a connection made, read verification
             //? how to keep reading verifications, while loop?
-            server2.joinServer("localhost", Network2.MAIN_PORT);
-            System.out.println(server.readString());
-            //server.retrieveServers();
+            //! the first thing a connecting server should send is its verification
+            //server.checkConnection();
+            server2.join("localhost", Network2.MAIN_PORT);
+            server2.join("localhost", Network2.MAIN_PORT);
             
+            //server.retrieveServers();
+            //server2.sendData(Network2.BROWSER_VERIFICATION);
             //server2.joinServer("localhost", Network2.MAIN_PORT);
             //server.openServer();
             //server.sendData("test");
