@@ -4,88 +4,112 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
-// TODO: make constructor + instance vars for OOP with user-hosted servers
-@Deprecated
+// https://stackoverflow.com/questions/8816870/i-want-to-get-the-ping-execution-time-and-result-in-string-after-ping-host
 public class Network {
-    private static Socket socket;
-    private static ServerSocket serverSocket;
-    private static PrintStream printStream;
-    private static BufferedReader bufferedReader;
+    private Socket socket;
+    private ServerSocket serverSocket;
+    private PrintStream printStream;
+    private BufferedReader bufferedReader;
+    private String name;
+    private String address;
+    private boolean connected = false; //! DO I NEED?
 
-    // Server details
     public static final int MAIN_PORT = 14000;
     private static final int MAX_PLAYERS = 2;
-    private static String name;
-    private static String address;
-
-    public static final String SERVER_VERIFICATION = "F7 server here!";
+    public static final String MAIN_VERIFICATION = "F7 server here!";
     public static final String BROWSER_VERIFICATION = "F7 browser here!";
 
-    public static String getName() {return name;}
+    public String getName() {return name;}
 
-    public static String getAddress() {return address;}
+    public String getAddress() {return address;}
 
-    // need?
-    public static ServerSocket getServerSocket() {return serverSocket;}
+    // Need?
+    public ServerSocket getServerSocket() {return serverSocket;}
 
-    //TODO: do i want the non-static stuff? do i want the static stuff?
-    // Possibly make static because only 1 computer will be hosting 1 server
-
-    // make following void or boolean?
-    public static void startServer(int port) {
+    // how to split into constructor and server opener?
+    // establish all networking code within the same thread
+    // verify different connections with different strings
+    //     yes, not secure at all, who cares
+    public Network(int port, String name) {
         new Thread(() -> {
             try {
                 serverSocket = new ServerSocket(port);
                 address = InetAddress.getLocalHost().getHostAddress();
-    
-                // This line waits for a connection
-                socket = serverSocket.accept();
-    
-                bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                printStream = new PrintStream(socket.getOutputStream());
+
+                //! waits for a connection to be made
+                // socket = serverSocket.accept();
+                // connected = true; //! do i need?
+
+                
+                // bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                // printStream = new PrintStream(socket.getOutputStream());
+                
+                // checkConnection();
+                //sendData("test");
+
+                open();
             } catch (IOException e) {
+                // replace this with something else soon
                 System.out.println("Server already exists");
             }
         }).start();
     }
 
-    public static void joinServer(String address, int port) throws IOException {
+    private void open() throws IOException {
+        //new Thread(() -> {
+        //    try {
+                socket = serverSocket.accept();
+                connected = true; //! do i need?
+
+                bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                printStream = new PrintStream(socket.getOutputStream());
+
+                checkConnection();
+        //    } catch (Exception e) {
+        //        e.printStackTrace();
+        //    }
+        //}).start();
+    }
+
+    public void join(String address, int port) throws IOException {
         try {
             socket = new Socket(address, port);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream = new PrintStream(socket.getOutputStream());
-
-            printStream.println(SERVER_VERIFICATION);
+            
+            sendData(BROWSER_VERIFICATION + " ");
         } catch (ConnectException e) {
             System.out.println("Server with port " + port + " not found");
         }
     }
 
     // For the hosting server
-    public static void checkConnection() {
-        
-       
+    private void checkConnection() {
         new Thread(() -> {
             while (true) {
                 String verification = readString(); 
 
                 try {
-                    if (verification.equals(SERVER_VERIFICATION)) {
+                    if (verification.equals(MAIN_VERIFICATION)) {
                         // keep the connection
-                        System.out.println("is server");
+                        //System.out.println("is server");
                         break;
-                    } else if (verification.equals(BROWSER_VERIFICATION)) {
+                    } else if (verification.equals(BROWSER_VERIFICATION)) { 
                         // send the data then disconnect
                         printStream.println(name);
                         printStream.println(address);
                         printStream.println(getPing());
                         printStream.println(getPlayers());
                         socket.close();
-                        System.out.println("is browser");
-                    } else {
+                        //System.out.println("is browser");
+                        open();
+                        break;
+                    } else { //! probably shouldnt have this?
                         // disconnect
                         socket.close();
-                        System.out.println("is disconnect");
+                        //System.out.println("is disconnect");
+                        open();
+                        break;
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -94,57 +118,21 @@ public class Network {
         }).start();
     }
 
-    private static boolean testServerConnection(String address, int port) throws IOException {
+    // TODO: use the verification strings 
+    // TODO: keep static?
+    private static boolean testConnection(String address, int port) throws IOException {
         try {
-            socket = new Socket(address, port);
-            sendData("test");
-
+            Socket socket = new Socket(address, port);
+            PrintStream printStream = new PrintStream(socket.getOutputStream());
+            printStream.println(BROWSER_VERIFICATION);
+            socket.close();
             return true;
-        } catch (ConnectException ignored) {
+        } catch (ConnectException e) {
             return false;
         }
     }
 
-    public static void sendData(Object data) {
-        printStream.println(data);
-    }
-
-    //? How to handle reading data
-    // Once data is read, it is deleted from the buffer
-    // We can work with this.
-    private static Object readData() {
-        Object object;
-
-        try {
-            // will be reading strings
-            object = bufferedReader.readLine();
-
-            // object returned can only be turned into a string without any methods
-            return object;
-        } catch (Exception e) {
-            e.printStackTrace();
-
-            return null;
-        }
-    }
-
-    public static String readString() {
-        return (String) readData();
-    }
-
-    public static int readInt() {
-        return Integer.parseInt(readString());
-    }
-
-    public static double readDouble() {
-        return Double.parseDouble(readString());
-    }
-
-    public static boolean readBoolean() {
-        return Boolean.parseBoolean(readString());
-    }
-
-    public static ArrayList<InetAddress> retrieveServers() {
+    public ArrayList<InetAddress> retrieveServers() {
         ArrayList<InetAddress> servers = new ArrayList<>();
         byte[] ip;
 
@@ -162,13 +150,14 @@ public class Network {
                     InetAddress address = InetAddress.getByAddress(ip);
                     String output = address.toString().substring(1);
                     long initialTime = System.currentTimeMillis();
-                    if (address.isReachable(5000) && testServerConnection(output, 14000)) {
+                    // checks if you can connect to the server, it's an F7 server, and it's not the localhost
+                    if (address.isReachable(5000) && testConnection(output, MAIN_PORT) && !output.equals(InetAddress.getLocalHost().getHostAddress())) {
                         long ping = System.currentTimeMillis() - initialTime;
                         servers.add(address);
-                        System.out.println(readString());
+                        System.out.println(output + " is on the network");
                         System.out.println("ping: " + ping + "ms");
-                        //System.out.println(output + " is on the network");
                     }
+                } catch (SocketException ignored) {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -176,6 +165,37 @@ public class Network {
         }
 
         return servers;
+    }
+
+    public void sendData(String data) {
+        printStream.println(data);
+    }
+
+    // Once data is read, it is deleted from the buffer
+    private Object readData() {
+        try {
+            return bufferedReader.readLine();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return null;
+        }
+    }
+
+    public String readString() {
+        return (String) readData();
+    }
+
+    public int readInt() {
+        return Integer.parseInt(readString());
+    }
+
+    public double readDouble() {
+        return Double.parseDouble(readString());
+    }
+
+    public boolean readBoolean() {
+        return Boolean.parseBoolean(readString());
     }
 
     // do i need?

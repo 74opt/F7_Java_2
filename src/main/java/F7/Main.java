@@ -16,7 +16,6 @@ Hailey Wong: Didn't fuck up F7
 
 /*
 TODO (Ordered by importance):
-    - Holmer said you can make variables public if they are final
     - Make the DeathMenu and WinMenu much better please (make sure to unshit code)
         - You deadass forgot to implement the player actually dying
         - Probably should have them in the same class as CombatMenu2
@@ -73,15 +72,15 @@ public class Main {
             // Network.retrieveServers();
             
             // usually, servers will have the same port, different addresses.
-            Network2 server = new Network2(Network2.MAIN_PORT, "test server");
-            Network2 server2 = new Network2(Network2.MAIN_PORT + 1, "test server2");
+            Network server = new Network(Network.MAIN_PORT, "test server");
+            Network server2 = new Network(Network.MAIN_PORT + 1, "test server2");
 
             /// Upon a connection made, read verification
             //? how to keep reading verifications, while loop?
             //! the first thing a connecting server should send is its verification
             //server.checkConnection();
-            server2.join("localhost", Network2.MAIN_PORT);
-            server2.join("localhost", Network2.MAIN_PORT);
+            server2.join("localhost", Network.MAIN_PORT);
+            server2.join("localhost", Network.MAIN_PORT);
             
             //server.retrieveServers();
             //server2.sendData(Network2.BROWSER_VERIFICATION);

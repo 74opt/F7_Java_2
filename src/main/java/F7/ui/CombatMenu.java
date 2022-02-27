@@ -40,7 +40,7 @@ public class CombatMenu {
     private static int shieldTime;
     private static int shieldChargingTime;
 
-    private static final int enemyAttackInterval = 2;
+    private static final int ENEMY_ATTACK_INTERVAL = 2;
 
     private static HashMap<Consumable, Integer> statusHashMap = new HashMap<>();
     private static HashMap<Weapon, Integer> weaponReload = new HashMap<>();
@@ -85,6 +85,7 @@ public class CombatMenu {
         menu();
     }
 
+    // TODO: Insert the new handler methods here once i come back to work on combatmenu 
     private static void menu() throws Exception {
         initialDraw();
 
@@ -214,7 +215,7 @@ public class CombatMenu {
                     }
 
                     //* Enemy Attack
-                    if (timeElapsed % enemyAttackInterval == 0 && Utils.chance(70) && !checkStatus(Consumables.flashbang)) {
+                    if (timeElapsed % ENEMY_ATTACK_INTERVAL == 0 && Utils.chance(70) && !checkStatus(Consumables.flashbang)) {
                         enemyAttack();
                     }
 
@@ -352,7 +353,7 @@ public class CombatMenu {
                                 // Taring
                                 case 't' -> useConsumable(Consumables.target);
 
-                                // Damage -> {
+                                // Damage 
                                 case 'd' -> useConsumable(Consumables.amplifier);
 
                                 // Flashbang
@@ -367,6 +368,126 @@ public class CombatMenu {
                 }
             }
         }).start();
+    }
+
+    private void timeHandler() throws Exception {
+        timeElapsed++;
+        Lanterna.clear(12, 85, 54);
+        Lanterna.print(85, 12, "^G" + displayTime());
+    }
+
+    private void statusHandler() throws Exception {
+        statusHashMap.forEach((key, value) -> {
+            if (value > 0) {
+                statusHashMap.replace(key, value - 1);
+
+                if (value == 1) {
+                    try {
+                        addInfo(key.toString() + "^G effect ended");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+    
+    private void corrosionHandler() throws Exception{
+        if (checkStatus(Consumables.corrosive)) {
+            int corrosiveDamage = (int) (enemy.getHealth() * (Utils.randomRange(17, 28) / 1000.0));
+
+            enemy.setTempHealth(enemy.getTempHealth() - corrosiveDamage);
+
+            addInfo(Consumables.corrosive.toString() + " ^Gdealt " + corrosiveDamage + " damage to " + enemy.getNAME());
+
+            for (int i = 0; i < 2; i++) {
+                Lanterna.clear(5, 106 + i, 105);
+            }
+
+            Lanterna.printf(106, 5,
+                    """
+                    %s
+                            %s""",
+                    Utils.outOf("Health:", enemy.getHealth(), enemy.getTempHealth(), "^R"),
+                    Utils.percentBar(80, enemy.getHealth(), enemy.getTempHealth(), "^R")
+            );
+
+            if (enemy.getTempHealth() <= 0) {
+                enemyDead();
+            }
+        }
+
+        for (int i = 0; i < 6; i++) {
+            Lanterna.clear(32 + i, 71, 69);
+        }
+
+        int statusIndexReplacement = 0;
+        for (Map.Entry<Consumable, Integer> element : statusHashMap.entrySet()) {
+            Consumable key = (Consumable) element.getKey();
+            int value = statusHashMap.get(key);
+
+            if (value > 0) {
+                Lanterna.print(71, 32 + statusIndexReplacement, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
+                statusIndexReplacement++;
+            }
+        }
+    }
+
+    private void shieldHandler() throws Exception {
+        if (shieldStatus().equals("Up")) {
+            shieldTime--;
+
+            Lanterna.clear(42, 1, 68);
+
+            Lanterna.printf(1, 42, "^WShield (%s):", shieldStatus());
+            Lanterna.print(1, 48, "^GShield Timer:   " + Utils.percentBar(30, Players.getPlayer().getShield().getTURNS(), shieldTime, "^C"));
+
+            if (shieldTime == 0) {
+                addInfo(Players.getPlayer().getShield().getNAME() + " charging");
+
+                shieldChargingTime = Players.getPlayer().getShield().getCOOLDOWN();
+
+                Lanterna.printf(1, 42, "^WShield (%s):", shieldStatus());
+                Lanterna.print(1, 47, "^GCharging Timer: " + Utils.percentBar(30, Players.getPlayer().getShield().getCOOLDOWN(), shieldChargingTime, "^O"));
+            }
+        } else if (shieldStatus().equals("Charging")) {
+            shieldChargingTime--;
+
+            Lanterna.clear(42, 1, 68);
+
+            Lanterna.printf(1, 42, "^WShield (%s):", shieldStatus());
+            Lanterna.print(1, 47, "^GCharging Timer: " + Utils.percentBar(30, Players.getPlayer().getShield().getCOOLDOWN(), shieldChargingTime, "^O"));
+
+            if (shieldChargingTime == 0) {
+                addInfo(Players.getPlayer().getShield().getNAME() + " finished charging");
+            }
+        }
+    }
+
+    private void reloadHandler() throws Exception {
+        weaponReload.forEach((key, value) -> {
+            if (value > 0) {
+                weaponReload.replace(key, value - 1);
+
+                if (value == 1) {
+                    try {
+                        addInfo(key.getNAME() + " reloaded");
+
+                        weaponRof.put(key, key.getRof());
+
+                        Lanterna.clear((Arrays.asList(Players.getPlayer().getWeapons()).indexOf(key == Weapons.getFists() ? null : key) * 3) + 22, 1, 68);
+                        Lanterna.print(1, (Arrays.asList(Players.getPlayer().getWeapons()).indexOf(key == Weapons.getFists() ? null : key) * 3) + 22, String.format("^G%s/%s", weaponRof.get(key), (key.getRof())));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        for (int i = 0; i < 4; i++) {
+            Lanterna.clear((i * 3) + 23, 1, 50);
+            Lanterna.print(1, (i * 3) + 23, Utils.percentBar(50, (Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i]).getReloadTime(), weaponReload.get((Players.getPlayer().getWeapons()[i] == null ? Weapons.getFists() : Players.getPlayer().getWeapons()[i])), "^G"));
+        }
     }
 
     private static void initialDraw() throws Exception {

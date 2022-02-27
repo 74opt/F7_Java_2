@@ -113,7 +113,6 @@ public class MapMenu {
         }).start();
     }
 
-    // TODO: Modify for Lanterna
     private static void exit() throws Exception {
         Lanterna.print(14, 28, "^GAre you sure you want to quit? All unsaved progress will be lost. (^gQ^G to confirm, ^RE^G to cancel)");
 
