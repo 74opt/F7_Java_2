@@ -81,6 +81,7 @@ public class Main {
             //server.checkConnection();
             server2.join("localhost", Network.MAIN_PORT);
             server2.join("localhost", Network.MAIN_PORT);
+            System.out.println(server.readString());
             
             //server.retrieveServers();
             //server2.sendData(Network2.BROWSER_VERIFICATION);

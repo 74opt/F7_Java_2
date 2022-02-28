@@ -5,6 +5,7 @@ import java.net.*;
 import java.util.ArrayList;
 
 // https://stackoverflow.com/questions/8816870/i-want-to-get-the-ping-execution-time-and-result-in-string-after-ping-host
+// TODO: Remove all System.out.print for final product
 public class Network {
     private Socket socket;
     private ServerSocket serverSocket;
@@ -12,6 +13,7 @@ public class Network {
     private BufferedReader bufferedReader;
     private String name;
     private String address;
+    private int players;
     private boolean connected = false; //! DO I NEED?
 
     public static final int MAIN_PORT = 14000;
@@ -33,19 +35,10 @@ public class Network {
     public Network(int port, String name) {
         new Thread(() -> {
             try {
-                serverSocket = new ServerSocket(port);
-                address = InetAddress.getLocalHost().getHostAddress();
-
-                //! waits for a connection to be made
-                // socket = serverSocket.accept();
-                // connected = true; //! do i need?
-
-                
-                // bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                // printStream = new PrintStream(socket.getOutputStream());
-                
-                // checkConnection();
-                //sendData("test");
+                this.serverSocket = new ServerSocket(port);
+                this.address = InetAddress.getLocalHost().getHostAddress();
+                this.name = name;
+                this.players = 1;
 
                 open();
             } catch (IOException e) {
@@ -56,19 +49,27 @@ public class Network {
     }
 
     private void open() throws IOException {
-        //new Thread(() -> {
-        //    try {
-                socket = serverSocket.accept();
-                connected = true; //! do i need?
+        if (players < MAX_PLAYERS) {
+            socket = serverSocket.accept();
+            connected = true; //! do i need?
 
-                bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                printStream = new PrintStream(socket.getOutputStream());
+            bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            printStream = new PrintStream(socket.getOutputStream());
 
-                checkConnection();
-        //    } catch (Exception e) {
-        //        e.printStackTrace();
-        //    }
-        //}).start();
+            checkConnection();
+        } else {
+            System.out.println("Server full");
+        }
+    }
+
+    // TODO: implement 
+    public void close() {
+        try {
+            serverSocket.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void join(String address, int port) throws IOException {
@@ -77,7 +78,7 @@ public class Network {
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream = new PrintStream(socket.getOutputStream());
             
-            sendData(BROWSER_VERIFICATION + " ");
+            sendData(MAIN_VERIFICATION);
         } catch (ConnectException e) {
             System.out.println("Server with port " + port + " not found");
         }
@@ -93,12 +94,13 @@ public class Network {
                     if (verification.equals(MAIN_VERIFICATION)) {
                         // keep the connection
                         //System.out.println("is server");
+                        this.players++;
                         break;
                     } else if (verification.equals(BROWSER_VERIFICATION)) { 
                         // send the data then disconnect
                         printStream.println(name);
                         printStream.println(address);
-                        printStream.println(getPing());
+                        //printStream.println(getPing());
                         printStream.println(getPlayers());
                         socket.close();
                         //System.out.println("is browser");
@@ -132,6 +134,7 @@ public class Network {
         }
     }
 
+    //! probably replace this with checkConnection? or a method that uses checkConnection
     public ArrayList<InetAddress> retrieveServers() {
         ArrayList<InetAddress> servers = new ArrayList<>();
         byte[] ip;
@@ -199,8 +202,13 @@ public class Network {
     }
 
     // do i need?
-    public static int getPing() {
-        return 0;
+    public static int getPing(InetAddress address) {
+        long initialTime = System.currentTimeMillis();
+        if (address.isReachable(5000)) {
+            return (int) (System.currentTimeMillis() - initialTime);
+        } else {
+            return -1;
+        }
     }
 
     public static int getPlayers() {
