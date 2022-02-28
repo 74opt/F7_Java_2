@@ -202,7 +202,7 @@ public class Network {
     }
 
     // do i need?
-    public static int getPing(InetAddress address) {
+    public static int getPing(InetAddress address) throws IOException {
         long initialTime = System.currentTimeMillis();
         if (address.isReachable(5000)) {
             return (int) (System.currentTimeMillis() - initialTime);
