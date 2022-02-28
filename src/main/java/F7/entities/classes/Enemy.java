@@ -3,6 +3,7 @@ package F7.entities.classes;
 import F7.Utils;
 
 public class Enemy {
+    // TODO: create a final string var for description of special attack
     private final String NAME, DESCRIPTION;
     private int health, tempHealth, damage, level, accuracy;
     private final Rarity RARITY;
@@ -80,5 +81,18 @@ public class Enemy {
                 DESCRIPTION
             );
         }
+    }
+
+    // make protected?
+    public int calculateNormalDamage() {
+        return 0;
+    }
+
+    public int calculateCriticalDamage() {
+        return 0;
+    }
+
+    public int calculateSpecialDamage() {
+        return 0;
     }
 }

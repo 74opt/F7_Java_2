@@ -2,8 +2,8 @@ package F7.entities.construction;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import F7.entities.classes.*;
+import F7.entities.construction.enemies.*;
 
 public class Enemies { 
     private static Enemy bear = new Enemy("Bear", "Native to these lands,\nand very territorial.", 14, 4, 1, 68, Rarities.COMMON);
@@ -23,6 +23,9 @@ public class Enemies {
     private static Enemy tank = new Enemy("M7-Abrams Tank", "This hunk of metal\ncould destroy you in\nan instant.", 40, 10, 1, 30, Rarities.EXCEPTIONAL);
 
     private static Enemy angel = new Enemy("Angel", "They've had enough\nof your hubris.\nYou go against the\nnatural law. ", 16, 10, 1, 95, Rarities.GODLY);
+
+    // woah this is possible!
+    private static Enemy test = new Bear("Test", "Test", 14, 4, 1, 68, Rarities.COMMON);
 
     private static HashMap<Rarity, Enemy[]> enemyHashMap = new HashMap<>();
 

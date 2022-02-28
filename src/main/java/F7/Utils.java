@@ -7,14 +7,11 @@ import java.util.*;
  * Utils contains static variables and methods to aid in several features in the rest of F7.
  */
 public class Utils {
-
-    // TODO: use the getters please and make private
     /** .042 seconds, used for the screen's refresh rate */
     public static final int TWENTY_FOUR_FRAMES = 42;
     /** 2 seconds, used as a standard waiting time for Thread.sleep() */
     public static final int STANDARD = 2000;
 
-    // TODO: these stay public until i deal with DeathMenu
     /** 1.5 seconds, used as a standard waiting time for Thread.sleep() */
     public static final int QUICK_STANDARD = 1500;
     /** .045 seconds, used for the time between each character appearing in Utils.scrollText() */

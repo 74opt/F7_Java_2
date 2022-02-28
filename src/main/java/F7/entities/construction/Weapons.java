@@ -4,7 +4,7 @@ import java.util.HashMap;
 import F7.entities.classes.Rarity;
 import F7.entities.classes.Weapon;
 
-public class Weapons { // TODO: make setLevel for enemy + weapon to modify stats thansk
+public class Weapons { 
     private static Weapon fists = new Weapon("Fists", 2, 45, 1, 2, Rarities.COMMON, 1, 2, 1); // will not be able to loot, only if no weapon
 
     private static Weapon crowbar = new Weapon("Crowbar", 6, 73, 1, 1, Rarities.COMMON, 7, 1.8, 1);

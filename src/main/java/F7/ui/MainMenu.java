@@ -15,7 +15,7 @@ TODO: Main Menu overhaul
     1) New Character
     2) Load Character
     3) Exit
-2) Multiplayer
+2) Multiplayer (Create Server)
     1) New Character
         1) Host Server -> Start Game
         2) Join Server -> Server Browser
@@ -27,6 +27,7 @@ TODO: Main Menu overhaul
     3) Exit
 3) Quit
 */
+
 public class MainMenu {
     private static final String LOGO =
             """
@@ -68,11 +69,12 @@ public class MainMenu {
         Lanterna.clear();
 
         Lanterna.print(1, 1,
-                LOGO + "\n" +
-                        """
-                        ^G1) New Game
-                        2) Continue
-                        3) Quit"""
+                LOGO + 
+                """
+                        
+                ^G1) New Game
+                2) Continue
+                3) Quit"""
         );
 
         new Thread(() -> {

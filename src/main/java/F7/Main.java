@@ -47,7 +47,7 @@ https://stackoverflow.com/questions/29325034/how-would-an-mmo-deal-with-calculat
 https://stackoverflow.com/questions/52565970/can-i-connect-2-computers-using-sockets-in-java
 https://www.geeksforgeeks.org/java-networking/
 https://www.geeksforgeeks.org/establishing-the-two-way-communication-between-server-and-client-in-java/
- */
+*/
 
 /*
 Server Notes:
@@ -72,9 +72,20 @@ public class Main {
             // Network.retrieveServers();
             
             // usually, servers will have the same port, different addresses.
-            Network2 server = new Network2(Network2.MAIN_PORT, "test server");
+            Network server = new Network(Network.MAIN_PORT, "test server");
+            Network server2 = new Network(Network.MAIN_PORT + 1, "test server2");
+
+            /// Upon a connection made, read verification
+            //? how to keep reading verifications, while loop?
+            //! the first thing a connecting server should send is its verification
+            //server.checkConnection();
+            server2.join("localhost", Network.MAIN_PORT);
+            server2.join("localhost", Network.MAIN_PORT);
             
-            
+            //server.retrieveServers();
+            //server2.sendData(Network2.BROWSER_VERIFICATION);
+            //server2.joinServer("localhost", Network2.MAIN_PORT);
+            //server.openServer();
             //server.sendData("test");
         } catch (Exception e) {
             e.printStackTrace();
