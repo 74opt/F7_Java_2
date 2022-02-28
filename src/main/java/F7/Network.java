@@ -18,7 +18,10 @@ public class Network {
     private static String name;
     private static String address;
 
-    public static final String VERIFICATION = "F7 server here!";
+    public static final String SERVER_VERIFICATION = "F7 server here!";
+    public static final String BROWSER_VERIFICATION = "F7 browser here!";
+
+    private static Thread networkingThread;
 
     public static String getName() {return name;}
 

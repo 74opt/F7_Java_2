@@ -1,7 +1,5 @@
 package F7;
 
-import com.diogonunes.jcolor.Ansi;
-import com.diogonunes.jcolor.Attribute;
 import java.text.DecimalFormat;
 import java.util.*;
 

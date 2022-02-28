@@ -16,7 +16,6 @@ Hailey Wong: Didn't fuck up F7
 
 /*
 TODO (Ordered by importance):
-    - Holmer said you can make variables public if they are final
     - Make the DeathMenu and WinMenu much better please (make sure to unshit code)
         - You deadass forgot to implement the player actually dying
         - Probably should have them in the same class as CombatMenu2
@@ -74,7 +73,8 @@ public class Main {
             
             // usually, servers will have the same port, different addresses.
             Network2 server = new Network2(Network2.MAIN_PORT, "test server");
-        
+            
+            
             //server.sendData("test");
         } catch (Exception e) {
             e.printStackTrace();
