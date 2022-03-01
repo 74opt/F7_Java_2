@@ -65,6 +65,74 @@ public class MainMenu {
                    :`                                  .m+++++++++++h`
             """;
 
+    public static void menu2() throws Exception {
+        Lanterna.clear();
+
+        Lanterna.print(1, 1,
+                LOGO + 
+                """
+
+                ^G1) Singleplayer
+                2) Multiplayer
+                3) Quit 
+                """
+        );
+        
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case '1' -> {
+                                    running = false;
+                                    singleplayer(); 
+                                }
+                                case '2' -> {
+                                    running = false;
+                                    multiplayer();
+                                }
+                                case '3' -> System.exit(0);
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    // TODO: Create better implementation for this tyty
+    private static void singleplayer() throws Exception {
+        menu();
+    }
+
+    private static void multiplayer() throws Exception {
+        /*
+        Multiplayer has same implementation as singleplayer,
+        but upon making character, user is brought to server
+        options
+        */
+    }
+
+    private static void newCharacter() throws Exception {
+    }
+
+    private static void loadCharacter() throws Exception {
+    }
+
+    private static void hostServer() throws Exception {
+    }
+
+    private static void joinServer() throws Exception {
+    }
+
+    @Deprecated
     public static void menu() throws Exception {
         Lanterna.clear();
 
@@ -169,13 +237,5 @@ public class MainMenu {
         }
 
         MapMenu.menu();
-    }
-
-    private static void singleplayer() throws Exception {
-        
-    }
-
-    private static void multiplayer() throws Exception {
-        
     }
 }
