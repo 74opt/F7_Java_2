@@ -121,15 +121,19 @@ public class MainMenu {
     }
 
     private static void newCharacter() throws Exception {
+        start();
     }
 
     private static void loadCharacter() throws Exception {
+        load();
     }
 
     private static void hostServer() throws Exception {
+
     }
 
     private static void joinServer() throws Exception {
+
     }
 
     @Deprecated
