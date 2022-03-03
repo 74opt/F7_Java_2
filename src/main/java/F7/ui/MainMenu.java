@@ -26,6 +26,16 @@ TODO: Main Menu overhaul
         3) Exit
     3) Exit
 3) Quit
+
+methods needed:
+menu()
+singleplayer()
+multiplayer()
+newCharacter()
+loadCharacter()
+quit()
+host()
+join()
 */
 
 public class MainMenu {

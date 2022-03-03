@@ -57,21 +57,22 @@ Server Notes:
 public class Main {
     public static void main(String[] args) {
         try {
-            // Enemies.setEnemyHashMap();
-            // Weapons.setWeaponHashMap();
-            // Shields.setShieldHashMap();
-            // Rarities.setRaritiesArrayList();
-            // Consumables.setConsumableHashMap();
-            // WinMenu.setRarityMultipliers();
+            Enemies.setEnemyHashMap();
+            Weapons.setWeaponHashMap();
+            Shields.setShieldHashMap();
+            Rarities.setRaritiesArrayList();
+            Consumables.setConsumableHashMap();
+            WinMenu.setRarityMultipliers();
 
-            // Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
+            Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
 
-            // MainMenu.menu();
+            MainMenu.menu2();
             // Network.startServer(Network.MAIN_PORT);
             // Network.joinServer("localhost", Network.MAIN_PORT);
             // Network.retrieveServers();
             
             // usually, servers will have the same port, different addresses.
+            /*
             Network server = new Network(Network.MAIN_PORT, "test server");
             Network server2 = new Network(Network.MAIN_PORT + 1, "test server2");
 
@@ -82,6 +83,7 @@ public class Main {
             server2.join("localhost", Network.MAIN_PORT);
             server2.join("localhost", Network.MAIN_PORT);
             System.out.println(server.readString());
+            */
             
             //server.retrieveServers();
             //server2.sendData(Network2.BROWSER_VERIFICATION);
