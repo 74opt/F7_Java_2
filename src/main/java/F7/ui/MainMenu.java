@@ -76,6 +76,8 @@ public class MainMenu {
                    :`                                  .m+++++++++++h`
             """;
 
+    private static String name = "";
+
     public static void menu2() throws Exception {
         Lanterna.clear();
 
@@ -118,7 +120,6 @@ public class MainMenu {
         }).start();
     }
 
-    // TODO: Create better implementation for this tyty
     private static void singleplayer() throws Exception {
         for (int i = 0; i < 3; i++) {
             Lanterna.clear(34 + i);
@@ -145,7 +146,17 @@ public class MainMenu {
                             switch (keyPressed.getCharacter()) {
                                 case '1' -> {
                                     running = false;
-                                    start();
+                                    inputName();
+                                    
+                                    MapMenu.setCurrentMap(new Map(Maps.getPlains()));
+                                    Players.setPlayer(new Player(name));
+
+                                    //! IS FOR TESTING DELETE LATER
+                                    //Players.getPlayer() = Players.presentation;
+
+                                    MapMenu.getCurrentMap().spawnPlayer(19, 8);
+
+                                    MapMenu.menu();
                                 }
                                 case '2' -> {
                                     running = false;
@@ -196,11 +207,13 @@ public class MainMenu {
                             switch (keyPressed.getCharacter()) {
                                 case '1' -> {
                                     running = false;
-                                    start();
+                                    inputName();
+                                    selectServerType();
                                 }
                                 case '2' -> {
                                     running = false;
                                     load();
+                                    selectServerType();
                                 }
                                 case '3' -> {
                                     running = false;
@@ -276,51 +289,47 @@ public class MainMenu {
         ServerMenu.menu();
     }
 
-    @Deprecated
-    public static void menu() throws Exception {
-        Lanterna.clear();
+    private static void inputName() throws Exception {
+        Lanterna.print(1, 37, "\n^WWhat is your name?\n^g> ^G");
+        boolean running = true;
 
-        Lanterna.print(1, 1,
-                LOGO + 
-                """
-                        
-                ^G1) New Game
-                2) Continue
-                3) Quit"""
-        );
+        while (running) {
+            try {
+                KeyStroke keyPressed = Lanterna.getScreen().readInput();
 
-        new Thread(() -> {
-            boolean running = true;
-
-            while (running) {
-                try {
-                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
-
-                    if (keyPressed != null) {
-                        try {
-                            switch (keyPressed.getCharacter()) {
-                                case '1' -> {
-                                    running = false;
-                                    start();
-                                }
-                                case '2' -> {
-                                    running = false;
-                                    load();
-                                }
-                                case '3' -> System.exit(0);
-                            }
-                        } catch (Exception ignored) {}
+                if (keyPressed != null) {
+                    if (keyPressed.getKeyType().equals(KeyType.F7)) {
+                        System.exit(0);
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+                    try {
+                        switch (keyPressed.getKeyType()) {
+                            case Backspace, Delete -> {
+                                name = name.substring(0, name.length() - 1);
+
+                                Lanterna.print(name.length() + 3, 39, " ");
+                                Lanterna.print(3, 39, name);
+                            }
+                            case Enter -> running = false;
+                            default -> {
+                                try {
+                                    name += keyPressed.getCharacter();
+
+                                    Lanterna.print(3, 39, name);
+                                } catch (Exception ignored) {}
+                            }
+                        }
+                    } catch (Exception ignored) {}
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).start();
+        }
     }
 
+    @Deprecated
     private static void start() throws Exception {
         Lanterna.print(1, 37, "\n^WWhat is your name?\n^g> ^G");
-        String name = "";
         boolean running = true;
 
         while (running) {
@@ -380,6 +389,7 @@ public class MainMenu {
             e.printStackTrace();
         }
 
+        // TODO: remove
         MapMenu.menu();
     }
 }
