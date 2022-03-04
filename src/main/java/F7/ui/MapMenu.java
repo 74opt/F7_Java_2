@@ -122,7 +122,7 @@ public class MapMenu {
 
             if (choice.getCharacter() == 'q') {
                 running = false;
-                MainMenu.menu();
+                MainMenu.menu2();
                 break;
             } else if (choice.getCharacter() == 'e') {
                 Lanterna.clear(28);

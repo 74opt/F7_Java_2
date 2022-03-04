@@ -36,6 +36,7 @@ loadCharacter()
 quit()
 host()
 join()
+start() (for singleplayer gameplay)
 */
 
 public class MainMenu {
@@ -119,7 +120,49 @@ public class MainMenu {
 
     // TODO: Create better implementation for this tyty
     private static void singleplayer() throws Exception {
-        menu();
+        for (int i = 0; i < 3; i++) {
+            Lanterna.clear(34 + i);
+        }
+
+        Lanterna.print(1, 34,
+                """
+                ^WSingleplayer
+                ^G1) New Character
+                2) Load Character
+                3) Exit
+                """
+        );
+
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case '1' -> {
+                                    running = false;
+                                    start();
+                                }
+                                case '2' -> {
+                                    running = false;
+                                    load();
+                                }
+                                case '3' -> {
+                                    running = false;
+                                    menu2();
+                                }
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     private static void multiplayer() throws Exception {
@@ -128,8 +171,95 @@ public class MainMenu {
         but upon making character, user is brought to server
         options
         */
+        for (int i = 0; i < 3; i++) {
+            Lanterna.clear(34 + i);
+        }
+
+        Lanterna.print(1, 34,
+                """
+                ^WMultiplayer
+                ^G1) New Character
+                2) Load Character
+                3) Exit
+                """
+        );
+
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case '1' -> {
+                                    running = false;
+                                    start();
+                                }
+                                case '2' -> {
+                                    running = false;
+                                    load();
+                                }
+                                case '3' -> {
+                                    running = false;
+                                    menu2();
+                                }
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
+    private static void selectServerType() throws Exception {
+        for (int i = 0; i < 3; i++) {
+            Lanterna.clear(35 + i);
+        }
+
+        Lanterna.print(1, 35,
+                """
+                1) Host Server
+                2) Join Server
+                3) Exit     
+                """
+        );
+
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case '1' -> {
+                                    running = false;
+                                    hostServer();
+                                }
+                                case '2' -> {
+                                    running = false;
+                                    joinServer();
+                                }
+                                case '3' -> {
+                                    running = false;
+                                    menu2();
+                                }
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
     private static void newCharacter() throws Exception {
         start();
     }
@@ -139,11 +269,11 @@ public class MainMenu {
     }
 
     private static void hostServer() throws Exception {
-
+        ServerMenu.menu();
     }
 
     private static void joinServer() throws Exception {
-
+        ServerMenu.menu();
     }
 
     @Deprecated
