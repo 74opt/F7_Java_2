@@ -147,7 +147,7 @@ public class MainMenu {
                                 case '1' -> {
                                     running = false;
                                     inputName();
-                                    
+
                                     MapMenu.setCurrentMap(new Map(Maps.getPlains()));
                                     Players.setPlayer(new Player(name));
 
@@ -161,6 +161,7 @@ public class MainMenu {
                                 case '2' -> {
                                     running = false;
                                     load();
+                                    MapMenu.getCurrentMap().spawnPlayer(Players.getPlayer().getX(), Players.getPlayer().getY());
                                 }
                                 case '3' -> {
                                     running = false;
@@ -207,8 +208,7 @@ public class MainMenu {
                             switch (keyPressed.getCharacter()) {
                                 case '1' -> {
                                     running = false;
-                                    inputName();
-                                    selectServerType();
+                                    inputName();                                    selectServerType();
                                 }
                                 case '2' -> {
                                     running = false;
@@ -273,16 +273,12 @@ public class MainMenu {
             }
         }).start();
     }
-    private static void newCharacter() throws Exception {
-        start();
-    }
-
-    private static void loadCharacter() throws Exception {
-        load();
-    }
 
     private static void hostServer() throws Exception {
-        ServerMenu.menu();
+        // TODO: implement naming
+        String name = "";
+
+        ServerMenu.start(name);
     }
 
     private static void joinServer() throws Exception {
@@ -290,9 +286,11 @@ public class MainMenu {
     }
 
     private static void inputName() throws Exception {
-        Lanterna.print(1, 37, "\n^WWhat is your name?\n^g> ^G");
-        boolean running = true;
+        int row = 39;
 
+        Lanterna.print(1, row, "^WWhat is your name?\n^g> ^G");
+        boolean running = true;
+        
         while (running) {
             try {
                 KeyStroke keyPressed = Lanterna.getScreen().readInput();
@@ -301,13 +299,13 @@ public class MainMenu {
                     if (keyPressed.getKeyType().equals(KeyType.F7)) {
                         System.exit(0);
                     }
-
+                    
                     try {
                         switch (keyPressed.getKeyType()) {
                             case Backspace, Delete -> {
                                 name = name.substring(0, name.length() - 1);
 
-                                Lanterna.print(name.length() + 3, 39, " ");
+                                Lanterna.print(name.length() + 3, row, " ");
                                 Lanterna.print(3, 39, name);
                             }
                             case Enter -> running = false;
@@ -315,7 +313,7 @@ public class MainMenu {
                                 try {
                                     name += keyPressed.getCharacter();
 
-                                    Lanterna.print(3, 39, name);
+                                    Lanterna.print(3, row, name);
                                 } catch (Exception ignored) {}
                             }
                         }
@@ -325,55 +323,6 @@ public class MainMenu {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Deprecated
-    private static void start() throws Exception {
-        Lanterna.print(1, 37, "\n^WWhat is your name?\n^g> ^G");
-        boolean running = true;
-
-        while (running) {
-            try {
-                KeyStroke keyPressed = Lanterna.getScreen().readInput();
-
-                if (keyPressed != null) {
-                    if (keyPressed.getKeyType().equals(KeyType.F7)) {
-                        System.exit(0);
-                    }
-
-                    try {
-                        switch (keyPressed.getKeyType()) {
-                            case Backspace, Delete -> {
-                                name = name.substring(0, name.length() - 1);
-
-                                Lanterna.print(name.length() + 3, 39, " ");
-                                Lanterna.print(3, 39, name);
-                            }
-                            case Enter -> running = false;
-                            default -> {
-                                try {
-                                    name += keyPressed.getCharacter();
-
-                                    Lanterna.print(3, 39, name);
-                                } catch (Exception ignored) {}
-                            }
-                        }
-                    } catch (Exception ignored) {}
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        MapMenu.setCurrentMap(new Map(Maps.getPlains()));
-        Players.setPlayer(new Player(name));
-
-        //! IS FOR TESTING DELETE LATER
-        //Players.getPlayer() = Players.presentation;
-
-        MapMenu.getCurrentMap().spawnPlayer(19, 8);
-
-        MapMenu.menu();
     }
 
     // this appears to be working and i sure hope it does buddy
@@ -384,7 +333,6 @@ public class MainMenu {
             Players.setPlayer(objectMapper.readValue(new File(Utils.PLAYER_SAVE_PATH), Player.class));
             MapMenu.setCurrentMap(objectMapper.readValue(new File(Utils.MAP_SAVE_PATH), Map.class));
 
-            MapMenu.getCurrentMap().spawnPlayer(Players.getPlayer().getX(), Players.getPlayer().getY());
         } catch (Exception e) {
             e.printStackTrace();
         }
