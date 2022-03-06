@@ -4,9 +4,9 @@ import F7.Utils;
 
 public class Enemy {
     // TODO: create a final string var for description of special attack
-    private final String NAME, DESCRIPTION;
-    private int health, tempHealth, damage, level, accuracy;
-    private final Rarity RARITY;
+    protected final String NAME, DESCRIPTION;
+    protected int health, tempHealth, damage, level, accuracy;
+    protected final Rarity RARITY;
 
     // Setters and Getters
     public String getNAME() {return NAME;}
@@ -83,15 +83,13 @@ public class Enemy {
         }
     }
 
-    // make protected?
     public int calculateNormalDamage() {
-        return 0;
+        int damage = this.damage * (Utils.randomRange(85, 116) / 100);
+
+        return damage;
     }
 
-    public int calculateCriticalDamage() {
-        return 0;
-    }
-
+    // to be overridden
     public int calculateSpecialDamage() {
         return 0;
     }
