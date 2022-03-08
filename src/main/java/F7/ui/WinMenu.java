@@ -86,8 +86,8 @@ public class WinMenu {
                                     Players.getPlayer().setWeapon(weapon, Integer.parseInt(dropChoice.getCharacter() + "") - 1);
                                     dropping = false;
                                 }
-                            } catch (Exception e) {
-                                Lanterna.print(1, 10, e.getClass().getName());
+                            } catch (Exception ignored) {
+                                //Lanterna.print(1, 10, e.getClass().getName());
                             }
                         }
                     }

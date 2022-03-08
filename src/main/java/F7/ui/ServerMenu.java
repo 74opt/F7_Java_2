@@ -1,7 +1,11 @@
 package F7.ui;
 
+import java.io.IOException;
+
 import F7.Lanterna;
 import F7.Network;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 
 public class ServerMenu {
     //! do i want the network here or in Network? or even in construction package?
@@ -54,10 +58,10 @@ public class ServerMenu {
             try {
                 for (int i = 0; i < 211; i++) {
                     switch (i) {
-                        case 10, 200 -> Lanterna.print(i, 60, "╩");
-                        case 0 -> Lanterna.print(i, 60, "╚");
-                        case 210 -> Lanterna.print(i, 60, "╝");
-                        default -> Lanterna.print(i, 60, "═");
+                        case 10, 200 -> Lanterna.print(i, 55, "╩");
+                        case 0 -> Lanterna.print(i, 55, "╚");
+                        case 210 -> Lanterna.print(i, 55, "╝");
+                        default -> Lanterna.print(i, 55, "═");
                     }
                 }
             } catch (Exception e) {
@@ -71,7 +75,7 @@ public class ServerMenu {
         for (int i : cols) {
             new Thread(() -> {
                 try {
-                    for (int j = 0; j < 61; j++) {
+                    for (int j = 0; j < 55; j++) {
                         switch (j) {
                             case 0, 2, 60 -> {}
                             default -> Lanterna.print(i, j, "║");
@@ -83,10 +87,17 @@ public class ServerMenu {
             }).start();
         }
 
-        // Text
+        // Top Text
         Lanterna.print(1, 1, "Ping");
         Lanterna.print(11, 1, "Server Name");
         Lanterna.print(201, 1, "Players");
+
+        // Controls
+        Lanterna.print(1, 56, """
+        ^GW) Move up server list
+        S) Move down server list
+        E) Join server
+        Q) Exit""");
     }
 
     // TODO: add key binding list at bottom
@@ -94,5 +105,32 @@ public class ServerMenu {
     public static void menu() throws Exception {
         // List this info: server name, latency, player count
         initialDraw();
+
+        new Thread(() -> {
+            boolean running = true;
+
+            while (running) {
+                try {
+                    KeyStroke keyPressed = Lanterna.getScreen().pollInput();
+
+                    if (keyPressed != null) {
+                        try {
+                            switch (keyPressed.getCharacter()) {
+                                case 'w' -> {}
+                                case 's' -> {}
+                                case 'e' -> {}
+                                case 'q' -> {
+                                    running = false;
+                                    
+                                    MainMenu.menu2();
+                                }
+                            }
+                        } catch (Exception ignored) {}
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }
