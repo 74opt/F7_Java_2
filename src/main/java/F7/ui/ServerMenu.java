@@ -22,7 +22,9 @@ public class ServerMenu {
             try {
                 for (int i = 0; i < 211; i++) {
                     switch (i) {
-                        case 6, 205 -> Lanterna.print(i, 0, "╦");
+                        case 10, 200 -> Lanterna.print(i, 0, "╦");
+                        case 0 -> Lanterna.print(i, 0, "╔");
+                        case 210 -> Lanterna.print(i, 0, "╗");
                         default -> Lanterna.print(i, 0, "═");
                     }
                 }
@@ -36,7 +38,9 @@ public class ServerMenu {
             try {
                 for (int i = 0; i < 211; i++) {
                     switch (i) {
-                        case 6, 205 -> Lanterna.print(i, 2, "╦");
+                        case 10, 200 -> Lanterna.print(i, 2, "╬");
+                        case 0 -> Lanterna.print(i, 2, "╠");
+                        case 210 -> Lanterna.print(i, 2, "╣");
                         default -> Lanterna.print(i, 2, "═");
                     }
                 }
@@ -50,8 +54,10 @@ public class ServerMenu {
             try {
                 for (int i = 0; i < 211; i++) {
                     switch (i) {
-                        case 6, 205 -> Lanterna.print(i, 61, "╩");
-                        default -> Lanterna.print(i, 61, "═");
+                        case 10, 200 -> Lanterna.print(i, 60, "╩");
+                        case 0 -> Lanterna.print(i, 60, "╚");
+                        case 210 -> Lanterna.print(i, 60, "╝");
+                        default -> Lanterna.print(i, 60, "═");
                     }
                 }
             } catch (Exception e) {
@@ -59,21 +65,34 @@ public class ServerMenu {
             }
         }).start();
 
-        // First vertical line
+        // Vertical lines
+        int[] cols = {0, 10, 200, 210};
 
+        for (int i : cols) {
+            new Thread(() -> {
+                try {
+                    for (int j = 0; j < 61; j++) {
+                        switch (j) {
+                            case 0, 2, 60 -> {}
+                            default -> Lanterna.print(i, j, "║");
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
 
-        // Second vertical line
-
-
-        // Third vertical line
-
-
-        // Fourth vertical line
+        // Text
+        Lanterna.print(1, 1, "Ping");
+        Lanterna.print(11, 1, "Server Name");
+        Lanterna.print(201, 1, "Players");
     }
 
-    // TODO: top priority, design a server menu (whiteboard time)
-    public static void menu() {
+    // TODO: add key binding list at bottom
+    // TODO: cursor at server name column
+    public static void menu() throws Exception {
         // List this info: server name, latency, player count
-        
+        initialDraw();
     }
 }

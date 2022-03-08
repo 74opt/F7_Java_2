@@ -286,7 +286,7 @@ public class MainMenu {
     }
 
     private static void inputName() throws Exception {
-        int row = 39;
+        int row = 40;
 
         Lanterna.print(1, row, "^WWhat is your name?\n^g> ^G");
         boolean running = true;
@@ -305,15 +305,19 @@ public class MainMenu {
                             case Backspace, Delete -> {
                                 name = name.substring(0, name.length() - 1);
 
-                                Lanterna.print(name.length() + 3, row, " ");
-                                Lanterna.print(3, 39, name);
+                                Lanterna.print(name.length() + 3, row + 1, " ");
+                                Lanterna.print(3, row + 1, name);
                             }
-                            case Enter -> running = false;
+                            case Enter -> {
+                                running = false;
+                                Lanterna.clear(40);
+                                Lanterna.clear(41);
+                            }
                             default -> {
                                 try {
                                     name += keyPressed.getCharacter();
 
-                                    Lanterna.print(3, row, name);
+                                    Lanterna.print(3, row + 1, name);
                                 } catch (Exception ignored) {}
                             }
                         }
