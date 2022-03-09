@@ -157,6 +157,9 @@ public class ServerMenu {
                     String address = InetAddress.getByAddress(ips).toString().substring(1);
 
                     Network.testConnection(address, Network.MAIN_PORT);
+                    // 1. connect with a BROWSER_VERIFICATION
+                    // 2. have that server return info
+                    // 3. add to list
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

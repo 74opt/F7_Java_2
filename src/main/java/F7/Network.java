@@ -122,6 +122,7 @@ public class Network {
 
     // TODO: keep static?
     // TODO: make return server info (is this the time where i must use the raw arraylist)
+    // ^ remember that printstream only works with strings
     public static boolean testConnection(String address, int port) throws IOException {
         try {
             Socket socket = new Socket(address, port);
