@@ -148,6 +148,7 @@ public class ServerMenu {
         // TODO: implement actual server search
         byte[] ips = InetAddress.getLocalHost().getAddress();
 
+        //! hopefully adding to arraylist wont be weird with threading
         for (int i = 1; i < 255; i++) {
             final int j = i; // must be declared final to use in thread
 
