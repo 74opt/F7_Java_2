@@ -1,6 +1,8 @@
 package F7.ui;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.util.ArrayList;
 
 import F7.Lanterna;
 import F7.Network;
@@ -116,9 +118,15 @@ public class ServerMenu {
                     if (keyPressed != null) {
                         try {
                             switch (keyPressed.getCharacter()) {
-                                case 'w' -> {}
-                                case 's' -> {}
-                                case 'e' -> {}
+                                case 'w' -> {
+                                    
+                                }
+                                case 's' -> {
+
+                                }
+                                case 'e' -> {
+
+                                }
                                 case 'q' -> {
                                     running = false;
                                     
@@ -132,5 +140,34 @@ public class ServerMenu {
                 }
             }
         }).start();
+    }
+
+    private static void searchServers() throws Exception {
+        ArrayList<Network> servers = new ArrayList<>();
+
+        // TODO: implement actual server search
+        byte[] ips = InetAddress.getLocalHost().getAddress();
+
+        for (int i = 1; i < 255; i++) {
+            final int j = i; // must be declared final to use in thread
+
+            new Thread(() -> {
+                try {
+                    ips[3] = (byte) j;
+                    String address = InetAddress.getByAddress(ips).toString().substring(1);
+
+                    Network.testConnection(address, Network.MAIN_PORT);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+
+        for (int i = 0; i < servers.size(); i++) {
+            // TODO: implement server info printing
+            // 1st, ping
+            // 2nd, name
+            // 3rd, players
+        }
     }
 }
