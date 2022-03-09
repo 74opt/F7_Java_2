@@ -100,6 +100,8 @@ public class ServerMenu {
         S) Move down server list
         E) Join server
         Q) Exit""");
+
+        searchServers();
     }
 
     // TODO: add key binding list at bottom
@@ -149,6 +151,7 @@ public class ServerMenu {
         byte[] ips = InetAddress.getLocalHost().getAddress();
 
         //! hopefully adding to arraylist wont be weird with threading
+        
         for (int i = 1; i < 255; i++) {
             final int j = i; // must be declared final to use in thread
 
@@ -156,11 +159,21 @@ public class ServerMenu {
                 try {
                     ips[3] = (byte) j;
                     String address = InetAddress.getByAddress(ips).toString().substring(1);
-
-                    Network.testConnection(address, Network.MAIN_PORT);
+                    
+                    String data = Network.testConnection(address, Network.MAIN_PORT + 1);
                     // 1. connect with a BROWSER_VERIFICATION
                     // 2. have that server return info
                     // 3. add to list
+                    Thread.sleep(1000);
+                    if (!data.equals(null)) {
+                        String[] datum = data.split("|");
+                        String ping = datum[0];
+                        String name = datum[1];
+                        String players = datum[2];
+                        Lanterna.print(30, 30, ping + "ms");
+                        Lanterna.print(30, 31, name);
+                        Lanterna.print(30, 32, players + "/" + Network.MAX_PLAYERS);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

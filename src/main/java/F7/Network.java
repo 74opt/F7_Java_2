@@ -17,7 +17,7 @@ public class Network {
     private boolean connected = false; //! DO I NEED?
 
     public static final int MAIN_PORT = 14000;
-    private static final int MAX_PLAYERS = 2;
+    public static final int MAX_PLAYERS = 2;
     public static final String MAIN_VERIFICATION = "F7 server here!";
     public static final String BROWSER_VERIFICATION = "F7 browser here!";
 
@@ -98,10 +98,7 @@ public class Network {
                         break;
                     } else if (verification.equals(BROWSER_VERIFICATION)) { 
                         // send the data then disconnect
-                        printStream.println(name);
-                        printStream.println(address);
-                        //printStream.println(getPing());
-                        printStream.println(getPlayers());
+                        printStream.println(name + "|" + address + "|" + players);
                         socket.close();
                         //System.out.println("is browser");
                         open();
@@ -123,15 +120,17 @@ public class Network {
     // TODO: keep static?
     // TODO: make return server info (is this the time where i must use the raw arraylist)
     // ^ remember that printstream only works with strings
-    public static boolean testConnection(String address, int port) throws IOException {
+    public static String testConnection(String address, int port) throws IOException {
         try {
             Socket socket = new Socket(address, port);
             PrintStream printStream = new PrintStream(socket.getOutputStream());
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream.println(BROWSER_VERIFICATION);
+            String data = bufferedReader.readLine();
             socket.close();
-            return true;
+            return data;
         } catch (ConnectException e) {
-            return false;
+            return null;
         }
     }
 

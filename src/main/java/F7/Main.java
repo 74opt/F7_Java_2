@@ -72,10 +72,10 @@ public class Main {
             // Network.retrieveServers();
             
             // usually, servers will have the same port, different addresses.
+            
+            //Network server = new Network(Network.MAIN_PORT, "test server");
+            Network server2 = new Network(Network.MAIN_PORT + 1, "whoop whoop");
             /*
-            Network server = new Network(Network.MAIN_PORT, "test server");
-            Network server2 = new Network(Network.MAIN_PORT + 1, "test server2");
-
             /// Upon a connection made, read verification
             //? how to keep reading verifications, while loop?
             //! the first thing a connecting server should send is its verification
