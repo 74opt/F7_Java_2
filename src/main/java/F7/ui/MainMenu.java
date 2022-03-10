@@ -276,9 +276,19 @@ public class MainMenu {
 
     private static void hostServer() throws Exception {
         // TODO: implement naming
-        String name = "";
+        String name = "default server name";
 
         ServerMenu.start(name);
+
+        MapMenu.setCurrentMap(new Map(Maps.getPlains()));
+        Players.setPlayer(new Player("default player name"));
+
+        //! IS FOR TESTING DELETE LATER
+        //Players.getPlayer() = Players.presentation;
+
+        MapMenu.getCurrentMap().spawnPlayer(19, 8);
+
+        MapMenu.menu();
     }
 
     private static void joinServer() throws Exception {
