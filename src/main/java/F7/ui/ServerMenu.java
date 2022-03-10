@@ -166,10 +166,11 @@ public class ServerMenu {
                     // 3. add to list
                     Thread.sleep(1000);
                     if (!data.equals(null)) {
-                        String[] datum = data.split("|");
+                        String[] datum = data.split("\\|");
                         String ping = datum[0];
                         String name = datum[1];
                         String players = datum[2];
+                        // TODO: implement ping time
                         Lanterna.print(30, 30, ping + "ms");
                         Lanterna.print(30, 31, name);
                         Lanterna.print(30, 32, players + "/" + Network.MAX_PLAYERS);
