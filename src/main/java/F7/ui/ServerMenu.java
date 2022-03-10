@@ -28,7 +28,7 @@ public class ServerMenu {
             try {
                 for (int i = 0; i < 211; i++) {
                     switch (i) {
-                        case 10, 200 -> Lanterna.print(i, 0, "╦");
+                        case 10, 179 -> Lanterna.print(i, 0, "╦");
                         case 0 -> Lanterna.print(i, 0, "╔");
                         case 210 -> Lanterna.print(i, 0, "╗");
                         default -> Lanterna.print(i, 0, "═");
@@ -44,7 +44,7 @@ public class ServerMenu {
             try {
                 for (int i = 0; i < 211; i++) {
                     switch (i) {
-                        case 10, 200 -> Lanterna.print(i, 2, "╬");
+                        case 10, 179 -> Lanterna.print(i, 2, "╬");
                         case 0 -> Lanterna.print(i, 2, "╠");
                         case 210 -> Lanterna.print(i, 2, "╣");
                         default -> Lanterna.print(i, 2, "═");
@@ -60,7 +60,7 @@ public class ServerMenu {
             try {
                 for (int i = 0; i < 211; i++) {
                     switch (i) {
-                        case 10, 200 -> Lanterna.print(i, 55, "╩");
+                        case 10, 179 -> Lanterna.print(i, 55, "╩");
                         case 0 -> Lanterna.print(i, 55, "╚");
                         case 210 -> Lanterna.print(i, 55, "╝");
                         default -> Lanterna.print(i, 55, "═");
@@ -72,7 +72,7 @@ public class ServerMenu {
         }).start();
 
         // Vertical lines
-        int[] cols = {0, 10, 200, 210};
+        int[] cols = {0, 10, 179, 210};
 
         for (int i : cols) {
             new Thread(() -> {
@@ -92,7 +92,7 @@ public class ServerMenu {
         // Top Text
         Lanterna.print(1, 1, "Ping");
         Lanterna.print(11, 1, "Server Name");
-        Lanterna.print(201, 1, "Players");
+        Lanterna.print(180, 1, "Players");
 
         // Controls
         Lanterna.print(1, 56, """
@@ -100,8 +100,6 @@ public class ServerMenu {
         S) Move down server list
         E) Join server
         Q) Exit""");
-
-        searchServers();
     }
 
     // TODO: add key binding list at bottom
@@ -109,6 +107,7 @@ public class ServerMenu {
     public static void menu() throws Exception {
         // List this info: server name, latency, player count
         initialDraw();
+        searchServers();
 
         new Thread(() -> {
             boolean running = true;
@@ -145,13 +144,8 @@ public class ServerMenu {
     }
 
     private static void searchServers() throws Exception {
-        ArrayList<Network> servers = new ArrayList<>();
-
-        // TODO: implement actual server search
         byte[] ips = InetAddress.getLocalHost().getAddress();
 
-        //! hopefully adding to arraylist wont be weird with threading
-        
         for (int i = 1; i < 255; i++) {
             final int j = i; // must be declared final to use in thread
 
@@ -160,6 +154,7 @@ public class ServerMenu {
                     ips[3] = (byte) j;
                     String address = InetAddress.getByAddress(ips).toString().substring(1);
                     
+                    // TODO: change the +1, only for testing
                     String data = Network.testConnection(address, Network.MAIN_PORT + 1);
                     // 1. connect with a BROWSER_VERIFICATION
                     // 2. have that server return info
@@ -170,22 +165,18 @@ public class ServerMenu {
                         String ping = datum[0];
                         String name = datum[1];
                         String players = datum[2];
-                        // TODO: implement ping time
-                        Lanterna.print(30, 30, ping + "ms");
-                        Lanterna.print(30, 31, name);
-                        Lanterna.print(30, 32, players + "/" + Network.MAX_PLAYERS);
+
+                        // set color
+                        Lanterna.print(0, 0, "^W");
+
+                        Lanterna.print(1, 3, ping + "ms");
+                        Lanterna.print(11, 3, name);
+                        Lanterna.print(180, 3, players + "/" + Network.MAX_PLAYERS + " players");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }).start();
-        }
-
-        for (int i = 0; i < servers.size(); i++) {
-            // TODO: implement server info printing
-            // 1st, ping
-            // 2nd, name
-            // 3rd, players
         }
     }
 }
