@@ -98,7 +98,7 @@ public class Network {
                         break;
                     } else if (verification.equals(BROWSER_VERIFICATION)) { 
                         // send the data then disconnect
-                        printStream.println(name + "|" + address + "|" + players);
+                        printStream.println(name + "," + players);
                         socket.close();
                         //System.out.println("is browser");
                         open();
@@ -123,10 +123,15 @@ public class Network {
     public static String testConnection(String address, int port) throws IOException {
         try {
             Socket socket = new Socket(address, port);
+            long initialTime = System.currentTimeMillis();
+            long ping = 0;
+            if (InetAddress.getByName(address).isReachable(1000)) {
+                ping = System.currentTimeMillis() - initialTime;
+            }
             PrintStream printStream = new PrintStream(socket.getOutputStream());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream.println(BROWSER_VERIFICATION);
-            String data = bufferedReader.readLine();
+            String data = ping + "," + bufferedReader.readLine();
             socket.close();
             return data;
         } catch (ConnectException e) {
