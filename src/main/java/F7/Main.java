@@ -57,6 +57,8 @@ Server Notes:
 public class Main {
     public static void main(String[] args) {
         try {
+            Network server = new Network(Network.MAIN_PORT, "test server");
+
             Enemies.setEnemyHashMap();
             Weapons.setWeaponHashMap();
             Shields.setShieldHashMap();
@@ -73,7 +75,6 @@ public class Main {
             
             // usually, servers will have the same port, different addresses.
             
-            //Network server = new Network(Network.MAIN_PORT, "test server");
             //Network server2 = new Network(Network.MAIN_PORT + 1, "whoop whoop");
             /*
             /// Upon a connection made, read verification
@@ -84,6 +85,7 @@ public class Main {
             server2.join("localhost", Network.MAIN_PORT);
             System.out.println(server.readString());
             */
+            
             
             //server.retrieveServers();
             //server2.sendData(Network2.BROWSER_VERIFICATION);

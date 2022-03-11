@@ -11,7 +11,7 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
 public class ServerMenu {
-    private record ServerInfo(String name, long ping, int players) {}
+    private record ServerInfo(String name, long ping, int players, String address) {}
 
     //! do i want the network here or in Network? or even in construction package?
     private static Network network;
@@ -115,6 +115,7 @@ public class ServerMenu {
 
         new Thread(() -> {
             boolean running = true;
+            int selectedServer = 0;
 
             while (running) {
                 try {
@@ -123,14 +124,31 @@ public class ServerMenu {
                     if (keyPressed != null) {
                         try {
                             switch (keyPressed.getCharacter()) {
+                                // TODO: W and S and E implementation
                                 case 'w' -> {
+                                    if (selectedServer == 0) {
+                                        selectedServer = servers.size() - 1;
+                                    } else {
+                                        selectedServer--;
+                                    }         
                                     
+                                    Lanterna.print(11, selectedServer + 2, "^W" + servers.get(selectedServer).name);
+                                    Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                 }
                                 case 's' -> {
+                                    if (selectedServer == servers.size() - 1) {
+                                        selectedServer = 0;
+                                    } else {
+                                        selectedServer++;
+                                    }
 
+                                    Lanterna.print(11, selectedServer + 2, "^W" + servers.get(selectedServer).name);
+                                    Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                 }
                                 case 'e' -> {
+                                    network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
+                                    // TODO: implementation
                                 }
                                 case 'q' -> {
                                     running = false;
@@ -169,7 +187,7 @@ public class ServerMenu {
                         String ping = datum[0];
                         String name = datum[1];
                         String players = datum[2];
-                        servers.add(new ServerInfo(name, Long.valueOf(ping), Integer.parseInt(players)));
+                        servers.add(new ServerInfo(name, Long.valueOf(ping), Integer.parseInt(players), address));
                     }
 
                     printServers();
@@ -181,12 +199,14 @@ public class ServerMenu {
     }
 
     private static void printServers() throws Exception {
-        // set color
-        Lanterna.print(0, 0, "^W");
-
         for (int i = 0; i < servers.size(); i++) {
+            if (i == 0) {
+                Lanterna.print(11, 3, "^g> ^W" + servers.get(i).name);
+            } else {
+                Lanterna.print(11, i + 3, servers.get(i).name);
+            }
+
             Lanterna.print(1, i + 3, servers.get(i).ping + " ms");
-            Lanterna.print(11, i + 3, servers.get(i).name);
             Lanterna.print(180, i + 3, servers.get(i).players + "/2");
         }
     }
