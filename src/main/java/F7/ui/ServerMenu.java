@@ -2,6 +2,7 @@ package F7.ui;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import F7.Lanterna;
@@ -10,8 +11,11 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
 public class ServerMenu {
+    private record ServerInfo(String name, long ping, int players) {}
+
     //! do i want the network here or in Network? or even in construction package?
     private static Network network;
+    private static ArrayList<ServerInfo> servers = new ArrayList<>();
 
     public static void start(String name) {
         network = new Network(Network.MAIN_PORT, name);
@@ -143,7 +147,7 @@ public class ServerMenu {
         }).start();
     }
 
-    private static void searchServers() throws Exception {
+    private static void searchServers() throws UnknownHostException {
         byte[] ips = InetAddress.getLocalHost().getAddress();
 
         for (int i = 1; i < 255; i++) {
@@ -165,18 +169,25 @@ public class ServerMenu {
                         String ping = datum[0];
                         String name = datum[1];
                         String players = datum[2];
-
-                        // set color
-                        Lanterna.print(0, 0, "^W");
-
-                        Lanterna.print(1, 3, ping + "ms");
-                        Lanterna.print(11, 3, name);
-                        Lanterna.print(180, 3, players + "/" + Network.MAX_PLAYERS + " players");
+                        servers.add(new ServerInfo(name, Long.valueOf(ping), Integer.parseInt(players)));
                     }
+
+                    printServers();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }).start();
+        }
+    }
+
+    private static void printServers() throws Exception {
+        // set color
+        Lanterna.print(0, 0, "^W");
+
+        for (int i = 0; i < servers.size(); i++) {
+            Lanterna.print(1, i + 3, servers.get(i).ping + " ms");
+            Lanterna.print(11, i + 3, servers.get(i).name);
+            Lanterna.print(180, i + 3, servers.get(i).players + "/2");
         }
     }
 }
