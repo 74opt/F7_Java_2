@@ -139,43 +139,6 @@ public class Network {
         }
     }
 
-    //! probably replace this with checkConnection? or a method that uses checkConnection
-    // @Deprecated
-    // public ArrayList<InetAddress> retrieveServers() {
-    //     ArrayList<InetAddress> servers = new ArrayList<>();
-    //     byte[] ip;
-
-    //     try {
-    //         ip = InetAddress.getLocalHost().getAddress();
-    //     } catch (Exception e) {
-    //         return null;
-    //     }
-
-    //     for (int i = 1; i < 255; i++) {
-    //         final int j = i;  // i as non-final variable cannot be referenced from inner class
-    //         new Thread(() -> {
-    //             try {
-    //                 ip[3] = (byte) j;
-    //                 InetAddress address = InetAddress.getByAddress(ip);
-    //                 String output = address.toString().substring(1);
-    //                 long initialTime = System.currentTimeMillis();
-    //                 // checks if you can connect to the server, it's an F7 server, and it's not the localhost
-    //                 if (address.isReachable(5000) && testConnection(output, MAIN_PORT) && !output.equals(InetAddress.getLocalHost().getHostAddress())) {
-    //                     long ping = System.currentTimeMillis() - initialTime;
-    //                     servers.add(address);
-    //                     System.out.println(output + " is on the network");
-    //                     System.out.println("ping: " + ping + "ms");
-    //                 }
-    //             } catch (SocketException ignored) {
-    //             } catch (Exception e) {
-    //                 e.printStackTrace();
-    //             }
-    //         }).start();
-    //     }
-
-    //     return servers;
-    // }
-
     public void sendData(String data) {
         printStream.println(data);
     }
