@@ -18,7 +18,6 @@ public class Lanterna {
     // Values good for 1920x1080
     public static final int STANDARD_COLUMNS = 211;
     public static final int STANDARD_ROWS = 61;
-
     public static final int SCROLL_TIME = 45;
 
     public static Screen getScreen() {return screen;}
