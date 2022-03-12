@@ -104,7 +104,7 @@ public class Lanterna {
                             continue;
                         }
 
-                        default -> throw new Exception("^ not followed by character");
+                        default -> throw new Exception("^ not followed by valid character");
                     }
                     textGraphics.setForegroundColor(new TextColor.Indexed(color));
 
