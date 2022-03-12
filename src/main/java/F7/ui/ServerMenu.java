@@ -106,8 +106,6 @@ public class ServerMenu {
         Q) Exit""");
     }
 
-    // TODO: add key binding list at bottom
-    // TODO: cursor at server name column
     public static void menu() throws Exception {
         // List this info: server name, latency, player count
         initialDraw();
@@ -124,26 +122,33 @@ public class ServerMenu {
                     if (keyPressed != null) {
                         try {
                             switch (keyPressed.getCharacter()) {
-                                // TODO: W and S and E implementation
-                                case 'w' -> {
+                                case 'w' -> { // go up
                                     if (selectedServer == 0) {
+                                        // go back to end
                                         selectedServer = servers.size() - 1;
+
+                                        Lanterna.print(11, 3, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                     } else {
                                         selectedServer--;
+                                        
+                                        Lanterna.print(11, selectedServer + 4, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                     }         
-                                    
-                                    Lanterna.print(11, selectedServer + 2, "^W" + servers.get(selectedServer).name);
-                                    Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                 }
-                                case 's' -> {
+                                case 's' -> { // go down
                                     if (selectedServer == servers.size() - 1) {
+                                        // go back to start
                                         selectedServer = 0;
+
+                                        Lanterna.print(11, servers.size() + 2, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, 3, "^g> ^W" + servers.get(selectedServer).name);
                                     } else {
                                         selectedServer++;
-                                    }
 
-                                    Lanterna.print(11, selectedServer + 2, "^W" + servers.get(selectedServer).name);
-                                    Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
+                                        Lanterna.print(11, selectedServer + 2, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
+                                    }
                                 }
                                 case 'e' -> {
                                     network.join(servers.get(selectedServer).address, Network.MAIN_PORT);

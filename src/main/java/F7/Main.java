@@ -11,7 +11,8 @@ Aramie Ewen and Gordon Dewey: Main Rivals/Emotional Support Animals
 David Lai and Oliver Malkus: Did My English Work
 Mr. Holmer: Assigned This Project
 Gayan Weerakutti: Some dude from stack overflow
-Hailey Wong: Didn't fuck up F7
+Hailey Wong: Didn't fuck up F7 when she had my computer
+
 */
 
 /*
@@ -38,18 +39,7 @@ TODO (Ordered by importance):
         - Make the records set in construction public
             - Maybe enum?
     - Javadoc all files in the F7 package?
-*/
 
-/*
-Sources because im gonna kashoot myself
-https://stackoverflow.com/questions/29545597/multiplayer-game-in-java-connect-client-player-to-game-that-was-created-by-ot
-https://stackoverflow.com/questions/29325034/how-would-an-mmo-deal-with-calculating-and-sending-packets-for-thousands-of-play/30826823#30826823
-https://stackoverflow.com/questions/52565970/can-i-connect-2-computers-using-sockets-in-java
-https://www.geeksforgeeks.org/java-networking/
-https://www.geeksforgeeks.org/establishing-the-two-way-communication-between-server-and-client-in-java/
-*/
-
-/*
 Server Notes:
     - Upon entering multiplayer, server is made, regardless of being a host or not
 */
@@ -57,7 +47,7 @@ Server Notes:
 public class Main {
     public static void main(String[] args) {
         try {
-            Network server = new Network(Network.MAIN_PORT, "test server");
+            Network server = new Network(Network.MAIN_PORT, "test server in main method");
 
             Enemies.setEnemyHashMap();
             Weapons.setWeaponHashMap();
@@ -66,32 +56,9 @@ public class Main {
             Consumables.setConsumableHashMap();
             WinMenu.setRarityMultipliers();
 
-            Lanterna.startScreen(Lanterna.getSTANDARD_COLUMNS(), Lanterna.getSTANDARD_ROWS());
+            Lanterna.startScreen(Lanterna.STANDARD_COLUMNS, Lanterna.STANDARD_ROWS);
 
             MainMenu.menu2();
-            // Network.startServer(Network.MAIN_PORT);
-            // Network.joinServer("localhost", Network.MAIN_PORT);
-            // Network.retrieveServers();
-            
-            // usually, servers will have the same port, different addresses.
-            
-            //Network server2 = new Network(Network.MAIN_PORT + 1, "whoop whoop");
-            /*
-            /// Upon a connection made, read verification
-            //? how to keep reading verifications, while loop?
-            //! the first thing a connecting server should send is its verification
-            //server.checkConnection();
-            server2.join("localhost", Network.MAIN_PORT);
-            server2.join("localhost", Network.MAIN_PORT);
-            System.out.println(server.readString());
-            */
-            
-            
-            //server.retrieveServers();
-            //server2.sendData(Network2.BROWSER_VERIFICATION);
-            //server2.joinServer("localhost", Network2.MAIN_PORT);
-            //server.openServer();
-            //server.sendData("test");
         } catch (Exception e) {
             e.printStackTrace();
         }

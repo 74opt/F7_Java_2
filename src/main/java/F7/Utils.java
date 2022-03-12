@@ -24,9 +24,6 @@ public class Utils {
     /** Standard decimal format used in the game */
     public static final DecimalFormat DOUBLE_DECIMAL = new DecimalFormat("0.0#");
 
-    // Random
-    private static Random random = new Random();
-
     /**
      * Returns a string that contains a percentage of how much of an item left out 
      * of the total possible amount of items, comparing integers.

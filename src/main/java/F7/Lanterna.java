@@ -16,17 +16,13 @@ public class Lanterna {
     private static int initColumn;
 
     // Values good for 1920x1080
-    private static final int STANDARD_COLUMNS = 211;
-    private static final int STANDARD_ROWS = 61;
+    public static final int STANDARD_COLUMNS = 211;
+    public static final int STANDARD_ROWS = 61;
 
     public static final int SCROLL_TIME = 45;
 
     public static Screen getScreen() {return screen;}
 
-    public static int getSTANDARD_COLUMNS() {return STANDARD_COLUMNS;}
-
-    public static int getSTANDARD_ROWS() {return STANDARD_ROWS;}
-    
     public static void startScreen(int paramInitColumn, int paramInitRow) throws IOException {
         initColumn = paramInitColumn;
         terminal = new DefaultTerminalFactory().setInitialTerminalSize(new TerminalSize(paramInitColumn, paramInitRow)).createTerminal();

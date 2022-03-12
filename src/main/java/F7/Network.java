@@ -5,7 +5,6 @@ import java.net.*;
 import java.util.ArrayList;
 
 // https://stackoverflow.com/questions/8816870/i-want-to-get-the-ping-execution-time-and-result-in-string-after-ping-host
-// TODO: Remove all System.out.print for final product
 public class Network {
     private Socket socket;
     private ServerSocket serverSocket;
@@ -43,7 +42,6 @@ public class Network {
                 open();
             } catch (IOException e) {
                 // replace this with something else soon
-                System.out.println("Server already exists");
             }
         }).start();
     }
@@ -57,8 +55,6 @@ public class Network {
             printStream = new PrintStream(socket.getOutputStream());
 
             checkConnection();
-        } else {
-            System.out.println("Server full");
         }
     }
 
@@ -80,7 +76,6 @@ public class Network {
             
             sendData(MAIN_VERIFICATION);
         } catch (ConnectException e) {
-            System.out.println("Server with port " + port + " not found");
         }
     }
 
@@ -93,20 +88,17 @@ public class Network {
                 try {
                     if (verification.equals(MAIN_VERIFICATION)) {
                         // keep the connection
-                        //System.out.println("is server");
                         this.players++;
                         break;
                     } else if (verification.equals(BROWSER_VERIFICATION)) { 
                         // send the data then disconnect
                         printStream.println(name + "," + players);
                         socket.close();
-                        //System.out.println("is browser");
                         open();
                         break;
                     } else { //! probably shouldnt have this?
                         // disconnect
                         socket.close();
-                        //System.out.println("is disconnect");
                         open();
                         break;
                     }

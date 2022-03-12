@@ -1,4 +1,3 @@
-Need several instances for this networking thing to work, run from powershell from now on.
 Try not to x out, use normal method to exit out with System.exit(0);
 If you need to x out, end java instance with task manager
 

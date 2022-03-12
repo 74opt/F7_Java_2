@@ -44,9 +44,6 @@ public class WinMenu {
 
             weaponRarity = rarities[rarityIndex];
 
-            // System.out.println("weaponRarity: " + weaponRarity);
-            // System.out.println("testRarity: " + testRarity);
-
             Weapon weapon = new Weapon(Weapons.getWeaponHashMap().get(weaponRarity)[Utils.randomRange(0, Weapons.getWeaponHashMap().get(weaponRarity).length)]);
             weapon.setLevel(CombatMenu.getEnemy().getLevel() + Utils.randomRange(-1, 1));
 
