@@ -20,8 +20,8 @@
 - [x] Uses selection sort.
 - [x] Uses insertion sort.
 - [ ] Compares selection and insertion sort with statement execution counts.
-- [ ] Safeguards personal privacy.
-- [ ] Benefits personal security.
+- [x] Safeguards personal privacy.
+- [x] Benefits personal security.
 
 ## Unit 8: 2D Array
 
@@ -33,11 +33,11 @@
 
 ## Unit 9: Inheritance
 
-- [ ] Uses a subclass that extends a superclass.
-- [ ] Calls a superclass constructor with the super keyword and passes actual parameters.
+- [x] Uses a subclass that extends a superclass.
+- [x] Calls a superclass constructor with the super keyword and passes actual parameters.
 - [ ] Calls a superclass’s no-argument constructor.
 - [ ] Calls the Object constructor.
-- [ ] Overrides methods in a superclass.
+- [x] Overrides methods in a superclass.
 - [ ] Includes subclasses with instance variables.
 - [ ] Calls an inherited method.
 - [ ] Calls a superclass method with the super keyword and passes actual parameters.
