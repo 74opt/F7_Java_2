@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import F7.Lanterna;
 import F7.Network;
@@ -16,6 +17,7 @@ public class ServerMenu {
     //! do i want the network here or in Network? or even in construction package?
     private static Network network;
     private static ArrayList<ServerInfo> servers = new ArrayList<>();
+    private static final ArrayList<ServerInfo> demoServers = new ArrayList<>(Arrays.asList(new ServerInfo("Demo Server 1", 53, 1, ""), new ServerInfo("Demo Server 2", 37, 1, ""), new ServerInfo("Demo Server 3", 52, 1, ""), new ServerInfo("Demo Server 4", 42, 1, ""), new ServerInfo("Demo Server 5", 22, 1, "")));
 
     public static void start(String name) {
         network = new Network(Network.MAIN_PORT, name);
@@ -171,6 +173,8 @@ public class ServerMenu {
     }
 
     private static void searchServers() throws UnknownHostException {
+        // TODO: uncomment when game done
+        //servers = new ArrayList<>();
         byte[] ips = InetAddress.getLocalHost().getAddress();
 
         for (int i = 1; i < 255; i++) {
@@ -200,6 +204,59 @@ public class ServerMenu {
                 }
             }).start();
         }
+
+        // TODO: only for testing
+        servers = demoServers;
+    }
+
+    // Sort by ping
+    private static void sortServers() {
+        //* implementing insertion and selection sort
+        //* gonna have them in their own threads
+        //* also need statement execution counts
+        //* this rubric sucks
+
+        // insertion sort
+        new Thread(() -> {
+            int count = 0;
+            
+            for (int i = 1; i < servers.size(); i++) {
+                ServerInfo temp = servers.get(i);
+                int j = i;
+
+                while (j > 0 && servers.get(j - 1).ping > temp.ping) {
+                    servers.set(j, servers.get(j - 1));
+                    j--;
+                    count++;
+                }
+
+                servers.set(j, temp);
+            }
+        }).start();
+
+        // selection sort
+        new Thread(() -> {
+            int count = 0;
+
+            for (int i = 0; i < servers.size() - 1; i++) {
+                int min = i;
+
+                // TODO: do i need the count here?
+                for (int j = i + 1; j < servers.size(); j++) {
+                    if (servers.get(j).ping < servers.get(min).ping) {
+                        min = j;
+                    }
+                }
+
+                if (min != i) {
+                    count++;
+
+                    ServerInfo temp = servers.get(i);
+                    servers.set(i, servers.get(min));
+                    servers.set(min, temp);
+                }
+            }
+        }).start();
     }
 
     private static void printServers() throws Exception {
@@ -210,6 +267,8 @@ public class ServerMenu {
                 Lanterna.print(11, i + 3, servers.get(i).name);
             }
 
+            // Reset color to white in case it was changed by the name
+            Lanterna.print(0, 0, "^W");
             Lanterna.print(1, i + 3, servers.get(i).ping + " ms");
             Lanterna.print(180, i + 3, servers.get(i).players + "/2");
         }

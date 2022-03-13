@@ -83,6 +83,7 @@ public class Lanterna {
                         case 'B' -> color = 27; // Blue; Main blue to use; To replace 20
                         case 'P' -> color = 13; // Pink
                         case 'p' -> color = 99; // Purple
+                        case 'Y' -> color = 11; // Yellow
 
                         // The following are codes for specifically for tiles
                         case '1' -> color = 82; // Green

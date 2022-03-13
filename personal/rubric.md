@@ -6,19 +6,19 @@
 - [ ] Uses the raw type ArrayList.
 - [x] Imports the java.util package.
 - [ ] Both calls and uses the return value (if non-void) of each of the following ArrayList methods:
-  - [ ] int size()
-  - [ ] boolean add(E obj)
+  - [x] int size()
+  - [x] boolean add(E obj)
   - [ ] void add(int index, E obj)
   - [x] E get(int index)
-  - [ ] E set(int index, E obj)
+  - [x] E set(int index, E obj)
   - [ ] E remove(int index)
 - [x] Uses iteration to traverse an ArrayList
 - [ ] Deletes an element of an ArrayList during traversal without skipping an element.
-- [ ] Throws no ArrayIndexOutOfBoundsExceptions.
-- [ ] Throws no ConcurrentModificationExceptions.
+- [x] Throws no ArrayIndexOutOfBoundsExceptions.
+- [x] Throws no ConcurrentModificationExceptions.
 - [ ] Checks each element in an ArrayList  in order until a desired value is found or all elements in the ArrayList have been checked.
-- [ ] Uses selection sort.
-- [ ] Uses insertion sort.
+- [x] Uses selection sort.
+- [x] Uses insertion sort.
 - [ ] Compares selection and insertion sort with statement execution counts.
 - [ ] Safeguards personal privacy.
 - [ ] Benefits personal security.
