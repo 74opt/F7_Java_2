@@ -4,6 +4,9 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+import F7.entities.construction.Players;
+import F7.ui.MapMenu;
+
 // https://stackoverflow.com/questions/8816870/i-want-to-get-the-ping-execution-time-and-result-in-string-after-ping-host
 public class Network {
     private Socket socket;
@@ -26,6 +29,9 @@ public class Network {
 
     // Need?
     public ServerSocket getServerSocket() {return serverSocket;}
+    public Socket getSocket() {return socket;}
+    public PrintStream getPrintStream() {return printStream;}
+    public BufferedReader getBufferedReader() {return bufferedReader;}
 
     // how to split into constructor and server opener?
     // establish all networking code within the same thread
@@ -75,8 +81,7 @@ public class Network {
             printStream = new PrintStream(socket.getOutputStream());
             
             sendData(MAIN_VERIFICATION);
-        } catch (ConnectException e) {
-        }
+        } catch (ConnectException e) {}
     }
 
     // For the hosting server
@@ -89,6 +94,9 @@ public class Network {
                     if (verification.equals(MAIN_VERIFICATION)) {
                         // keep the connection
                         this.players++;
+                        printStream.println(Players.getPlayer().getX());
+                        printStream.println(Players.getPlayer().getY());
+                        // need smth with getting map if i ever implement more than one
                         break;
                     } else if (verification.equals(BROWSER_VERIFICATION)) { 
                         // send the data then disconnect

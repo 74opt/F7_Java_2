@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 import F7.Lanterna;
 import F7.Network;
+import F7.entities.construction.Players;
+
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 
@@ -129,12 +131,12 @@ public class ServerMenu {
                                         // go back to end
                                         selectedServer = servers.size() - 1;
 
-                                        Lanterna.print(11, 3, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, 3, "^W" + servers.get(0).name + "  ");
                                         Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                     } else {
                                         selectedServer--;
                                         
-                                        Lanterna.print(11, selectedServer + 4, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, selectedServer + 4, "^W" + servers.get(selectedServer + 1).name + "  ");
                                         Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                     }         
                                 }
@@ -143,19 +145,21 @@ public class ServerMenu {
                                         // go back to start
                                         selectedServer = 0;
 
-                                        Lanterna.print(11, servers.size() + 2, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, servers.size() + 2, "^W" + servers.get(servers.size() - 1).name + "  ");
                                         Lanterna.print(11, 3, "^g> ^W" + servers.get(selectedServer).name);
                                     } else {
                                         selectedServer++;
 
-                                        Lanterna.print(11, selectedServer + 2, "^W" + servers.get(selectedServer).name + "  ");
+                                        Lanterna.print(11, selectedServer + 2, "^W" + servers.get(selectedServer - 1).name + "  ");
                                         Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                     }
                                 }
                                 case 'e' -> {
                                     network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
-                                    // TODO: implementation
+                                    // TODO: read from printStream with bufferedReader to get location of host kthxbai
+                                    MapMenu.getCurrentMap().spawnPlayer(19, 8);
+                                    MapMenu.menu();
                                 }
                                 case 'q' -> {
                                     running = false;
@@ -174,7 +178,7 @@ public class ServerMenu {
 
     private static void searchServers() throws UnknownHostException {
         // TODO: uncomment when game done
-        //servers = new ArrayList<>();
+        servers = new ArrayList<>();
         byte[] ips = InetAddress.getLocalHost().getAddress();
 
         for (int i = 1; i < 255; i++) {
@@ -217,49 +221,46 @@ public class ServerMenu {
         //* this rubric sucks
 
         // insertion sort
-        new Thread(() -> {
-            int count = 0;
-            
-            for (int i = 1; i < servers.size(); i++) {
-                ServerInfo temp = servers.get(i);
-                int j = i;
+        for (int i = 1; i < servers.size(); i++) {
+            ServerInfo temp = servers.get(i);
+            int j = i;
 
-                while (j > 0 && servers.get(j - 1).ping > temp.ping) {
-                    servers.set(j, servers.get(j - 1));
-                    j--;
-                    count++;
-                }
-
-                servers.set(j, temp);
+            while (j > 0 && servers.get(j - 1).ping > temp.ping) {
+                servers.set(j, servers.get(j - 1));
+                j--;
             }
-        }).start();
 
-        // selection sort
-        new Thread(() -> {
-            int count = 0;
+            servers.set(j, temp);
+        }
 
-            for (int i = 0; i < servers.size() - 1; i++) {
-                int min = i;
+        // // selection sort
+        // new Thread(() -> {
+        //     int count = 0;
 
-                // TODO: do i need the count here?
-                for (int j = i + 1; j < servers.size(); j++) {
-                    if (servers.get(j).ping < servers.get(min).ping) {
-                        min = j;
-                    }
-                }
+        //     for (int i = 0; i < servers.size() - 1; i++) {
+        //         int min = i;
 
-                if (min != i) {
-                    count++;
+        //         // TODO: do i need the count here?
+        //         for (int j = i + 1; j < servers.size(); j++) {
+        //             if (servers.get(j).ping < servers.get(min).ping) {
+        //                 min = j;
+        //             }
+        //         }
 
-                    ServerInfo temp = servers.get(i);
-                    servers.set(i, servers.get(min));
-                    servers.set(min, temp);
-                }
-            }
-        }).start();
+        //         if (min != i) {
+        //             count++;
+
+        //             ServerInfo temp = servers.get(i);
+        //             servers.set(i, servers.get(min));
+        //             servers.set(min, temp);
+        //         }
+        //     }
+        // }).start();
     }
 
     private static void printServers() throws Exception {
+        sortServers();
+
         for (int i = 0; i < servers.size(); i++) {
             if (i == 0) {
                 Lanterna.print(11, 3, "^g> ^W" + servers.get(i).name);
