@@ -76,6 +76,7 @@ public class Network {
 
     public void join(String address, int port) throws IOException {
         try {
+            System.out.println("join method");
             socket = new Socket(address, port);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream = new PrintStream(socket.getOutputStream());
@@ -92,6 +93,7 @@ public class Network {
 
                 try {
                     if (verification.equals(MAIN_VERIFICATION)) {
+                        System.out.println("this is the one baby");
                         // keep the connection
                         this.players++;
                         printStream.println(Players.getPlayer().getX());

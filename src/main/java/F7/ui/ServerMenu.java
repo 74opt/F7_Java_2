@@ -158,7 +158,6 @@ public class ServerMenu {
                                 }
                                 case 'e' -> {
                                     try {
-                                        Lanterna.print(30, 30, "e pressed");
                                         //running = false;
                                         network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
