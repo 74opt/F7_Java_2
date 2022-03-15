@@ -5,9 +5,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 import F7.Lanterna;
 import F7.Network;
+import F7.entities.construction.Maps;
 import F7.entities.construction.Players;
 
 import com.googlecode.lanterna.input.KeyStroke;
@@ -158,7 +160,10 @@ public class ServerMenu {
                                     network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
                                     // TODO: read from printStream with bufferedReader to get location of host kthxbai
+                                    int hostX = network.readInt();
+                                    int hostY = network.readInt();
                                     MapMenu.getCurrentMap().spawnPlayer(19, 8);
+                                    MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
                                     MapMenu.menu();
                                 }
                                 case 'q' -> {

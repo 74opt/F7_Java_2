@@ -17,6 +17,7 @@ public class Map {
     public String getNAME() {return NAME;}
 
     public Tile[][] getMAP() {return MAP;}
+    public void setTile(Tile tile, int x, int y) {MAP[y][x] = tile;}
 
     public Map getPARENT() {return PARENT;}
 
