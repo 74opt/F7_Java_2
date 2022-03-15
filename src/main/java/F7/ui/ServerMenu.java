@@ -157,14 +157,21 @@ public class ServerMenu {
                                     }
                                 }
                                 case 'e' -> {
-                                    network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
+                                    try {
+                                        Lanterna.print(30, 30, "e pressed");
+                                        //running = false;
+                                        network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
-                                    // TODO: read from printStream with bufferedReader to get location of host kthxbai
-                                    int hostX = network.readInt();
-                                    int hostY = network.readInt();
-                                    MapMenu.getCurrentMap().spawnPlayer(19, 8);
-                                    MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
-                                    MapMenu.menu();
+                                        // TODO: read from printStream with bufferedReader to get location of host kthxbai
+                                        int hostX = network.readInt();
+                                        int hostY = network.readInt();
+                                        MapMenu.getCurrentMap().spawnPlayer(19, 8);
+                                        MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
+                                        MapMenu.menu();
+                                        Lanterna.print(50, 50, "Coordinates: " + hostX + " " + hostY);
+                                    } catch (Exception e) {
+                                        Lanterna.print(40, 40, "^rFailed to join server");
+                                    }
                                 }
                                 case 'q' -> {
                                     running = false;

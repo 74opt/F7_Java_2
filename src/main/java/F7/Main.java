@@ -47,7 +47,7 @@ Server Notes:
 public class Main {
     public static void main(String[] args) {
         try {
-            Network server = new Network(Network.MAIN_PORT, "^Rc^Oo^Yo^gl ^Bser^pver");
+            //Network server = new Network(Network.MAIN_PORT, "^Rc^Oo^Yo^gl ^Bser^pver");
 
             Enemies.setEnemyHashMap();
             Weapons.setWeaponHashMap();
