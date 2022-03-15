@@ -74,6 +74,14 @@ public class Network {
         }
     }
 
+    /*
+    Do whatever the hell you did with those verification strings
+    those sending seemed to work
+
+    or maybe sending the browser strings dont let you send any more?
+
+    look back on code ok
+     */
     public void join(String address, int port) throws IOException {
         try {
             System.out.println("join method");
@@ -148,6 +156,7 @@ public class Network {
     // Once data is read, it is deleted from the buffer
     private Object readData() {
         try {
+            System.out.println("read: " + bufferedReader.readLine());
             return bufferedReader.readLine();
         } catch (Exception e) {
             e.printStackTrace();

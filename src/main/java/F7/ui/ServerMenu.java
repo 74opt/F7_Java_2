@@ -205,7 +205,7 @@ public class ServerMenu {
                     // 2. have that server return info
                     // 3. add to list
                     Thread.sleep(1000);
-                    if (!data.equals(null)) {
+                    if (data != null) {
                         String[] datum = data.split(",");
                         String ping = datum[0];
                         String name = datum[1];
