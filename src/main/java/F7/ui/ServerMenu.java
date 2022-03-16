@@ -195,7 +195,7 @@ public class ServerMenu {
 
     private static void searchServers() throws UnknownHostException {
         // TODO: uncomment when game done
-        servers = new ArrayList<>();
+        servers = demoServers;
         byte[] ips = InetAddress.getLocalHost().getAddress();
 
         for (int i = 1; i < 255; i++) {
@@ -216,7 +216,7 @@ public class ServerMenu {
                         String ping = datum[0];
                         String name = datum[1];
                         String players = datum[2];
-                        servers.add(new ServerInfo(name, Long.valueOf(ping), Integer.parseInt(players), address));
+                        servers.add(new ServerInfo(name, Long.parseLong(ping), Integer.parseInt(players), address));
                     }
 
                     printServers();
@@ -227,7 +227,7 @@ public class ServerMenu {
         }
 
         // TODO: only for testing
-        servers = demoServers;
+        //servers = demoServers;
     }
 
     // Sort by ping

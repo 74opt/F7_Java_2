@@ -57,7 +57,7 @@ public class MainMenu {
 
                 ^G1) Singleplayer
                 2) Multiplayer
-                3) Quit 
+                3) Quit
                 """
         );
         
@@ -179,7 +179,8 @@ public class MainMenu {
                             switch (keyPressed.getCharacter()) {
                                 case '1' -> {
                                     running = false;
-                                    inputName();                                    selectServerType();
+                                    inputName();
+                                    selectServerType();
                                 }
                                 case '2' -> {
                                     running = false;
@@ -268,6 +269,7 @@ public class MainMenu {
 
     private static void inputName() throws Exception {
         int row = 40;
+        name = "";
 
         Lanterna.print(1, row, "^WWhat is your name?\n^g> ^G");
         boolean running = true;
