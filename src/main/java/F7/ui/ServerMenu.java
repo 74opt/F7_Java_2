@@ -89,7 +89,7 @@ public class ServerMenu {
                 try {
                     for (int j = 0; j < 55; j++) {
                         switch (j) {
-                            case 0, 2, 60 -> {}
+                            case 0, 2 -> {}
                             default -> Lanterna.print(i, j, "║");
                         }
                     }
@@ -162,14 +162,17 @@ public class ServerMenu {
                                         network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
                                         // TODO: read from printStream with bufferedReader to get location of host kthxbai
-                                        int hostX = network.readInt();
-                                        int hostY = network.readInt();
+                                        String data = network.readString();
+                                        String[] datum = data.split(",");
+
+                                        int hostX = Integer.parseInt(datum[0]);
+                                        int hostY = Integer.parseInt(datum[1]);
                                         MapMenu.getCurrentMap().spawnPlayer(19, 8);
                                         MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
                                         MapMenu.menu();
                                         Lanterna.print(50, 50, "Coordinates: " + hostX + " " + hostY);
                                     } catch (Exception e) {
-                                        Lanterna.print(40, 40, "^rFailed to join server");
+                                        Lanterna.print(40, 40, "^RFailed to join server");
                                     }
                                 }
                                 case 'q' -> {

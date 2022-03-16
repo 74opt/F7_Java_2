@@ -27,7 +27,6 @@ public class Network {
 
     public String getAddress() {return address;}
 
-    // Need?
     public ServerSocket getServerSocket() {return serverSocket;}
     public Socket getSocket() {return socket;}
     public PrintStream getPrintStream() {return printStream;}
@@ -104,8 +103,7 @@ public class Network {
                         System.out.println("this is the one baby");
                         // keep the connection
                         this.players++;
-                        printStream.println(Players.getPlayer().getX());
-                        printStream.println(Players.getPlayer().getY());
+                        printStream.println(Players.getPlayer().getX() + "," + Players.getPlayer().getY());
                         // need smth with getting map if i ever implement more than one
                         break;
                     } else if (verification.equals(BROWSER_VERIFICATION)) { 
@@ -149,6 +147,7 @@ public class Network {
         }
     }
 
+    //! when sending multiple things, make sure to use a delimiter (,)
     public void sendData(String data) {
         printStream.println(data);
     }
