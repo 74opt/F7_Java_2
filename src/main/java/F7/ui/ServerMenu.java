@@ -23,6 +23,8 @@ public class ServerMenu {
     private static ArrayList<ServerInfo> servers = new ArrayList<>();
     private static final ArrayList<ServerInfo> demoServers = new ArrayList<>(Arrays.asList(new ServerInfo("Demo Server 1", 53, 1, ""), new ServerInfo("Demo Server 2", 37, 1, ""), new ServerInfo("Demo Server 3", 52, 1, ""), new ServerInfo("Demo Server 4", 42, 1, ""), new ServerInfo("Demo Server 5", 22, 1, "")));
 
+    public static Network getNetwork() {return network;}
+
     public static void start(String name) {
         network = new Network(Network.MAIN_PORT, name);
     }
