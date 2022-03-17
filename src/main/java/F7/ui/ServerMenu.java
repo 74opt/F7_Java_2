@@ -195,18 +195,23 @@ public class ServerMenu {
 
     private static void searchServers() throws UnknownHostException {
         // TODO: uncomment when game done
-        servers = demoServers;
-        byte[] ips = InetAddress.getLocalHost().getAddress();
+        //servers = demoServers;
+        //servers = new ArrayList<>();
+        byte[] ip = InetAddress.getLocalHost().getAddress();
 
         for (int i = 1; i < 255; i++) {
             final int j = i; // must be declared final to use in thread
 
             new Thread(() -> {
                 try {
-                    ips[3] = (byte) j;
-                    String address = InetAddress.getByAddress(ips).toString().substring(1);
+                    ip[3] = (byte) j;
+                    String address = InetAddress.getByAddress(ip).toString().substring(1);
                     
                     String data = Network.testConnection(address, Network.MAIN_PORT);
+
+                    if (InetAddress.getByAddress(ip).isReachable(5000)) {
+                        System.out.println(address);
+                    }
                     // 1. connect with a BROWSER_VERIFICATION
                     // 2. have that server return info
                     // 3. add to list

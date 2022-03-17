@@ -44,16 +44,24 @@ public class Network {
                 this.name = name;
                 this.players = 1;
 
+                System.out.println("network constructed");
                 open();
             } catch (IOException e) {
                 // replace this with something else soon
+                e.printStackTrace();
             }
         }).start();
     }
 
+    /*
+    TODO: only problem is that info isnt being sent correctly
+     */
     private void open() throws IOException {
         if (players < MAX_PLAYERS) {
+            System.out.println("open method start");
+            // The method blocks until a connection is made.
             socket = serverSocket.accept();
+            System.out.println("serverSocket.accept worked");
             connected = true; //! do i need?
 
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -106,14 +114,16 @@ public class Network {
                         printStream.println(Players.getPlayer().getX() + "," + Players.getPlayer().getY());
                         // need smth with getting map if i ever implement more than one
                         break;
-                    } else if (verification.equals(BROWSER_VERIFICATION)) { 
+                    } else if (verification.equals(BROWSER_VERIFICATION)) {
                         // send the data then disconnect
+                        System.out.println("Brows");
                         printStream.println(name + "," + players);
                         socket.close();
                         open();
                         break;
                     } else { //! probably shouldnt have this?
                         // disconnect
+                        System.out.println("I think you messed up dude");
                         socket.close();
                         open();
                         break;
@@ -125,9 +135,7 @@ public class Network {
         }).start();
     }
 
-    // TODO: keep static?
-    // TODO: make return server info (is this the time where i must use the raw arraylist)
-    // ^ remember that printstream only works with strings
+    // TODO: rename method?
     public static String testConnection(String address, int port) throws IOException {
         try {
             Socket socket = new Socket(address, port);
@@ -141,6 +149,7 @@ public class Network {
             printStream.println(BROWSER_VERIFICATION);
             String data = ping + "," + bufferedReader.readLine();
             socket.close();
+            System.out.println("things be workin fr fr");
             return data;
         } catch (ConnectException e) {
             return null;
