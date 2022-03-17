@@ -138,6 +138,7 @@ public class Network {
     // TODO: rename method?
     public static String testConnection(String address, int port) throws IOException {
         try {
+            System.out.println("testConnection called with " + address);
             Socket socket = new Socket(address, port);
             long initialTime = System.currentTimeMillis();
             long ping = 0;
@@ -152,6 +153,7 @@ public class Network {
             System.out.println("things be workin fr fr");
             return data;
         } catch (ConnectException e) {
+            System.out.println(address + " failed to connect");
             return null;
         }
     }
@@ -164,8 +166,9 @@ public class Network {
     // Once data is read, it is deleted from the buffer
     private Object readData() {
         try {
-            System.out.println("read: " + bufferedReader.readLine());
-            return bufferedReader.readLine();
+            String ver = bufferedReader.readLine();
+            System.out.println("read: " + ver);
+            return ver;
         } catch (Exception e) {
             e.printStackTrace();
 

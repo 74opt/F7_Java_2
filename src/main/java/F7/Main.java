@@ -47,7 +47,7 @@ Server Notes:
 public class Main {
     public static void main(String[] args) {
         try {
-            Network server = new Network(Network.MAIN_PORT, "Test Server In Main Method");
+            //Network server = new Network(Network.MAIN_PORT, "Test Server In Main Method");
 
             Enemies.setEnemyHashMap();
             Weapons.setWeaponHashMap();

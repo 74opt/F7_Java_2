@@ -210,13 +210,14 @@ public class ServerMenu {
                     String data = Network.testConnection(address, Network.MAIN_PORT);
 
                     if (InetAddress.getByAddress(ip).isReachable(5000)) {
-                        System.out.println(address);
+                        System.out.println(address + " is reachable");
                     }
                     // 1. connect with a BROWSER_VERIFICATION
                     // 2. have that server return info
                     // 3. add to list
                     Thread.sleep(1000);
                     if (data != null) {
+                        System.out.println("guys data isnt null woohoo");
                         String[] datum = data.split(",");
                         String ping = datum[0];
                         String name = datum[1];
