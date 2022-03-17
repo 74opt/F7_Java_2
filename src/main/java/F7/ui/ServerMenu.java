@@ -162,6 +162,9 @@ public class ServerMenu {
                                 case 'e' -> {
                                     try {
                                         //running = false;
+                                        System.out.println("pressed e, lets hope also address is " + servers.get(selectedServer).address);
+
+                                        // Network is null
                                         network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
                                         // TODO: read from printStream with bufferedReader to get location of host kthxbai
@@ -176,6 +179,7 @@ public class ServerMenu {
                                         Lanterna.print(50, 50, "Coordinates: " + hostX + " " + hostY);
                                     } catch (Exception e) {
                                         Lanterna.print(40, 40, "^RFailed to join server");
+                                        e.printStackTrace();
                                     }
                                 }
                                 case 'q' -> {

@@ -97,7 +97,9 @@ public class Network {
             printStream = new PrintStream(socket.getOutputStream());
             
             sendData(MAIN_VERIFICATION);
-        } catch (ConnectException e) {}
+        } catch (ConnectException e) {
+            e.printStackTrace();
+        }
     }
 
     // For the hosting server
