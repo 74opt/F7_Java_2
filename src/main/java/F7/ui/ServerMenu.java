@@ -117,6 +117,7 @@ public class ServerMenu {
 
     public static void menu() throws Exception {
         // List this info: server name, latency, player count
+        start("default client name");
         initialDraw();
         searchServers();
 
@@ -168,11 +169,12 @@ public class ServerMenu {
                                         network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
                                         // TODO: read from printStream with bufferedReader to get location of host kthxbai
-                                        String data = network.readString();
+                                        String data = network.readString(); // reading "F7 server here!"
                                         String[] datum = data.split(",");
 
                                         int hostX = Integer.parseInt(datum[0]);
                                         int hostY = Integer.parseInt(datum[1]);
+                                        MapMenu.setCurrentMap(Maps.getPlains());
                                         MapMenu.getCurrentMap().spawnPlayer(19, 8);
                                         MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
                                         MapMenu.menu();
@@ -210,6 +212,8 @@ public class ServerMenu {
                 try {
                     ip[3] = (byte) j;
                     String address = InetAddress.getByAddress(ip).toString().substring(1);
+
+
                     
                     String data = Network.testConnection(address, Network.MAIN_PORT);
 
@@ -220,7 +224,7 @@ public class ServerMenu {
                     // 2. have that server return info
                     // 3. add to list
                     Thread.sleep(1000);
-                    if (data != null) {
+                    if (data != null && !address.equals(InetAddress.getLocalHost())) {
                         System.out.println("guys data isnt null woohoo");
                         String[] datum = data.split(",");
                         String ping = datum[0];
