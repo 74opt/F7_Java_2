@@ -11,9 +11,13 @@ import java.io.*;
 public class MapMenu {
     private static Map currentMap;
     private static boolean running;
+    private static boolean isMultiplayer = false;
 
     public static Map getCurrentMap() {return currentMap;}
     public static void setCurrentMap(Map currentMap) {MapMenu.currentMap = currentMap;}
+
+    public static boolean getIsMultiplayer() {return isMultiplayer;}
+    public static void setIsMultiplayer(boolean isMultiplayer) {MapMenu.isMultiplayer = isMultiplayer;}
 
     public static void menu() throws Exception {
         Lanterna.clear();
@@ -56,18 +60,34 @@ public class MapMenu {
                                 case 'w' -> {
                                     currentMap.movePlayer("up", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
+
+                                    if (isMultiplayer) {
+                                        ServerMenu.getNetwork().sendData(String.format("%s,%s", Players.getPlayer().getX(), Players.player.getY()));
+                                    }
                                 }
                                 case 'a' -> {
                                     currentMap.movePlayer("left", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
+
+                                    if (isMultiplayer) {
+                                        ServerMenu.getNetwork().sendData(String.format("%s,%s", Players.getPlayer().getX(), Players.player.getY()));
+                                    }
                                 }
                                 case 's' -> {
                                     currentMap.movePlayer("down", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
+
+                                    if (isMultiplayer) {
+                                        ServerMenu.getNetwork().sendData(String.format("%s,%s", Players.getPlayer().getX(), Players.player.getY()));
+                                    }
                                 }
                                 case 'd' -> {
                                     currentMap.movePlayer("right", 1);
                                     Lanterna.print(1, 3, currentMap.toString());
+
+                                    if (isMultiplayer) {
+                                        ServerMenu.getNetwork().sendData(String.format("%s,%s", Players.getPlayer().getX(), Players.player.getY()));
+                                    }
                                 }
                             }
                         } catch (Exception ignored) {}

@@ -112,8 +112,9 @@ public class Network {
                 try {
                     if (verification.equals(MAIN_VERIFICATION)) {
                         if (Players.getPlayer().getX() == 19 && Players.player.getY() == 8) {
-                            // move player somewhere
+                            // move player somewhere else
                         }
+                        MapMenu.setIsMultiplayer(true);
                         System.out.println("this is the one baby");
                         // keep the connection
                         this.players++;

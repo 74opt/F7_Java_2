@@ -169,13 +169,12 @@ public class ServerMenu {
 
                                         String data = network.readString(); // reading "F7 server here!"
                                         String[] datum = data.split(",");
+                                        MapMenu.setIsMultiplayer(true);
 
                                         int hostX = Integer.parseInt(datum[0]);
                                         int hostY = Integer.parseInt(datum[1]);
                                         MapMenu.setCurrentMap(new Map(Maps.getPlains()));
                                         MapMenu.getCurrentMap().spawnPlayer(19, 8);
-//                                        Players.getPlayer().setX(19);
-//                                        Players.getPlayer().setY(8);
                                         MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
                                         running = false;
                                         MapMenu.menu();

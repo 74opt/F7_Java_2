@@ -11,8 +11,9 @@ Aramie Ewen and Gordon Dewey: Main Rivals/Emotional Support Animals
 David Lai and Oliver Malkus: Did My English Work
 Mr. Holmer: Assigned This Project
 Gayan Weerakutti: Some dude from stack overflow
-Hailey Wong: Didn't fuck up F7 when she had my computer
+Hailey Wong: Didn't destroy F7 when she had my computer
 Ev Lisovenko and Harper V: Emotional-er Support Animals
+Max Klot, Ammaar Shaikh, Mr. Miller: Welcomed me into some random classroom
 */
 
 /*
