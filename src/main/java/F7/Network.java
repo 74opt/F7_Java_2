@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 
+import F7.entities.construction.Maps;
 import F7.entities.construction.Players;
 import F7.ui.MapMenu;
 
@@ -54,19 +55,19 @@ public class Network {
     }
 
     /*
-    TODO: only problem is that info isnt being sent correctly
+    TODO: only problem is that info isnt being sent correctly?
      */
     private void open() throws IOException {
         if (players < MAX_PLAYERS) {
             System.out.println("open method start");
             // The method blocks until a connection is made.
             socket = serverSocket.accept();
-            System.out.println("serverSocket.accept worked");
             connected = true; //! do i need?
 
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             printStream = new PrintStream(socket.getOutputStream());
 
+            System.out.println("serverSocket.accept worked");
             checkConnection();
         }
     }
@@ -110,10 +111,14 @@ public class Network {
 
                 try {
                     if (verification.equals(MAIN_VERIFICATION)) {
+                        if (Players.getPlayer().getX() == 19 && Players.player.getY() == 8) {
+                            // move player somewhere
+                        }
                         System.out.println("this is the one baby");
                         // keep the connection
                         this.players++;
                         printStream.println(Players.getPlayer().getX() + "," + Players.getPlayer().getY());
+                        MapMenu.getCurrentMap().setTile(Maps.getPlayer(), 19, 8);
                         // need smth with getting map if i ever implement more than one
                         break;
                     } else if (verification.equals(BROWSER_VERIFICATION)) {
