@@ -210,7 +210,7 @@ public class MainMenu {
                 """
                 1) Host Server
                 2) Join Server
-                3) Exit     
+                3) Exit
                 """
         );
 

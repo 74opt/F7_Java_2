@@ -162,7 +162,6 @@ public class ServerMenu {
                                 }
                                 case 'e' -> {
                                     try {
-                                        //running = false;
                                         System.out.println("pressed e, lets hope also address is " + servers.get(selectedServer).address);
 
                                         // Network is null
@@ -177,8 +176,9 @@ public class ServerMenu {
                                         MapMenu.setCurrentMap(Maps.getPlains());
                                         MapMenu.getCurrentMap().spawnPlayer(19, 8);
                                         MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
+                                        running = false;
                                         MapMenu.menu();
-                                        Lanterna.print(50, 50, "Coordinates: " + hostX + " " + hostY);
+                                        //Lanterna.print(50, 50, "Coordinates: " + hostX + " " + hostY);
                                     } catch (Exception e) {
                                         Lanterna.print(40, 40, "^RFailed to join server");
                                         e.printStackTrace();
@@ -212,8 +212,6 @@ public class ServerMenu {
                 try {
                     ip[3] = (byte) j;
                     String address = InetAddress.getByAddress(ip).toString().substring(1);
-
-
                     
                     String data = Network.testConnection(address, Network.MAIN_PORT);
 
@@ -224,7 +222,7 @@ public class ServerMenu {
                     // 2. have that server return info
                     // 3. add to list
                     Thread.sleep(1000);
-                    if (data != null && !address.equals(InetAddress.getLocalHost())) {
+                    if (data != null && !address.equals(InetAddress.getLocalHost().toString())) {
                         System.out.println("guys data isnt null woohoo");
                         String[] datum = data.split(",");
                         String ping = datum[0];
