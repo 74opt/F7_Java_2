@@ -35,7 +35,7 @@ public class Maps {
     private static Tile y = new Tile("^2#", true);
 
     // Player
-    private static Tile f = new Tile("^R7", false);
+    private static Tile f = new Tile("^R7", true);
     public static Tile getPlayer() {return f;}
 
     private static Map plains = new Map("Kwéleches Plains", new Tile[][]

@@ -5,12 +5,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 import F7.Lanterna;
 import F7.Network;
 import F7.entities.construction.Maps;
 import F7.entities.construction.Players;
+import F7.entities.classes.Map;
 
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
@@ -138,13 +138,12 @@ public class ServerMenu {
                                         selectedServer = servers.size() - 1;
 
                                         Lanterna.print(11, 3, "^W" + servers.get(0).name + "  ");
-                                        Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                     } else {
                                         selectedServer--;
                                         
                                         Lanterna.print(11, selectedServer + 4, "^W" + servers.get(selectedServer + 1).name + "  ");
-                                        Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
-                                    }         
+                                    }
+                                    Lanterna.print(11, selectedServer + 3, "^g> ^W" + servers.get(selectedServer).name);
                                 }
                                 case 's' -> { // go down
                                     if (selectedServer == servers.size() - 1) {
@@ -162,19 +161,21 @@ public class ServerMenu {
                                 }
                                 case 'e' -> {
                                     try {
+                                        //TODO: after joining server, cannot move
                                         System.out.println("pressed e, lets hope also address is " + servers.get(selectedServer).address);
 
                                         // Network is null
                                         network.join(servers.get(selectedServer).address, Network.MAIN_PORT);
 
-                                        // TODO: read from printStream with bufferedReader to get location of host kthxbai
                                         String data = network.readString(); // reading "F7 server here!"
                                         String[] datum = data.split(",");
 
                                         int hostX = Integer.parseInt(datum[0]);
                                         int hostY = Integer.parseInt(datum[1]);
-                                        MapMenu.setCurrentMap(Maps.getPlains());
+                                        MapMenu.setCurrentMap(new Map(Maps.getPlains()));
                                         MapMenu.getCurrentMap().spawnPlayer(19, 8);
+//                                        Players.getPlayer().setX(19);
+//                                        Players.getPlayer().setY(8);
                                         MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
                                         running = false;
                                         MapMenu.menu();
