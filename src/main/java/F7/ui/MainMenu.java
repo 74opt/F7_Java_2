@@ -264,6 +264,7 @@ public class MainMenu {
     }
 
     private static void joinServer() throws Exception {
+        Players.setPlayer(new Player("default player name"));
         ServerMenu.menu();
     }
 
