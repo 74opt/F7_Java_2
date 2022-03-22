@@ -120,6 +120,9 @@ public class MapMenu {
 
                         currentMap.setTile(currentMap.getPARENT().getMAP()[otherY][otherX], otherX, otherY);
                         currentMap.setTile(Maps.getPlayer(), newX, newY);
+                        otherX = newX;
+                        otherY = newY;
+                        Lanterna.print(1, 3, currentMap.toString());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
