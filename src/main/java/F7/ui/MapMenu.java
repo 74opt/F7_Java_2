@@ -102,21 +102,27 @@ public class MapMenu {
                     e.printStackTrace();
                 }
 
-                if (isMultiplayer) {
-                    try {
-                        String otherMovement = ServerMenu.getNetwork().readString();
+                otherPositionChecker();
+            }
+        }).start();
+    }
 
-                        if (otherMovement != null) {
-                            String[] datum = otherMovement.split(",");
-                            int newX = Integer.parseInt(datum[0]);
-                            int newY = Integer.parseInt(datum[1]);
+    private static void otherPositionChecker() {
+        new Thread(() -> {
+            if (isMultiplayer) {
+                try {
+                    String otherMovement = ServerMenu.getNetwork().readString();
 
-                            currentMap.setTile(currentMap.getPARENT().getMAP()[otherY][otherX], otherX, otherY);
-                            currentMap.setTile(Maps.getPlayer(), newX, newY);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (otherMovement != null) {
+                        String[] datum = otherMovement.split(",");
+                        int newX = Integer.parseInt(datum[0]);
+                        int newY = Integer.parseInt(datum[1]);
+
+                        currentMap.setTile(currentMap.getPARENT().getMAP()[otherY][otherX], otherX, otherY);
+                        currentMap.setTile(Maps.getPlayer(), newX, newY);
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
