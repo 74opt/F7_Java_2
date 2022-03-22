@@ -178,7 +178,7 @@ public class Network {
             System.out.println("read: " + ver);
             return ver;
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
 
             return null;
         }
