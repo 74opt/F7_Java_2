@@ -46,7 +46,6 @@ public class Map {
     }
 
     public void movePlayer(String direction, int tiles) {
-        System.out.println("movbing");
         HashMap<String, Integer[]> dir = new HashMap<>();
         dir.put("up", new Integer[] {0, -1});
         dir.put("down", new Integer[] {0, 1});

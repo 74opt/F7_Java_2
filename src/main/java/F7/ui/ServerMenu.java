@@ -175,6 +175,8 @@ public class ServerMenu {
                                         int hostY = Integer.parseInt(datum[1]);
                                         MapMenu.setCurrentMap(new Map(Maps.getPlains()));
                                         MapMenu.getCurrentMap().spawnPlayer(19, 8);
+                                        MapMenu.setOtherX(19);
+                                        MapMenu.setOtherX(8);
                                         MapMenu.getCurrentMap().setTile(Maps.getPlayer(), hostX, hostY);
                                         running = false;
                                         MapMenu.menu();

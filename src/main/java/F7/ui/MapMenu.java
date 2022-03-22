@@ -12,12 +12,18 @@ public class MapMenu {
     private static Map currentMap;
     private static boolean running;
     private static boolean isMultiplayer = false;
+    private static int otherX;
+    private static int otherY;
 
     public static Map getCurrentMap() {return currentMap;}
     public static void setCurrentMap(Map currentMap) {MapMenu.currentMap = currentMap;}
 
     public static boolean getIsMultiplayer() {return isMultiplayer;}
     public static void setIsMultiplayer(boolean isMultiplayer) {MapMenu.isMultiplayer = isMultiplayer;}
+
+    public static void setOtherX(int otherX) {MapMenu.otherX = otherX;}
+
+    public static void setOtherY(int otherY) {MapMenu.otherY = otherY;}
 
     public static void menu() throws Exception {
         Lanterna.clear();
@@ -94,6 +100,23 @@ public class MapMenu {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+
+                if (isMultiplayer) {
+                    try {
+                        String otherMovement = ServerMenu.getNetwork().readString();
+
+                        if (otherMovement != null) {
+                            String[] datum = otherMovement.split(",");
+                            int newX = Integer.parseInt(datum[0]);
+                            int newY = Integer.parseInt(datum[1]);
+
+                            currentMap.setTile(currentMap.getPARENT().getMAP()[otherY][otherX], otherX, otherY);
+                            currentMap.setTile(Maps.getPlayer(), newX, newY);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }).start();
