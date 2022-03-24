@@ -66,21 +66,26 @@ public class CombatMenu {
 
         setCombatHashMaps();
 
-        int enemyRarity = Utils.randomRange(0, 101);
+        if (!MapMenu.getIsMultiplayer()) {
+            int enemyRarity = Utils.randomRange(0, 101);
 
-        enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
+            enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
+
+            enemy.setLevel(Players.getPlayer().getLevel() + Utils.randomRange(-2, 2));
+
+            if (enemy.getLevel() <= 0) {
+                enemy.setLevel(1);
+            }
+
+            Lanterna.printf(1, 1, "%s ^Ghas come to fight!", enemy.toString(true));
+        } else {
+            Lanterna.printf(1, 1, "%s ^Ghas come to fight!", "default player name"); // TODO: thing
+        }
 
         running = true;
         timeElapsed = 0;
         information = new String[15];
 
-        enemy.setLevel(Players.getPlayer().getLevel() + Utils.randomRange(-2, 2));
-
-        if (enemy.getLevel() <= 0) {
-            enemy.setLevel(1);
-        }
-
-        Lanterna.printf(1, 1, "%s ^Ghas come to fight!", enemy.toString(true));
         Thread.sleep(Utils.STANDARD);
         menu();
     }
@@ -215,7 +220,7 @@ public class CombatMenu {
                     }
 
                     //* Enemy Attack
-                    if (timeElapsed % ENEMY_ATTACK_INTERVAL == 0 && Utils.chance(70) && !checkStatus(Consumables.flashbang)) {
+                    if (timeElapsed % ENEMY_ATTACK_INTERVAL == 0 && Utils.chance(70) && !checkStatus(Consumables.flashbang) && !MapMenu.getIsMultiplayer()) {
                         enemyAttack();
                     }
 
@@ -289,7 +294,9 @@ public class CombatMenu {
                                 }
 
                                 // Attack
-                                case 'f' -> playerAttack();
+                                case 'f' -> {
+                                    playerAttack();
+                                }
 
                                 // Shield
                                 case 'x' -> shield();
@@ -350,7 +357,7 @@ public class CombatMenu {
                                 // Corrosion
                                 case 'c' -> useConsumable(Consumables.corrosive);
 
-                                // Taring
+                                // Targeting
                                 case 't' -> useConsumable(Consumables.target);
 
                                 // Damage 
@@ -370,13 +377,13 @@ public class CombatMenu {
         }).start();
     }
 
-    private void timeHandler() throws Exception {
+    private static void timeHandler() throws Exception {
         timeElapsed++;
         Lanterna.clear(12, 85, 54);
         Lanterna.print(85, 12, "^G" + displayTime());
     }
 
-    private void statusHandler() throws Exception {
+    private static void statusHandler() throws Exception {
         statusHashMap.forEach((key, value) -> {
             if (value > 0) {
                 statusHashMap.replace(key, value - 1);
@@ -392,7 +399,7 @@ public class CombatMenu {
         });
     }
     
-    private void corrosionHandler() throws Exception{
+    private static void corrosionHandler() throws Exception{
         if (checkStatus(Consumables.corrosive)) {
             int corrosiveDamage = (int) (enemy.getHealth() * (Utils.randomRange(17, 28) / 1000.0));
 
@@ -433,7 +440,7 @@ public class CombatMenu {
         }
     }
 
-    private void shieldHandler() throws Exception {
+    private static void shieldHandler() throws Exception {
         if (shieldStatus().equals("Up")) {
             shieldTime--;
 
@@ -464,7 +471,7 @@ public class CombatMenu {
         }
     }
 
-    private void reloadHandler() throws Exception {
+    private static void reloadHandler() throws Exception {
         weaponReload.forEach((key, value) -> {
             if (value > 0) {
                 weaponReload.replace(key, value - 1);
@@ -637,18 +644,6 @@ public class CombatMenu {
 
         //* Statuses
         Lanterna.print(71, 31, "^WStatuses:");
-
-        // Don't think i need, since there won't be any statuses active
-        // int statusIndex = 0;
-        // for (Map.Entry element : statusHashMap.entrySet()) {
-        //     Consumable key = (Consumable) element.getKey();
-        //     int value = statusHashMap.get(key);
-
-        //     if (value > 0) {
-        //         Lanterna.print(71, 31 + statusIndex, key.toString() + "^G effect: ^W" + value + " seconds^G remaining");
-        //         statusIndex++;
-        //     }
-        // }
 
         //* Controls/Keybindings
         Lanterna.print(1, 51,

@@ -9,11 +9,9 @@ import java.util.Arrays;
 import F7.Lanterna;
 import F7.Network;
 import F7.entities.construction.Maps;
-import F7.entities.construction.Players;
 import F7.entities.classes.Map;
 
 import com.googlecode.lanterna.input.KeyStroke;
-import com.googlecode.lanterna.input.KeyType;
 
 public class ServerMenu {
     private record ServerInfo(String name, long ping, int players, String address) {}
@@ -189,7 +187,7 @@ public class ServerMenu {
                                 case 'q' -> {
                                     running = false;
                                     
-                                    MainMenu.menu2();
+                                    MainMenu.menu();
                                 }
                             }
                         } catch (Exception ignored) {}

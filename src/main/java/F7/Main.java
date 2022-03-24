@@ -2,7 +2,6 @@ package F7;
 
 import F7.entities.construction.*;
 import F7.ui.*;
-import java.net.*;
 
 /*
 Credits:
@@ -59,7 +58,7 @@ public class Main {
 
             Lanterna.startScreen(Lanterna.STANDARD_COLUMNS, Lanterna.STANDARD_ROWS);
 
-            MainMenu.menu2();
+            MainMenu.menu();
         } catch (Exception e) {
             e.printStackTrace();
         }

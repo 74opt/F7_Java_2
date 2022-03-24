@@ -48,7 +48,7 @@ public class MainMenu {
 
     private static String name = "";
 
-    public static void menu2() throws Exception {
+    public static void menu() throws Exception {
         Lanterna.clear();
 
         Lanterna.print(1, 1,
@@ -136,7 +136,7 @@ public class MainMenu {
                                 }
                                 case '3' -> {
                                     running = false;
-                                    menu2();
+                                    menu();
                                 }
                             }
                         } catch (Exception ignored) {}
@@ -189,7 +189,7 @@ public class MainMenu {
                                 }
                                 case '3' -> {
                                     running = false;
-                                    menu2();
+                                    menu();
                                 }
                             }
                         } catch (Exception ignored) {}
@@ -234,7 +234,7 @@ public class MainMenu {
                                 }
                                 case '3' -> {
                                     running = false;
-                                    menu2();
+                                    menu();
                                 }
                             }
                         } catch (Exception ignored) {}

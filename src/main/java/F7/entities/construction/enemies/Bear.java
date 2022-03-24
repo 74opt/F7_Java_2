@@ -12,4 +12,9 @@ public class Bear extends Enemy {
     public int calculateSpecialDamage() {
         return 0;
     }
+
+    @Override
+    public String applySpecialEffect() {
+        return "";
+    }
 }

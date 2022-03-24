@@ -174,7 +174,7 @@ public class MapMenu {
 
             if (choice.getCharacter() == 'q') {
                 running = false;
-                MainMenu.menu2();
+                MainMenu.menu();
                 break;
             } else if (choice.getCharacter() == 'e') {
                 Lanterna.clear(28);

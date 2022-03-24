@@ -93,4 +93,8 @@ public class Enemy {
     public int calculateSpecialDamage() {
         return 0;
     }
+
+    public String applySpecialEffect() {
+        return "";
+    }
 }
