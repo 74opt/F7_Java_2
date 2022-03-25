@@ -39,9 +39,9 @@
 - [ ] Calls the Object constructor.
 - [x] Overrides methods in a superclass.
 - [ ] Includes subclasses with instance variables.
-- [ ] Calls an inherited method.
+- [x] Calls an inherited method.
 - [ ] Calls a superclass method with the super keyword and passes actual parameters.
-- [ ] Facilitates polymorphism, i.e. assigns an object of a subclass to a reference of a superclass.
+- [x] Facilitates polymorphism, i.e. assigns an object of a subclass to a reference of a superclass.
 - [ ] Uses a method that takes an object of a superclass as a parameter but passes an object of a subclass.
 - [ ] Uses an array of superclass object references but populates it with subclass object references.
 - [ ] Uses an ArrayList of superclass object references but populates it with subclass object references.

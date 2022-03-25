@@ -84,7 +84,7 @@ public class Enemy {
     }
 
     public int calculateNormalDamage() {
-        return damage * (Utils.randomRange(85, 116) / 100);
+        return (int) (damage * (Utils.randomRange(85, 116) / 100.0));
     }
 
     // to be overridden

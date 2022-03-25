@@ -760,7 +760,14 @@ public class CombatMenu {
         };
 
         if (checkStatus(Consumables.smoke) ? Utils.chance(enemy.getAccuracy() - Utils.randomRange(30, 90)) : Utils.chance(enemy.getAccuracy())) {
-            double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
+            //double damage = Utils.round(enemy.getDamage() * (Utils.randomRange(85, 116) / 100.0), 2); // damage fluctuates for 85% to 115%
+            double damage;
+
+            if (Utils.chance(75)) {
+                damage = enemy.calculateNormalDamage();
+            } else {
+                damage = enemy.calculateSpecialDamage();
+            }
 
             if (shieldStatus().equals("Up")) {
                 damage *= (100 - Players.getPlayer().getShield().getDAMAGE_REDUCTION()) / 100.0;

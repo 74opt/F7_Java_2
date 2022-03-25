@@ -10,6 +10,6 @@ public class F3 extends Enemy {
 
     @Override
     public int calculateSpecialDamage() { // TODO
-        return super.calculateSpecialDamage();
+        return (int) Math.log(calculateNormalDamage() * 100);
     }
 }

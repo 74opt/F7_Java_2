@@ -7,4 +7,9 @@ public class Nomad extends Enemy {
     public Nomad(String NAME, String SPRITE, int health, int damage, int level, int accuracy, Rarity RARITY) {
         super(NAME, SPRITE, health, damage, level, accuracy, RARITY);
     }
+
+    @Override
+    public int calculateSpecialDamage() {
+        return (int) Math.pow(calculateNormalDamage(), 1.5);
+    }
 }
