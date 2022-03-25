@@ -1,0 +1,9 @@
+bear (multiply)
+hobo (random addition)
+nomad (exponent)
+swarm (random addition)
+f3 (big number gets divided by random num) these wont work uh
+logger (multiply)
+hawk (logarithm?)
+tank (big divided by random)
+angel (exponent)

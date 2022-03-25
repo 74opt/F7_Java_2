@@ -84,17 +84,11 @@ public class Enemy {
     }
 
     public int calculateNormalDamage() {
-        int damage = this.damage * (Utils.randomRange(85, 116) / 100);
-
-        return damage;
+        return damage * (Utils.randomRange(85, 116) / 100);
     }
 
     // to be overridden
     public int calculateSpecialDamage() {
         return 0;
-    }
-
-    public String applySpecialEffect() {
-        return "";
     }
 }
