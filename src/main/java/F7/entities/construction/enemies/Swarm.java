@@ -9,6 +9,10 @@ public class Swarm extends Enemy {
         super(NAME, SPRITE, health, damage, level, accuracy, RARITY);
     }
 
+    public Swarm(Enemy enemy) {
+        super(enemy);
+    }
+
     @Override
     public int calculateSpecialDamage() {
         int sum = 0;

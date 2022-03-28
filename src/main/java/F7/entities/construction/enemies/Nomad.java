@@ -8,6 +8,10 @@ public class Nomad extends Enemy {
         super(NAME, SPRITE, health, damage, level, accuracy, RARITY);
     }
 
+    public Nomad(Enemy enemy) {
+        super(enemy);
+    }
+
     @Override
     public int calculateSpecialDamage() {
         return (int) Math.pow(calculateNormalDamage(), 1.5);

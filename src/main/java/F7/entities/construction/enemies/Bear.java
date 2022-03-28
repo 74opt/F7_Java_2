@@ -8,6 +8,10 @@ public class Bear extends Enemy {
         super(NAME, SPRITE, health, damage, level, accuracy, RARITY);
     }
 
+    public Bear(Enemy enemy) {
+        super(enemy);
+    }
+
     @Override
     public int calculateSpecialDamage() {
         return calculateNormalDamage() * 2;

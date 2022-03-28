@@ -8,6 +8,7 @@ import F7.Lanterna;
 import F7.Utils;
 import F7.entities.construction.*;
 import F7.entities.classes.*;
+import F7.entities.construction.enemies.*;
 import com.googlecode.lanterna.input.KeyStroke;
 
 // I'm gonna DOTADIW your mom
@@ -69,7 +70,20 @@ public class CombatMenu {
         if (!MapMenu.getIsMultiplayer()) {
             int enemyRarity = Utils.randomRange(0, 101);
 
-            enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
+            //enemy = new Enemy(Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]);
+
+            switch (Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity))[Utils.randomRange(0, Enemies.getEnemyHashMap().get(Rarities.getRarityArrayList().get(enemyRarity)).length)]) {
+                case Angel e -> enemy = new Angel(e);
+                case Bear e -> enemy = new Bear(e);
+                case F3 e -> enemy = new F3(e);
+                case Hawk e -> enemy = new Hawk(e);
+                case Hobo e -> enemy = new Hobo(e);
+                case Logger e -> enemy = new Logger(e);
+                case Nomad e -> enemy = new Nomad(e);
+                case Swarm e -> enemy = new Swarm(e);
+                case Tank e -> enemy = new Enemy(e);
+                default -> throw new Exception("Unrecognized Enemy Type");
+            }
 
             enemy.setLevel(Players.getPlayer().getLevel() + Utils.randomRange(-2, 2));
 

@@ -9,6 +9,10 @@ public class Hawk extends Enemy {
         super(NAME, SPRITE, health, damage, level, accuracy, RARITY);
     }
 
+    public Hawk(Enemy enemy) {
+        super(enemy);
+    }
+
     @Override
     public int calculateSpecialDamage() {
         return (int) (calculateNormalDamage() * Math.sin(Utils.randomRange(30, 91)));

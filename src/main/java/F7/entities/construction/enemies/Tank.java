@@ -9,6 +9,10 @@ public class Tank extends Enemy {
         super(NAME, SPRITE, health, damage, level, accuracy, RARITY);
     }
 
+    public Tank(Enemy enemy) {
+        super(enemy);
+    }
+
     @Override
     public int calculateSpecialDamage() {
         return (int) (calculateNormalDamage() * Math.cos(Utils.randomRange(30, 91)));

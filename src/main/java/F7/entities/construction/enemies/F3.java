@@ -8,6 +8,10 @@ public class F3 extends Enemy {
         super(NAME, SPRITE, health, damage, level, accuracy, RARITY);
     }
 
+    public F3(Enemy enemy) {
+        super(enemy);
+    }
+
     @Override
     public int calculateSpecialDamage() { // TODO
         return (int) Math.log(calculateNormalDamage() * 100);

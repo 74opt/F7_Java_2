@@ -1,6 +1,8 @@
 package F7;
 
+import F7.entities.classes.Enemy;
 import F7.entities.construction.*;
+import F7.entities.construction.enemies.Bear;
 import F7.ui.*;
 
 /*
