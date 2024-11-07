@@ -336,13 +336,12 @@ public class CombatMenu {
 
                                         double restoration = Utils.randomRange(15, 21) / 100.0;
                                         restoration *= Players.getPlayer().getHealth();
-                                        double overheal;
 
                                         Players.getPlayer().getConsumables().remove(Consumables.medkit);
                                         Players.getPlayer().setTempHealth(Players.getPlayer().getTempHealth() + restoration);
 
                                         if (Players.getPlayer().getTempHealth() > Players.getPlayer().getHealth()) {
-                                            overheal = Players.getPlayer().getTempHealth() - Players.getPlayer().getHealth();
+                                            double overheal = Players.getPlayer().getTempHealth() - Players.getPlayer().getHealth();
 
                                             Players.getPlayer().setTempHealth(Players.getPlayer().getHealth());
 

@@ -20,7 +20,9 @@ public class Lanterna {
     public static final int STANDARD_ROWS = 61;
     public static final int SCROLL_TIME = 45;
 
-    public static Screen getScreen() {return screen;}
+    public static Screen getScreen() {
+        return screen;
+    }
 
     public static void startScreen(int paramInitColumn, int paramInitRow) throws IOException {
         initColumn = paramInitColumn;

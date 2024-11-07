@@ -222,18 +222,17 @@ public class MainMenu {
                     KeyStroke keyPressed = Lanterna.getScreen().pollInput();
 
                     if (keyPressed != null) {
+                        running = false;
+
                         try {
                             switch (keyPressed.getCharacter()) {
                                 case '1' -> {
-                                    running = false;
                                     hostServer();
                                 }
                                 case '2' -> {
-                                    running = false;
                                     joinServer();
                                 }
                                 case '3' -> {
-                                    running = false;
                                     menu();
                                 }
                             }
