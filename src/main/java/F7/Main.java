@@ -8,7 +8,7 @@ import F7.ui.*;
 /*
 Credits:
 Matthieu De Robles: Made F7
-Aramie Ewen and Gordon Dewey: Main Rivals/Emotional Support Animals
+Aramie Ewen and Grace Dewey: Main Rivals/Emotional Support Animals
 David Lai and Oliver Malkus: Did My English Work
 Mr. Holmer: Assigned This Project
 Gayan Weerakutti: Some dude from stack overflow
